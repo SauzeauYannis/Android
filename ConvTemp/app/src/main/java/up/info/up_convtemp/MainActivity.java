@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             double temp_val = Double.parseDouble(editInputTemp.getText().toString());
             double result = Double.NaN;
-            if (rbCelsius.isChecked()) result = (temp_val - 32) * 5 / 9;
-            else if (rbFahrenheit.isChecked()) result = temp_val * 9 / 5 + 32;
+            if (rbFahrenheit.isChecked()) result = (temp_val - 32) * 5 / 9;
+            else if (rbCelsius.isChecked()) result = temp_val * 9 / 5 + 32;
             else Log.v(TAG, "No unit");
             dispResult.setText(Double.isNaN(result) ?
                     Resources.getSystem().getString(R.string.unit) :

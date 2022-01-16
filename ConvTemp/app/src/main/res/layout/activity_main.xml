@@ -22,16 +22,17 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
-        android:labelFor="@+id/input_temp_txt"
-        android:hint="@string/input_temperature"
+        android:autofillHints="@string/input_temperature"
         android:ems="10"
+        android:hint="@string/input_temperature"
+        android:textColorHint="#757575"
         android:inputType="number"
+        android:labelFor="@+id/input_temp_txt"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/input_temp_txt"
         app:layout_constraintTop_toBottomOf="@+id/input_temp_txt"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:autofillHints="" />
+        tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck,TextContrastCheck" />
 
     <TextView
         android:id="@+id/input_unit_txt"
