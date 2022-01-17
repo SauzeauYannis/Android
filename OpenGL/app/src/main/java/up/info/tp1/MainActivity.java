@@ -64,6 +64,6 @@ public class MainActivity extends Activity
      */
     static public void log(String message)
     {
-        Log.e(LOG_TAG, message);
+        Log.i(LOG_TAG, message);
     }
 }

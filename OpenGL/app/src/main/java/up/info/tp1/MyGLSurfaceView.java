@@ -1,8 +1,11 @@
 package up.info.tp1;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.opengl.GLSurfaceView;
+import android.view.Display;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 
 import up.info.tp1.MyGLRenderer;
 import up.info.tp1.Scene;
@@ -32,7 +35,7 @@ public class MyGLSurfaceView extends GLSurfaceView
         //setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
     }
 
-    private final float SCALE_FACTOR = 0.005F;
+    private final float SCALE_FACTOR = 0.05F;
     private float previousx;
     private float previousy;
 
@@ -48,24 +51,17 @@ public class MyGLSurfaceView extends GLSurfaceView
 
         float deltax = x - previousx; // motion along x axis
         float deltay = y - previousy; // motion along y axis
+        
+        MainActivity.log(String.valueOf(e.getAction()));
 
-        switch (e.getAction()) {
-            case MotionEvent.ACTION_MOVE:
-                if (deltay > 1) {
-                    this.scene.anglex += 0.5F;
-                    this.scene.posz += 0.1F;
-                } else if (deltay < -1) {
-                    this.scene.anglex -= 0.5F;
-                    this.scene.posz -= 0.1F;
-                }
-                if (deltax > 1) {
-                    this.scene.angley += 0.5F;
-                    this.scene.posx += 0.1F;
-                } else if (deltax < -1) {
-                    this.scene.angley -= 0.5F;
-                    this.scene.posx -= 0.1F;
-                }
-                break;
+        if (e.getAction() == MotionEvent.ACTION_MOVE) {
+            if (e.getPointerCount() <= 1) {
+                this.scene.anglex += deltay * SCALE_FACTOR;
+                this.scene.angley += deltax * SCALE_FACTOR;
+            } else {
+                this.scene.anglex = 0;
+                this.scene.angley = 0;
+            }
         }
 
         previousx = x;
