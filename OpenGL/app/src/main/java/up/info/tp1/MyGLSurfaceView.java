@@ -7,9 +7,6 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
-import up.info.tp1.MyGLRenderer;
-import up.info.tp1.Scene;
-
 /**
  * Class to described the surface view. Mainly based on well-known code.
  */
@@ -33,11 +30,16 @@ public class MyGLSurfaceView extends GLSurfaceView
         // Render the view only when there is a change in the drawing data
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         //setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
     }
 
-    private final float SCALE_FACTOR = 0.05F;
-    private float previousx;
-    private float previousy;
+    private final float SCALE_FACTOR = 0.005F;
+    private float previousx = 0;
+    private float previousy = 0;
 
     @Override
     public boolean onTouchEvent(MotionEvent e)
@@ -54,14 +56,16 @@ public class MyGLSurfaceView extends GLSurfaceView
         
         MainActivity.log(String.valueOf(e.getAction()));
 
-        if (e.getAction() == MotionEvent.ACTION_MOVE) {
-            if (e.getPointerCount() <= 1) {
-                this.scene.anglex += deltay * SCALE_FACTOR;
-                this.scene.angley += deltax * SCALE_FACTOR;
-            } else {
-                this.scene.anglex = 0;
-                this.scene.angley = 0;
-            }
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                if (e.getPointerCount() == 1) {
+                    this.scene.anglex += deltay * 0.05;
+                    this.scene.angley += deltax * 0.05;
+                } else if (e.getPointerCount() == 2) {
+                    this.scene.posx += (deltax * SCALE_FACTOR * Math.cos(this.scene.angley));
+                    this.scene.posz += (deltay * SCALE_FACTOR * Math.cos(this.scene.angley));
+                }
+                break;
         }
 
         previousx = x;
