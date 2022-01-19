@@ -7,10 +7,5 @@
     <string name="result">Résulat</string>
     <string name="unit">Vous devez choisir une unité</string>
     <string name="auto_convert">Automatique</string>
-    <string-array name="array_temp_unit">
-        <item>°C fr</item>
-        <item>°F fr</item>
-        <item>°K fr</item>
-    </string-array>
     <string name="temp">température</string>
 </resources>

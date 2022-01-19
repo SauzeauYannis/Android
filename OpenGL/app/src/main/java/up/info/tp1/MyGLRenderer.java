@@ -108,6 +108,8 @@ public class MyGLRenderer implements GLSurfaceView.Renderer
         // Drawing the scene is mandatory, since display buffers are swapped in any case.
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
         this.scene.draw(this);
+        // Dirty mode, so post a new display request to loop
+        this.view.requestRender();
     }
 
 
