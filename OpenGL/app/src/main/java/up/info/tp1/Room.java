@@ -16,16 +16,16 @@ public class Room {
                         3, 0, -3,
                         3, Scene.wallsize, -3,
                         -3, Scene.wallsize, -3,
+                        // Left wall
+                        -3, Scene.wallsize, -3,
+                        -3, Scene.wallsize, 3,
+                        -3, 0, 3,
+                        -3, 0, -3,
                         // Right wall
                         3, 0, -3,
                         3, 0, 3,
                         3, Scene.wallsize, 3,
                         3, Scene.wallsize, -3,
-                        // Left wall
-                        -3, 0, 3,
-                        -3, 0, -3,
-                        -3, Scene.wallsize, -3,
-                        -3, Scene.wallsize, 3,
                         // Back wall
                         3, 0, 3,
                         -3, 0, 3,
@@ -35,15 +35,15 @@ public class Room {
                         // Front wall
                         0, 1, 3,
                         2, 3, 1,
-                        // Right wall
-                        0, 1, 3,
-                        2, 3, 1,
                         // Left wall
-                        0, 1, 3,
-                        2, 3, 1,
+                        4, 5, 7,
+                        6, 7, 5,
+                        // Right wall
+                        8, 9, 11,
+                        10, 11, 9,
                         // Back wall
-                        0, 1, 3,
-                        2, 3, 1}
+                        12, 13, 15,
+                        14, 15, 13}
         );
 
         floor = new VBO(
