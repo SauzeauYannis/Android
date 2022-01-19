@@ -37,7 +37,7 @@ public class MyGLSurfaceView extends GLSurfaceView
         display.getSize(size);
     }
 
-    private final float SCALE_FACTOR = 0.005F;
+    private final float SCALE_FACTOR = -0.010F;
     private float previousx = 0;
     private float previousy = 0;
 
@@ -58,12 +58,13 @@ public class MyGLSurfaceView extends GLSurfaceView
 
         switch (e.getAction()) {
             case MotionEvent.ACTION_MOVE:
+                double angleyrad = Math.toRadians(this.scene.angley);
                 if (e.getPointerCount() == 1) {
-                    this.scene.anglex += deltay * 0.05;
-                    this.scene.angley += deltax * 0.05;
+                    this.scene.anglex += deltay * SCALE_FACTOR * 10;
+                    this.scene.angley += deltax * SCALE_FACTOR * 10;
                 } else if (e.getPointerCount() == 2) {
-                    this.scene.posx += (deltax * SCALE_FACTOR * Math.cos(this.scene.angley));
-                    this.scene.posz += (deltay * SCALE_FACTOR * Math.cos(this.scene.angley));
+                    this.scene.posx += SCALE_FACTOR * (deltax * Math.cos(angleyrad) - deltay * Math.sin(angleyrad));
+                    this.scene.posz += SCALE_FACTOR * (deltax * Math.sin(angleyrad) + deltay * Math.cos(angleyrad));
                 }
                 break;
         }

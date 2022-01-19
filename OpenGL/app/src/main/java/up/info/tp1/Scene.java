@@ -126,9 +126,9 @@ public class Scene {
         // Place viewer in the right position and orientation
         Matrix.setIdentityM(modelviewmatrix,0);
         // setRotateM instead of rotateM in the next instruction would avoid this initialization...
-        Matrix.translateM(modelviewmatrix, 0, posx, -1.6F, posz);
         Matrix.rotateM(modelviewmatrix, 0, anglex, 1.0F, 0.0F, 0.0F);
         Matrix.rotateM(modelviewmatrix, 0, angley, 0.0F, 1.0F, 0.0F);
+        Matrix.translateM(modelviewmatrix, 0, posx, -1.6F, posz);
         shaders.setModelViewMatrix(modelviewmatrix);
 
         // Draw walls, floor and ceil in selected colors
