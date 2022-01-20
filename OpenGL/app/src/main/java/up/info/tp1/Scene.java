@@ -22,6 +22,7 @@ public class Scene {
     float posx, posz;
 
     private Room room;
+    private Room secondRoom;
 
     /**
      * Constructor : build each wall, the floor and the ceiling as quads
@@ -46,7 +47,13 @@ public class Scene {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         // Allow back face culling !!
-        GLES20.glEnable(GLES20.GL_CULL_FACE);
+        GLES20.glDisable(GLES20.GL_CULL_FACE);
+
+        GLES20.glDepthFunc(GLES20.GL_LESS);
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);
+
+        GLES20.glPolygonOffset(2.F, 4.F);
+        GLES20.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
 
         room = new Room();
 
@@ -67,20 +74,29 @@ public class Scene {
         // Get shader to send uniform data
         NoLightShaders shaders = renderer.getShaders();
 
-        shaders.setColor(MyGLRenderer.blue);
-        room.showWall(shaders);
-        shaders.setColor(MyGLRenderer.red);
-        room.showFloor(shaders);
-        shaders.setColor(MyGLRenderer.green);
-        room.showCeiling(shaders);
-
         // Place viewer in the right position and orientation
         Matrix.setIdentityM(modelviewmatrix,0);
         // setRotateM instead of rotateM in the next instruction would avoid this initialization...
         Matrix.rotateM(modelviewmatrix, 0, anglex, 1.0F, 0.0F, 0.0F);
         Matrix.rotateM(modelviewmatrix, 0, angley, 0.0F, 1.0F, 0.0F);
         Matrix.translateM(modelviewmatrix, 0, posx, -1.6F, posz);
+
         shaders.setModelViewMatrix(modelviewmatrix);
+
+        room.show(shaders);
+
+        float[] modelviewmatrixroom = new float[16];
+
+        System.arraycopy(room.getMatrix(), 0, modelviewmatrixroom, 0, room.getMatrix().length);
+        Matrix.rotateM(modelviewmatrixroom, 0, 180, 0.0F, 1.0F, 0.0F);
+        Matrix.translateM(modelviewmatrixroom, 0, 0.0F, 0.0F, -6.0F);
+
+
+        Matrix.multiplyMM(modelviewmatrixroom, 0, modelviewmatrix, 0, modelviewmatrixroom, 0);
+
+        shaders.setModelViewMatrix(modelviewmatrixroom);
+
+        room.show(shaders);
 
         MainActivity.log("Rendering terminated.");
     }
