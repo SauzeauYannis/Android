@@ -2,7 +2,6 @@ package up.info.tp1;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 public class Scene {
 
@@ -22,7 +21,7 @@ public class Scene {
     float posx, posz;
 
     private Room room;
-    private Room secondRoom;
+    private Sphere sphere;
 
     /**
      * Constructor : build each wall, the floor and the ceiling as quads
@@ -57,6 +56,8 @@ public class Scene {
 
         room = new Room();
 
+        sphere = new Sphere(1, 50, 50);
+
         MainActivity.log("Graphics initialized");
     }
 
@@ -85,12 +86,23 @@ public class Scene {
 
         room.show(shaders);
 
+        float[] modelviewmatrixsphere = new float[16];
+
+        Matrix.setIdentityM(modelviewmatrixsphere, 0);
+        Matrix.translateM(modelviewmatrixsphere, 0, 0.0F, 1.0F, 0.0F);
+
+        Matrix.multiplyMM(modelviewmatrixsphere, 0, modelviewmatrix, 0, modelviewmatrixsphere, 0);
+
+        shaders.setColor(MyGLRenderer.magenta);
+        shaders.setModelViewMatrix(modelviewmatrixsphere);
+
+        sphere.show(shaders, GLES20.GL_TRIANGLES);
+
         float[] modelviewmatrixroom = new float[16];
 
         System.arraycopy(room.getMatrix(), 0, modelviewmatrixroom, 0, room.getMatrix().length);
         Matrix.rotateM(modelviewmatrixroom, 0, 180, 0.0F, 1.0F, 0.0F);
         Matrix.translateM(modelviewmatrixroom, 0, 0.0F, 0.0F, -6.0F);
-
 
         Matrix.multiplyMM(modelviewmatrixroom, 0, modelviewmatrix, 0, modelviewmatrixroom, 0);
 

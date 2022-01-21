@@ -15,6 +15,8 @@ public class MyGLSurfaceView extends GLSurfaceView
     private final MyGLRenderer renderer;
     private final Scene scene;
 
+    private final int centerWidth;
+
     public MyGLSurfaceView(Context context, Scene scene)
     {
         super(context);
@@ -35,6 +37,7 @@ public class MyGLSurfaceView extends GLSurfaceView
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+        centerWidth = size.x / 2;
     }
 
     private final float SCALE_FACTOR = -0.010F;
@@ -56,17 +59,15 @@ public class MyGLSurfaceView extends GLSurfaceView
         
         MainActivity.log(String.valueOf(e.getAction()));
 
-        switch (e.getAction()) {
-            case MotionEvent.ACTION_MOVE:
+        if (e.getAction() == MotionEvent.ACTION_MOVE) {
+            if (x > centerWidth) {
+                this.scene.anglex += deltay * SCALE_FACTOR * 10;
+                this.scene.angley += deltax * SCALE_FACTOR * 10;
+            } else {
                 double angleyrad = Math.toRadians(this.scene.angley);
-                if (e.getPointerCount() == 1) {
-                    this.scene.anglex += deltay * SCALE_FACTOR * 10;
-                    this.scene.angley += deltax * SCALE_FACTOR * 10;
-                } else if (e.getPointerCount() == 2) {
-                    this.scene.posx += SCALE_FACTOR * (deltax * Math.cos(angleyrad) - deltay * Math.sin(angleyrad));
-                    this.scene.posz += SCALE_FACTOR * (deltax * Math.sin(angleyrad) + deltay * Math.cos(angleyrad));
-                }
-                break;
+                this.scene.posx += SCALE_FACTOR * (deltax * Math.cos(angleyrad) - deltay * Math.sin(angleyrad));
+                this.scene.posz += SCALE_FACTOR * (deltax * Math.sin(angleyrad) + deltay * Math.cos(angleyrad));
+            }
         }
 
         previousx = x;
