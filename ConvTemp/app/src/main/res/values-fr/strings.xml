@@ -6,4 +6,6 @@
     <string name="convert">Convertir</string>
     <string name="result">Résulat</string>
     <string name="unit">Vous devez choisir une unité</string>
+    <string name="auto_convert">Automatique</string>
+    <string name="temp">température</string>
 </resources>

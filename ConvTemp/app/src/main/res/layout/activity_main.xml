@@ -21,65 +21,36 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:autofillHints="@string/input_temperature"
         android:ems="10"
-        android:hint="@string/input_temperature"
-        android:textColorHint="#757575"
+        android:hint="@string/temp"
         android:inputType="number"
         android:labelFor="@+id/input_temp_txt"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toStartOf="@+id/in_spinner"
         app:layout_constraintStart_toStartOf="@+id/input_temp_txt"
         app:layout_constraintTop_toBottomOf="@+id/input_temp_txt"
         tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck,TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/input_unit_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/input_temperature_unit"
-        app:layout_constraintStart_toStartOf="@+id/input_temp_txt"
-        app:layout_constraintTop_toBottomOf="@+id/input_temp" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_unit_txt">
-
-        <RadioButton
-            android:id="@+id/rb_celsius"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/celsius_c" />
-
-        <RadioButton
-            android:id="@+id/rb_fahrenheit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/fahrenheit_f" />
-    </RadioGroup>
 
     <Button
         android:id="@+id/button_convert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="@string/convert"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/auto_convert"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/input_temp" />
 
     <TextView
         android:id="@+id/output_result_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/result"
-        app:layout_constraintStart_toStartOf="@+id/input_unit_txt"
+        app:layout_constraintStart_toStartOf="@+id/input_temp_txt"
         app:layout_constraintTop_toBottomOf="@+id/button_convert" />
 
     <TextView
@@ -88,8 +59,42 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/result_output"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toStartOf="@+id/out_spinner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/output_result_txt" />
+
+    <Spinner
+        android:id="@+id/in_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:entries="@array/array_temp_unit"
+        app:layout_constraintBottom_toBottomOf="@+id/input_temp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/input_temp"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <Spinner
+        android:id="@+id/out_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:entries="@array/array_temp_unit"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/output_result"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/output_result" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/auto_convert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:minHeight="48dp"
+        android:text="@string/auto_convert"
+        app:layout_constraintBottom_toBottomOf="@+id/button_convert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_convert" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

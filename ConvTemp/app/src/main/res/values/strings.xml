@@ -8,4 +8,6 @@
     <string name="result">Result:</string>
     <string name="result_output" translatable="false">Result</string>
     <string name="unit">You need to choose a unit</string>
+    <string name="auto_convert">Auto-convert</string>
+    <string name="temp">temp</string>
 </resources>

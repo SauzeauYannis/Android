@@ -7,9 +7,6 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
-import up.info.tp1.MyGLRenderer;
-import up.info.tp1.Scene;
-
 /**
  * Class to described the surface view. Mainly based on well-known code.
  */
@@ -17,6 +14,8 @@ public class MyGLSurfaceView extends GLSurfaceView
 {
     private final MyGLRenderer renderer;
     private final Scene scene;
+
+    private final int centerWidth;
 
     public MyGLSurfaceView(Context context, Scene scene)
     {
@@ -33,11 +32,17 @@ public class MyGLSurfaceView extends GLSurfaceView
         // Render the view only when there is a change in the drawing data
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         //setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        centerWidth = size.x / 2;
     }
 
-    private final float SCALE_FACTOR = 0.05F;
-    private float previousx;
-    private float previousy;
+    private final float SCALE_FACTOR = -0.010F;
+    private float previousx = 0;
+    private float previousy = 0;
 
     @Override
     public boolean onTouchEvent(MotionEvent e)
@@ -55,12 +60,13 @@ public class MyGLSurfaceView extends GLSurfaceView
         MainActivity.log(String.valueOf(e.getAction()));
 
         if (e.getAction() == MotionEvent.ACTION_MOVE) {
-            if (e.getPointerCount() <= 1) {
-                this.scene.anglex += deltay * SCALE_FACTOR;
-                this.scene.angley += deltax * SCALE_FACTOR;
+            if (x > centerWidth) {
+                this.scene.anglex += deltay * SCALE_FACTOR * 10;
+                this.scene.angley += deltax * SCALE_FACTOR * 10;
             } else {
-                this.scene.anglex = 0;
-                this.scene.angley = 0;
+                double angleyrad = Math.toRadians(this.scene.angley);
+                this.scene.posx += SCALE_FACTOR * (deltax * Math.cos(angleyrad) - deltay * Math.sin(angleyrad));
+                this.scene.posz += SCALE_FACTOR * (deltax * Math.sin(angleyrad) + deltay * Math.cos(angleyrad));
             }
         }
 
