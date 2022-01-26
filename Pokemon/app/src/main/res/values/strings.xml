@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PokeStat</string>
+    <string name="enter_pokemon_name">Enter pokemon name:</string>
+    <string name="search">Search</string>
+    <string name="exit">Exit</string>
+    <string name="name_in" translatable="false">Pikachu</string>
+    <string name="name_hint">Name</string>
+    <string name="type">Type:</string>
+    <string name="weight">Weight:</string>
+    <string name="name">"Name: "</string>
+    <string name="size">Size:</string>
+    <string name="key_name" translatable="false">inputpokemonname</string>
+</resources>

@@ -56,7 +56,7 @@ public class Scene {
 
         room = new Room();
 
-        sphere = new Sphere(1, 50, 50);
+        sphere = new Sphere(1, 25, 25);
 
         MainActivity.log("Graphics initialized");
     }

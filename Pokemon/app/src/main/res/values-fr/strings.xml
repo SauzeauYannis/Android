@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PokeStat</string>
+    <string name="enter_pokemon_name">Entrez le nom du pokemon</string>
+    <string name="search">Chercher</string>
+    <string name="exit">Fermer</string>
+    <string name="name_hint">Nom</string>
+    <string name="type">Type :</string>
+    <string name="weight">Poids :</string>
+    <string name="name">"Nom : "</string>
+    <string name="size">Taille :</string>
+</resources>
