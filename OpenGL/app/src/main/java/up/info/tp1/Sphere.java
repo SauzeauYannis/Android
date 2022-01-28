@@ -1,8 +1,11 @@
 package up.info.tp1;
 
-public class Sphere extends VBO {
+public class Sphere {    private final int nbLat = 25;
+    private final int nbLong = 25;
 
-    public static int initglposbuffer(int radius, int nbLat, int nbLong) {
+    private final VBO vbo;
+
+    public Sphere() {
         float[] vertexpos = new float[3 * (nbLong * nbLat + 2)];
 
         float phi = 360.0F / (nbLat - 1);
@@ -13,19 +16,17 @@ public class Sphere extends VBO {
                 int offset =  3 * j + 3 * i * nbLong;
                 double p = Math.toRadians(phi * j);
                 double t = Math.toRadians(-90 + theta * (i + 1));
-                vertexpos[offset]     = radius * (float) Math.cos(t) * (float) Math.cos(p);
-                vertexpos[offset + 1] = radius * (float) Math.sin(t);
-                vertexpos[offset + 2] = radius * (float) Math.cos(t) * (float) Math.sin(p);
+                vertexpos[offset]     = (float) Math.cos(t) * (float) Math.cos(p);
+                vertexpos[offset + 1] = (float) Math.sin(t);
+                vertexpos[offset + 2] = (float) Math.cos(t) * (float) Math.sin(p);
             }
         }
 
-        vertexpos[vertexpos.length - 5] = -radius;
-        vertexpos[vertexpos.length - 2] = radius;
+        vertexpos[vertexpos.length - 5] = 1;
+        vertexpos[vertexpos.length - 2] = -1;
 
-        return VBO.vertexPosToGlBuffer(vertexpos);
-    }
+        int glposbuffer = VBO.vertexPosToGlBuffer(vertexpos);
 
-    public static short[] inittrianglepos(int nbLat, int nbLong) {
         short[] triangles = new short[(6 * (nbLat - 1) * (nbLong - 1)) + 6 * (nbLat - 1)];
 
         for (int i = 0; i < nbLat - 1; i++) {
@@ -60,12 +61,8 @@ public class Sphere extends VBO {
             triangles[offset + 2] = (short) (nbLat * nbLong + 2);
         }
 
-        return triangles;
+        vbo = new VBO(glposbuffer, triangles);
     }
 
-    public Sphere(int radius, int nbLat, int nbLong) {
-        super(initglposbuffer(radius, nbLat, nbLong),
-                inittrianglepos(nbLat, nbLong));
-    }
-
+    public VBO getVbo() { return vbo; }
 }

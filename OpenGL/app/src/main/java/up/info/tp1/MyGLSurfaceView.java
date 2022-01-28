@@ -80,8 +80,8 @@ public class MyGLSurfaceView extends GLSurfaceView
                     this.scene.anglex += deltay * SCALE_FACTOR * 10;
                     this.scene.angley += deltax * SCALE_FACTOR * 10;
                 }
-                break;
-        }
+                break;        
+}
 
         previousx = x;
         previousy = y;
