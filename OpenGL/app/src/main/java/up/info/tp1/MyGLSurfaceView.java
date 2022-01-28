@@ -67,6 +67,10 @@ public class MyGLSurfaceView extends GLSurfaceView
                 double angleyrad = Math.toRadians(this.scene.angley);
                 this.scene.posx += SCALE_FACTOR * (deltax * Math.cos(angleyrad) - deltay * Math.sin(angleyrad));
                 this.scene.posz += SCALE_FACTOR * (deltax * Math.sin(angleyrad) + deltay * Math.cos(angleyrad));
+                if (this.scene.posx >= 3) this.scene.posx = 2;
+                if (this.scene.posx <= -3) this.scene.posx = -2;
+                if (this.scene.posz >= 3) this.scene.posz = 2;
+                if (this.scene.posz <= -9) this.scene.posz = -8;
             }
         }
 

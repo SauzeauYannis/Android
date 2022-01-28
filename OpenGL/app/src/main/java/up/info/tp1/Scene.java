@@ -21,7 +21,11 @@ public class Scene {
     float posx, posz;
 
     private Room room;
-    private Sphere sphere;
+    private Ball ball0;
+    private Ball ball1;
+    private Ball ball2;
+    private Ball ball3;
+    private Ball ball4;
 
     /**
      * Constructor : build each wall, the floor and the ceiling as quads
@@ -56,7 +60,11 @@ public class Scene {
 
         room = new Room();
 
-        sphere = new Sphere(1, 25, 25);
+        ball0 = new Ball(0.5F, 1.5F, 1.5F, MyGLRenderer.orange);
+        ball1 = new Ball(1.5F, 0F, 5.0F, MyGLRenderer.magenta);
+        ball2 = new Ball(1F, -1.5F, -1.5F, MyGLRenderer.gray);
+        ball3 = new Ball(0.25F, 0F, 0F, MyGLRenderer.cyan);
+        ball4 = new Ball(0.75F, 1F, -2.0F, MyGLRenderer.yellow);
 
         MainActivity.log("Graphics initialized");
     }
@@ -86,17 +94,11 @@ public class Scene {
 
         room.show(shaders);
 
-        float[] modelviewmatrixsphere = new float[16];
-
-        Matrix.setIdentityM(modelviewmatrixsphere, 0);
-        Matrix.translateM(modelviewmatrixsphere, 0, 0.0F, 1.0F, 0.0F);
-
-        Matrix.multiplyMM(modelviewmatrixsphere, 0, modelviewmatrix, 0, modelviewmatrixsphere, 0);
-
-        shaders.setColor(MyGLRenderer.magenta);
-        shaders.setModelViewMatrix(modelviewmatrixsphere);
-
-        sphere.show(shaders, GLES20.GL_TRIANGLES);
+        ball0.show(shaders, modelviewmatrix, false);
+        ball1.show(shaders, modelviewmatrix, false);
+        ball2.show(shaders, modelviewmatrix, false);
+        ball3.show(shaders, modelviewmatrix, false);
+        ball4.show(shaders, modelviewmatrix, false);
 
         float[] modelviewmatrixroom = new float[16];
 
