@@ -1,64 +1,61 @@
 package up.info.tp1;
 
-public class Sphere {    private final int nbLat = 25;
-    private final int nbLong = 25;
+public class Sphere {
 
     private final VBO vbo;
 
     public Sphere() {
-        float[] vertexpos = new float[3 * (nbLong * nbLat + 2)];
+        int nbslice = 25;
+        int nbcut = 25;
 
-        float phi = 360.0F / (nbLat - 1);
-        float theta = 180.0F / nbLong;
+        float[] vertexpos = new float[3 * ((nbslice - 1) * nbcut + 2)];
 
-        for (int i = 0; i < nbLong; i++) {
-            for (int j = 0; j < nbLat; j++) {
-                int offset =  3 * j + 3 * i * nbLong;
+        float theta = 180.0F / nbslice;
+        float phi = 360.0F / nbcut;
+
+        int n = 0;
+
+        for (int i = 1; i < nbslice; i++) {
+            for (int j = 0; j < nbcut; j++) {
+                double t = Math.toRadians(-90.0F + theta * i);
                 double p = Math.toRadians(phi * j);
-                double t = Math.toRadians(-90 + theta * (i + 1));
-                vertexpos[offset]     = (float) Math.cos(t) * (float) Math.cos(p);
-                vertexpos[offset + 1] = (float) Math.sin(t);
-                vertexpos[offset + 2] = (float) Math.cos(t) * (float) Math.sin(p);
+                vertexpos[n++] = (float) Math.cos(t) * (float) Math.cos(p);
+                vertexpos[n++] = (float) Math.cos(t) * (float) Math.sin(p);
+                vertexpos[n++] = (float) Math.sin(t);
             }
         }
 
-        vertexpos[vertexpos.length - 5] = 1;
-        vertexpos[vertexpos.length - 2] = -1;
+        vertexpos[vertexpos.length - 4] = -1;
+        vertexpos[vertexpos.length - 1] = 1;
 
         int glposbuffer = VBO.vertexPosToGlBuffer(vertexpos);
 
-        short[] triangles = new short[(6 * (nbLat - 1) * (nbLong - 1)) + 6 * (nbLat - 1)];
+        n = 0;
 
-        for (int i = 0; i < nbLat - 1; i++) {
-            for (int j = 0; j < nbLong - 1; j++) {
-                int offset =  3 * j + 3 * i * (nbLong - 1);
-                triangles[offset]     = (short) ((i * nbLat) + j + 1);
-                triangles[offset + 1] = (short) ((i * nbLat) + j);
-                triangles[offset + 2] = (short) ((i * nbLat) + j + nbLat);
+        short[] triangles = new short[6 * nbcut* (nbslice - 1)];
+
+        for (int i = 0; i < nbslice - 2; i++) {
+            for (int j = 0; j < nbcut; j++) {
+                triangles[n++] = (short) (nbcut * i + (j + 1) % nbcut);
+                triangles[n++] = (short) (nbcut * i + j);
+                triangles[n++] = (short) (nbcut * (i + 1) + j);
+
+                triangles[n++] = (short) (nbcut * (i + 1) + (j + 1) % nbcut);
+                triangles[n++] = (short) (nbcut * i + (j + 1) % nbcut);
+                triangles[n++] = (short) (nbcut * (i + 1) + j);
             }
         }
 
-        for (int i = 0; i < nbLat - 1; i++) {
-            for (int j = 0; j < nbLong - 1; j++) {
-                int offset =  3 * (nbLat - 1) * (nbLong - 1) + 3 * j + 3 * i * (nbLong - 1);
-                triangles[offset]     = (short) ((i * nbLat) + j + nbLat + 1);
-                triangles[offset + 1] = (short) ((i * nbLat) + j + 1);
-                triangles[offset + 2] = (short) ((i * nbLat) + j + nbLat);
-            }
+        for (int i = 0; i < nbcut; i++) {
+            triangles[n++] = (short) (i);
+            triangles[n++] = (short) ((i + 1) % nbcut);
+            triangles[n++] = (short) ((nbcut) * (nbslice - 1));
         }
 
-        for (int i = 0; i < nbLat - 1; i++) {
-            int offset =  6 * (nbLat - 1) * (nbLong - 1) + 3 * i;
-            triangles[offset]     = (short) (i);
-            triangles[offset + 1] = (short) (i + 1);
-            triangles[offset + 2] = (short) (nbLat * nbLong + 1);
-        }
-
-        for (int i = 0; i < nbLat - 1; i++) {
-            int offset =  3 * (nbLat - 1) + 6 * (nbLat - 1) * (nbLong - 1) + 3 * i;
-            triangles[offset]     = (short) (nbLat * (nbLong - 1) + i + 1);
-            triangles[offset + 1] = (short) (nbLat * (nbLong - 1) + i);
-            triangles[offset + 2] = (short) (nbLat * nbLong + 2);
+        for (int i = 0; i < nbcut; i++) {
+            triangles[n++] = (short) ((nbcut) * (nbslice - 1) + 1);
+            triangles[n++] = (short) ((nbcut) * (nbslice - 2) + (i + 1) % nbcut);
+            triangles[n++] = (short) ((nbcut) * (nbslice - 2) + i);
         }
 
         vbo = new VBO(glposbuffer, triangles);

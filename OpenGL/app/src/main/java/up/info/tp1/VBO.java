@@ -45,6 +45,18 @@ public class VBO {
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
+    public void showOutline(NoLightShaders shaders) {
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
+        shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
+        GLES20.glDrawElements(GLES20.GL_TRIANGLES, nbElem, GLES20.GL_UNSIGNED_SHORT, 0);
+        shaders.setColor(MyGLRenderer.black);
+        GLES20.glLineWidth(4);
+        GLES20.glDrawElements(GLES20.GL_LINE_STRIP, nbElem, GLES20.GL_UNSIGNED_SHORT, 0);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+
     public static int vertexPosToGlBuffer(float[] vertexpos) {
         ByteBuffer posbytebuf = ByteBuffer.allocateDirect(vertexpos.length * Float.BYTES);
         posbytebuf.order(ByteOrder.nativeOrder());

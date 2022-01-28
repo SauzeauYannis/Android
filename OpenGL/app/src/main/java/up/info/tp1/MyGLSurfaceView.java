@@ -3,6 +3,7 @@ package up.info.tp1;
 import android.content.Context;
 import android.graphics.Point;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -44,7 +45,7 @@ public class MyGLSurfaceView extends GLSurfaceView
         centerWidth = size.x / 2;
     }
 
-    private final float SCALE_FACTOR = -0.005F;
+    private final float SCALE_FACTOR = -0.008F;
     private float previousx = 0;
     private float previousy = 0;
 
