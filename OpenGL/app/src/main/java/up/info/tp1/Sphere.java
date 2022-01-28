@@ -1,14 +1,12 @@
 package up.info.tp1;
 
-import android.util.Log;
-
 public class Sphere extends VBO {
 
     public static int initglposbuffer(int radius, int nbLat, int nbLong) {
         float[] vertexpos = new float[3 * (nbLong * nbLat + 2)];
 
-        int phi = 360 / (nbLat - 1);
-        int theta = 180 / nbLong;
+        float phi = 360.0F / (nbLat - 1);
+        float theta = 180.0F / nbLong;
 
         for (int i = 0; i < nbLong; i++) {
             for (int j = 0; j < nbLat; j++) {

@@ -7,6 +7,8 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 
+import javax.xml.transform.sax.TemplatesHandler;
+
 /**
  * Class to described the surface view. Mainly based on well-known code.
  */
@@ -16,6 +18,8 @@ public class MyGLSurfaceView extends GLSurfaceView
     private final Scene scene;
 
     private final int centerWidth;
+
+    private boolean isMoving;
 
     public MyGLSurfaceView(Context context, Scene scene)
     {
@@ -40,7 +44,7 @@ public class MyGLSurfaceView extends GLSurfaceView
         centerWidth = size.x / 2;
     }
 
-    private final float SCALE_FACTOR = -0.010F;
+    private final float SCALE_FACTOR = -0.005F;
     private float previousx = 0;
     private float previousy = 0;
 
@@ -59,15 +63,24 @@ public class MyGLSurfaceView extends GLSurfaceView
         
         MainActivity.log(String.valueOf(e.getAction()));
 
-        if (e.getAction() == MotionEvent.ACTION_MOVE) {
-            if (x > centerWidth) {
-                this.scene.anglex += deltay * SCALE_FACTOR * 10;
-                this.scene.angley += deltax * SCALE_FACTOR * 10;
-            } else {
-                double angleyrad = Math.toRadians(this.scene.angley);
-                this.scene.posx += SCALE_FACTOR * (deltax * Math.cos(angleyrad) - deltay * Math.sin(angleyrad));
-                this.scene.posz += SCALE_FACTOR * (deltax * Math.sin(angleyrad) + deltay * Math.cos(angleyrad));
-            }
+        switch (e.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                isMoving = x < centerWidth;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (isMoving) {
+                    double angleyrad = Math.toRadians(this.scene.angley);
+                    this.scene.posx += SCALE_FACTOR * (deltax * Math.cos(angleyrad) - deltay * Math.sin(angleyrad));
+                    this.scene.posz += SCALE_FACTOR * (deltax * Math.sin(angleyrad) + deltay * Math.cos(angleyrad));
+                    if (this.scene.posx >= 3) this.scene.posx -= 1.0F;
+                    if (this.scene.posx <= -3) this.scene.posx += 1.0F;
+                    if (this.scene.posz >= 3) this.scene.posz -= 1.0F;
+                    if (this.scene.posz <= -9) this.scene.posz += 1.0F;
+                } else {
+                    this.scene.anglex += deltay * SCALE_FACTOR * 10;
+                    this.scene.angley += deltax * SCALE_FACTOR * 10;
+                }
+                break;
         }
 
         previousx = x;
