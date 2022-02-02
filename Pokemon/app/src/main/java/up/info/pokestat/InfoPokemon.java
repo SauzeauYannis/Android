@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Set;
@@ -29,6 +31,8 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 
 public class InfoPokemon extends AppCompatActivity {
 
@@ -39,6 +43,7 @@ public class InfoPokemon extends AppCompatActivity {
     private TextView pokemon_type;
     private TextView pokemon_size;
     private TextView pokemon_weight;
+    private ImageView imageView;
     private Set<String> searchedPokemonName;
 
     @Override
@@ -54,6 +59,7 @@ public class InfoPokemon extends AppCompatActivity {
         pokemon_type = findViewById(R.id.txt_type);
         pokemon_size = findViewById(R.id.txt_size);
         pokemon_weight = findViewById(R.id.txt_weight);
+        imageView = findViewById(R.id.img);
 
         findViewById(R.id.btn_close).setOnClickListener(view -> finish());
 
@@ -114,6 +120,7 @@ public class InfoPokemon extends AppCompatActivity {
         private String resname;
         private String resweight;
         private String ressize;
+        private String imageUrl;
 
         public PokeRequest(String name) {
             this.name = name;
@@ -128,6 +135,9 @@ public class InfoPokemon extends AppCompatActivity {
             try {
                 Document doc = Jsoup.connect(URL + name).get();
                 Element tableinfo = doc.selectFirst("table.tableaustandard");
+
+                Element img = tableinfo.select("img").first();
+                imageUrl = URL + img.attr("src");
 
                 assert tableinfo != null;
                 Elements names = tableinfo.select("th.entêtesection");
@@ -196,6 +206,7 @@ public class InfoPokemon extends AppCompatActivity {
             InfoPokemon.this.pokemon_type.append(restype);
             InfoPokemon.this.pokemon_size.append(ressize);
             InfoPokemon.this.pokemon_weight.append(resweight);
+            Glide.with(InfoPokemon.this).load(imageUrl).into(imageView);
             Toast.makeText(InfoPokemon.this, R.string.end_request, Toast.LENGTH_SHORT).show();
 
             // c'est ici que vous devrez ajouter l'écriture de votre fichier en FIN de sujet!!!
@@ -206,6 +217,7 @@ public class InfoPokemon extends AppCompatActivity {
             InfoPokemon.this.add_historic(info);
             InfoPokemon.this.reload_historic();
             InfoPokemon.this.display_historic();
+            InfoPokemon.this.write_historic_in_file();
         }
     }
 }

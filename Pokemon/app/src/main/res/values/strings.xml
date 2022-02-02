@@ -14,4 +14,5 @@
     <string name="btn_web">View on web</string>
     <string name="error_no_dom_entity" translatable="false" >Error : no dom entity</string>
     <string name="end_request" >Request ended</string>
+    <string name="image">image</string>
 </resources>
