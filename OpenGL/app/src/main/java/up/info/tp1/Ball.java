@@ -14,8 +14,8 @@ public class Ball {
     private final float posz;
     private final float[] color;
 
-    public Ball(float radius, float posx, float posz, float[] color) {
-        this.sphere = new Sphere();
+    private Ball(Sphere sphere, float radius, float posx, float posz, float[] color) {
+        this.sphere = sphere;
 
         this.modelviewmatrixsphere = new float[16];
 
@@ -23,6 +23,14 @@ public class Ball {
         this.posx = posx;
         this.posz = posz;
         this.color = color;
+    }
+
+    public Ball(float radius, float posx, float posz, float[] color) {
+        this(new Sphere(), radius, posx, posz, color);
+    }
+
+    public Ball(int nbsubdivision, float radius, float posx, float posz, float[] color) {
+        this(new Sphere(nbsubdivision), radius, posx, posz, color);
     }
 
     public void show(NoLightShaders shaders, float[] modelviewmatrix, boolean withOutline) {

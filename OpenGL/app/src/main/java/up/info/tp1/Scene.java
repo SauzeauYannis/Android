@@ -62,8 +62,8 @@ public class Scene {
 
         ball0 = new Ball(0.5F, 1.5F, 1.5F, MyGLRenderer.orange);
         ball1 = new Ball(wallsize / 2.0F, 0F, 5.0F, MyGLRenderer.magenta);
-        ball2 = new Ball(1F, -1.5F, -1.5F, MyGLRenderer.gray);
-        ball3 = new Ball(0.25F, 0F, 0F, MyGLRenderer.cyan);
+        ball2 = new Ball(1, 1F, 0F, 0F,  MyGLRenderer.gray);
+        ball3 = new Ball(0.25F, -1.5F, -1.5F, MyGLRenderer.cyan);
         ball4 = new Ball(0.75F, 1F, -2.0F, MyGLRenderer.yellow);
 
         MainActivity.log("Graphics initialized");
