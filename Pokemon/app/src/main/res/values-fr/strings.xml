@@ -9,4 +9,7 @@
     <string name="weight">Poids :</string>
     <string name="name">"Nom : "</string>
     <string name="size">Taille :</string>
+    <string name="btn_close">Fermer</string>
+    <string name="btn_web">Voir sur le web</string>
+    <string name="end_request">La requête est finie</string>
 </resources>

@@ -5,9 +5,13 @@
     <string name="exit">Exit</string>
     <string name="name_in" translatable="false">Pikachu</string>
     <string name="name_hint">Name</string>
-    <string name="type">Type:</string>
-    <string name="weight">Weight:</string>
+    <string name="type">"Type: "</string>
+    <string name="weight">"Weight: "</string>
     <string name="name">"Name: "</string>
-    <string name="size">Size:</string>
+    <string name="size">"Size: "</string>
     <string name="key_name" translatable="false">inputpokemonname</string>
+    <string name="btn_close">Close</string>
+    <string name="btn_web">View on web</string>
+    <string name="error_no_dom_entity" translatable="false" >Error : no dom entity</string>
+    <string name="end_request" >Request ended</string>
 </resources>
