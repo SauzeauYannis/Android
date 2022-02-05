@@ -2,13 +2,15 @@ package up.info.tp1;
 
 public class Sphere {
 
+    private final float[] vertexpos;
+    private final short[] triangles;
     private final VBO vbo;
 
     public Sphere() {
         int nbslice = 25;
         int nbcut = 25;
 
-        float[] vertexpos = new float[3 * ((nbslice - 1) * nbcut + 2)];
+        vertexpos = new float[3 * ((nbslice - 1) * nbcut + 2)];
 
         float theta = 180.0F / nbslice;
         float phi = 360.0F / nbcut;
@@ -30,7 +32,7 @@ public class Sphere {
 
         n = 0;
 
-        short[] triangles = new short[6 * nbcut* (nbslice - 1)];
+        triangles = new short[6 * nbcut* (nbslice - 1)];
 
         for (int i = 0; i < nbslice - 2; i++) {
             int h = nbcut * i;
@@ -60,22 +62,24 @@ public class Sphere {
             triangles[n++] = (short) (h + i);
         }
 
-
-
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
     }
 
     public Sphere(int nbsubdivision) {
-        float[] vertexpos = new float[] {
-                1, 0, 0,
-                0, 1, 0,
-                0, 0, 1,
-                -1, 0, 0,
-                0, -1, 0,
-                0, 0, -1
-        };
 
-        short[] triangles = new short[] {
+        vertexpos = new float[3 * 6 * (int) Math.pow(2, nbsubdivision - 1)];
+
+        for (int i = 0, n = -1; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                vertexpos[++n] = j == 0 ? (i == 0 ? 1 : -1) : 0;
+                vertexpos[++n] = j == 1 ? (i == 0 ? 1 : -1) : 0;
+                vertexpos[++n] = j == 2 ? (i == 0 ? 1 : -1) : 0;
+            }
+        }
+
+        triangles = new short[3 * 8 * (int) Math.pow(4, nbsubdivision - 1)];
+
+        short[] initTriangle = new short[] {
                 0, 1, 2,
                 2, 4, 0,
                 1, 0, 5,
@@ -86,7 +90,20 @@ public class Sphere {
                 3, 4, 5
         };
 
+        for (int i = 0; i < initTriangle.length; i++)
+            createSphere(nbsubdivision, i, initTriangle[i], initTriangle[++i], initTriangle[++i]);
+
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
+    }
+
+    private void createSphere(int nbsubdivision, int pos, short a, short b, short c) {
+        if (nbsubdivision == 1) {
+            triangles[pos]   = a;
+            triangles[++pos] = b;
+            triangles[++pos] = c;
+        } else {
+
+        }
     }
 
     public VBO getVbo() { return vbo; }
