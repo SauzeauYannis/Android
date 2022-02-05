@@ -1,9 +1,15 @@
 package up.info.tp1;
 
+import android.util.Log;
+
+import java.util.HashMap;
+
 public class Sphere {
 
     private final float[] vertexpos;
     private final short[] triangles;
+    private short vertexnum;
+    private int trianglesnum;
     private final VBO vbo;
 
     public Sphere() {
@@ -62,12 +68,14 @@ public class Sphere {
             triangles[n++] = (short) (h + i);
         }
 
+        vertexnum = (short) vertexpos.length;
+        trianglesnum = triangles.length;
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
     }
 
     public Sphere(int nbsubdivision) {
-
-        vertexpos = new float[3 * 6 * (int) Math.pow(2, nbsubdivision - 1)];
+        vertexnum = 6;
+        vertexpos = new float[6 + 3 * (int) Math.pow(4, nbsubdivision)];
 
         for (int i = 0, n = -1; i < 2; i++) {
             for (int j = 0; j < 3; j++) {
@@ -77,34 +85,75 @@ public class Sphere {
             }
         }
 
+        trianglesnum = 0;
         triangles = new short[3 * 8 * (int) Math.pow(4, nbsubdivision - 1)];
 
         short[] initTriangle = new short[] {
                 0, 1, 2,
-                2, 4, 0,
-                1, 0, 5,
-                0, 4, 5,
-                2, 3, 1,
-                2, 4, 3,
-                1, 3, 5,
-                3, 4, 5
+                1, 3, 2,
+                3, 4, 2,
+                4, 0, 2,
+                5, 1, 0,
+                5, 3, 1,
+                5, 4, 3,
+                5, 0, 4
         };
 
-        for (int i = 0; i < initTriangle.length; i++)
-            createSphere(nbsubdivision, i, initTriangle[i], initTriangle[++i], initTriangle[++i]);
+        if (nbsubdivision > 1) {
+            HashMap<String, Short> middlemap = new HashMap<>();
+            for (int i = 0; i < initTriangle.length; i++)
+                createSphereRec(nbsubdivision, 1, middlemap, initTriangle[i], initTriangle[++i], initTriangle[++i]);
+        } else {
+            System.arraycopy(initTriangle, 0, triangles, 0, initTriangle.length);
+            trianglesnum = initTriangle.length;
+        }
+
+        for (int i = 0; i < vertexpos.length - 2; i++)
+            Log.d("LOG", "P" + i / 3 + " => (" + vertexpos[i] + ", " + vertexpos[++i] + ", " + vertexpos[++i] + ")");
+
+        for (int i = 0; i < triangles.length - 2; i++)
+            Log.d("LOG", "T" + i / 3 + " => (" + triangles[i] + ", " + triangles[++i] + ", " + triangles[++i] + ")");
 
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
     }
 
-    private void createSphere(int nbsubdivision, int pos, short a, short b, short c) {
-        if (nbsubdivision == 1) {
-            triangles[pos]   = a;
-            triangles[++pos] = b;
-            triangles[++pos] = c;
-        } else {
+    public VBO getVbo() { return vbo; }
 
+    private void createSphereRec(int nbsubdivision, int currentsub, HashMap<String, Short> middlemap, short a, short b, short c) {
+        if (nbsubdivision == currentsub) {
+            triangles[trianglesnum++] = a;
+            triangles[trianglesnum++] = b;
+            triangles[trianglesnum++] = c;
+        } else {
+            short d = computeMiddle(middlemap, a, b);
+            short e = computeMiddle(middlemap, b, c);
+            short f = computeMiddle(middlemap, c, a);
+
+            createSphereRec(nbsubdivision, currentsub + 1, middlemap, a, d, f);
+            createSphereRec(nbsubdivision, currentsub + 1, middlemap, d, b, e);
+            createSphereRec(nbsubdivision, currentsub + 1, middlemap, f, e, c);
+            createSphereRec(nbsubdivision, currentsub + 1, middlemap, d, e, f);
         }
     }
 
-    public VBO getVbo() { return vbo; }
+    private short computeMiddle(HashMap<String, Short> middlemap, short v1, short v2) {
+        String middlekey = v1 < v2 ? String.valueOf(v1) + String.valueOf(v2) : String.valueOf(v2) + String.valueOf(v1);
+
+        if (middlemap.containsKey(middlekey)) return middlemap.get(middlekey);
+
+        short vm = vertexnum++;
+
+        for (int i = 0; i < 3; i++)
+            vertexpos[3 * vm + i] = 0.5F * (vertexpos[3 * v1 + i] + vertexpos[3 * v2 + i]);
+
+        float normd = (float) (1.0F / Math.sqrt(Math.pow(vertexpos[3 * vm], 2) + Math.pow(vertexpos[3 * vm + 1], 2) + Math.pow(vertexpos[3 * vm + 2], 2)));
+
+        for (int i = 0; i < 3; i++)
+            vertexpos[3 * vm + i] *= normd;
+
+        middlemap.put(middlekey, vm);
+
+        return vm;
+    }
+
 }
