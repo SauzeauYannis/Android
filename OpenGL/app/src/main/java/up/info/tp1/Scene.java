@@ -2,6 +2,7 @@ package up.info.tp1;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 public class Scene {
 
@@ -67,7 +68,7 @@ public class Scene {
         ball3 = new Ball(0.25F, 0F, 0F, MyGLRenderer.cyan);
         ball4 = new Ball(0.75F, 1F, -2.0F, MyGLRenderer.yellow);
 
-        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, MyGLRenderer.lightgray, 3 * 106289, 3 * 212574);
+        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, MyGLRenderer.lightgray, 3 * 15002, 3 * 30000);
 
         MainActivity.log("Graphics initialized");
     }
@@ -104,7 +105,7 @@ public class Scene {
         ball3.show(shaders, modelviewmatrix, false);
         ball4.show(shaders, modelviewmatrix, false);
 
-        armadilloObj.show(shaders, modelviewmatrix, true);
+        armadilloObj.show(shaders, modelviewmatrix, false);
 
         MainActivity.log("Rendering terminated.");
     }

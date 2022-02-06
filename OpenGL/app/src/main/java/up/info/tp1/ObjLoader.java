@@ -34,16 +34,16 @@ public class ObjLoader {
             int tn = -1;
 
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("v") || line.startsWith("f")) {
+                if (line.startsWith("v ") || line.startsWith("f")) {
                     String[] splitted = line.split(" ");
                     if (splitted[0].equals("v")) {
                         this.vertexPos[++vn] = Float.parseFloat(splitted[1]);
                         this.vertexPos[++vn] = Float.parseFloat(splitted[2]);
                         this.vertexPos[++vn] = Float.parseFloat(splitted[3]);
                     } else if (splitted[0].equals("f")) {
-                        this.triangles[++tn] = Integer.parseInt(splitted[1].split("//")[0]) - 1;
-                        this.triangles[++tn] = Integer.parseInt(splitted[2].split("//")[0]) - 1;
-                        this.triangles[++tn] = Integer.parseInt(splitted[3].split("//")[0]) - 1;
+                        this.triangles[++tn] = Integer.parseInt(splitted[1].split("/")[0]) - 1;
+                        this.triangles[++tn] = Integer.parseInt(splitted[2].split("/")[0]) - 1;
+                        this.triangles[++tn] = Integer.parseInt(splitted[3].split("/")[0]) - 1;
                     }
                 }
             }
