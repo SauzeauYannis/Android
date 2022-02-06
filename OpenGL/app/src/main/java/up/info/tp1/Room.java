@@ -100,8 +100,6 @@ public class Room {
                 new short[] {0, 3, 1, 2, 5, 6, 9, 10});
 
         matrix = new float[16];
-
-        Matrix.setIdentityM(matrix, 0);
     }
 
     public float[] getMatrix() { return matrix; }
@@ -115,6 +113,20 @@ public class Room {
         this.ceiling.show(shaders, GLES20.GL_TRIANGLES);
         shaders.setColor(MyGLRenderer.black);
         this.edge.show(shaders, GLES20.GL_LINES);
+    }
+
+    public void showSecondRoom(NoLightShaders shaders, float[] modelviewmatrix) {
+        Matrix.setIdentityM(this.matrix, 0);
+
+        Matrix.rotateM(this.matrix, 0, 180, 0.0F, 1.0F, 0.0F);
+
+        Matrix.translateM(this.matrix, 0, 0.0F, 0.0F, -6.0F);
+
+        Matrix.multiplyMM(this.matrix, 0, modelviewmatrix, 0, this.matrix, 0);
+
+        shaders.setModelViewMatrix(this.matrix);
+
+        this.show(shaders);
     }
 
 }

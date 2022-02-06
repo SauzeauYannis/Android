@@ -26,6 +26,7 @@ public class Scene {
     private Ball ball2;
     private Ball ball3;
     private Ball ball4;
+    private ObjLoader armadilloObj;
 
     /**
      * Constructor : build each wall, the floor and the ceiling as quads
@@ -66,6 +67,8 @@ public class Scene {
         ball3 = new Ball(0.25F, 0F, 0F, MyGLRenderer.cyan);
         ball4 = new Ball(0.75F, 1F, -2.0F, MyGLRenderer.yellow);
 
+        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, MyGLRenderer.lightgray, 3 * 106289, 3 * 212574);
+
         MainActivity.log("Graphics initialized");
     }
 
@@ -93,6 +96,7 @@ public class Scene {
         shaders.setModelViewMatrix(modelviewmatrix);
 
         room.show(shaders);
+        room.showSecondRoom(shaders, modelviewmatrix);
 
         ball0.show(shaders, modelviewmatrix, false);
         ball1.show(shaders, modelviewmatrix, true);
@@ -100,17 +104,7 @@ public class Scene {
         ball3.show(shaders, modelviewmatrix, false);
         ball4.show(shaders, modelviewmatrix, false);
 
-        float[] modelviewmatrixroom = new float[16];
-
-        System.arraycopy(room.getMatrix(), 0, modelviewmatrixroom, 0, room.getMatrix().length);
-        Matrix.rotateM(modelviewmatrixroom, 0, 180, 0.0F, 1.0F, 0.0F);
-        Matrix.translateM(modelviewmatrixroom, 0, 0.0F, 0.0F, -6.0F);
-
-        Matrix.multiplyMM(modelviewmatrixroom, 0, modelviewmatrix, 0, modelviewmatrixroom, 0);
-
-        shaders.setModelViewMatrix(modelviewmatrixroom);
-
-        room.show(shaders);
+        armadilloObj.show(shaders, modelviewmatrix, true);
 
         MainActivity.log("Rendering terminated.");
     }

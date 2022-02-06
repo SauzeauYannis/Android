@@ -108,12 +108,6 @@ public class Sphere {
             trianglesnum = initTriangle.length;
         }
 
-        for (int i = 0; i < vertexpos.length - 2; i++)
-            Log.d("LOG", "P" + i / 3 + " => (" + vertexpos[i] + ", " + vertexpos[++i] + ", " + vertexpos[++i] + ")");
-
-        for (int i = 0; i < triangles.length - 2; i++)
-            Log.d("LOG", "T" + i / 3 + " => (" + triangles[i] + ", " + triangles[++i] + ", " + triangles[++i] + ")");
-
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
     }
 
