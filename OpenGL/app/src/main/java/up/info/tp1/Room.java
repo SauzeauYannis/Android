@@ -106,13 +106,13 @@ public class Room {
 
     public void show(NoLightShaders shaders) {
         shaders.setColor(MyGLRenderer.blue);
-        this.wall.show(shaders, GLES20.GL_TRIANGLES);
+        this.wall.show(shaders, GLES20.GL_TRIANGLES, false);
         shaders.setColor(MyGLRenderer.red);
-        this.floor.show(shaders, GLES20.GL_TRIANGLES);
+        this.floor.show(shaders, GLES20.GL_TRIANGLES, false);
         shaders.setColor(MyGLRenderer.green);
-        this.ceiling.show(shaders, GLES20.GL_TRIANGLES);
+        this.ceiling.show(shaders, GLES20.GL_TRIANGLES, false);
         shaders.setColor(MyGLRenderer.black);
-        this.edge.show(shaders, GLES20.GL_LINES);
+        this.edge.show(shaders, GLES20.GL_LINES, false);
     }
 
     public void showSecondRoom(NoLightShaders shaders, float[] modelviewmatrix) {

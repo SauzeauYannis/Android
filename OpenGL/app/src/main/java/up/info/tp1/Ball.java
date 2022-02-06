@@ -46,9 +46,9 @@ public class Ball {
         shaders.setModelViewMatrix(this.modelviewmatrixsphere);
 
         if (withOutline)
-            sphere.getVbo().showOutline(shaders);
+            sphere.getVbo().showOutline(shaders, GLES20.GL_TRIANGLES, false);
         else
-            sphere.getVbo().show(shaders, GLES20.GL_TRIANGLES);
+            sphere.getVbo().show(shaders, GLES20.GL_TRIANGLES, false);
     }
 
 }

@@ -86,43 +86,26 @@ public class VBO {
         return glelembuffer;
     }
 
-    public void show(NoLightShaders shaders, int elemtype) {
+    public void show(NoLightShaders shaders, int elemtype, boolean useInt) {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
         shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(elemtype, nbElem, GLES20.GL_UNSIGNED_SHORT, 0);
+        GLES20.glDrawElements(elemtype, nbElem, useInt ? GLES20.GL_UNSIGNED_INT :  GLES20.GL_UNSIGNED_SHORT, 0);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    public void showBig(NoLightShaders shaders, int elemtype) {
+    public void showOutline(NoLightShaders shaders, int elemtype, boolean useInt) {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
         shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(elemtype, nbElem, GLES20.GL_UNSIGNED_INT, 0);
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    public void showOutline(NoLightShaders shaders) {
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
-        shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, nbElem, GLES20.GL_UNSIGNED_SHORT, 0);
+        GLES20.glDrawElements(elemtype, nbElem, useInt ? GLES20.GL_UNSIGNED_INT :  GLES20.GL_UNSIGNED_SHORT, 0);
         shaders.setColor(MyGLRenderer.black);
         GLES20.glLineWidth(4);
-        GLES20.glDrawElements(GLES20.GL_LINE_STRIP, nbElem, GLES20.GL_UNSIGNED_SHORT, 0);
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    public void showBigOutline(NoLightShaders shaders) {
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
-        shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, nbElem, GLES20.GL_UNSIGNED_INT, 0);
-        shaders.setColor(MyGLRenderer.black);
-        GLES20.glDrawElements(GLES20.GL_LINE_STRIP, nbElem, GLES20.GL_UNSIGNED_INT, 0);
+        for (int i = 0; i < nbElem; i += 3){
+            GLES20.glDrawElements(GLES20.GL_LINE_STRIP, 3,
+                    useInt ? GLES20.GL_UNSIGNED_INT :  GLES20.GL_UNSIGNED_SHORT, i * (useInt ? Integer.BYTES : Short.BYTES));
+        }
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
     }
