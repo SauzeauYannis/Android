@@ -1,6 +1,6 @@
 package up.info.tp1;
 
-import android.util.Log;
+import android.util.Pair;
 
 import java.util.HashMap;
 
@@ -100,7 +100,7 @@ public class Sphere {
         };
 
         if (nbsubdivision > 1) {
-            HashMap<String, Short> middlemap = new HashMap<>();
+            HashMap<Pair<Short, Short>, Short> middlemap = new HashMap<>();
             for (int i = 0; i < initTriangle.length; i++)
                 createSphereRec(nbsubdivision, 1, middlemap, initTriangle[i], initTriangle[++i], initTriangle[++i]);
         } else {
@@ -113,7 +113,7 @@ public class Sphere {
 
     public VBO getVbo() { return vbo; }
 
-    private void createSphereRec(int nbsubdivision, int currentsub, HashMap<String, Short> middlemap, short a, short b, short c) {
+    private void createSphereRec(int nbsubdivision, int currentsub, HashMap<Pair<Short, Short>, Short> middlemap, short a, short b, short c) {
         if (nbsubdivision == currentsub) {
             triangles[trianglesnum++] = a;
             triangles[trianglesnum++] = b;
@@ -130,8 +130,8 @@ public class Sphere {
         }
     }
 
-    private short computeMiddle(HashMap<String, Short> middlemap, short v1, short v2) {
-        String middlekey = v1 < v2 ? String.valueOf(v1) + String.valueOf(v2) : String.valueOf(v2) + String.valueOf(v1);
+    private short computeMiddle(HashMap<Pair<Short, Short>, Short> middlemap, short v1, short v2) {
+        Pair<Short, Short> middlekey = v1 < v2 ? new Pair<>(v1, v2) : new Pair<>(v2, v1);
 
         if (middlemap.containsKey(middlekey)) return middlemap.get(middlekey);
 

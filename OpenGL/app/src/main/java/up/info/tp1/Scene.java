@@ -9,7 +9,7 @@ public class Scene {
     /**
      * A constant for the size of the wall
      */
-    static final float wallsize = 3.0F;
+    static final float wallsize = 2.6F;
 
     /**
      * An angle used to animate the viewer
@@ -68,7 +68,7 @@ public class Scene {
         ball3 = new Ball(0.25F, 0F, 0F, MyGLRenderer.cyan);
         ball4 = new Ball(0.75F, 1F, -2.0F, MyGLRenderer.yellow);
 
-        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, MyGLRenderer.darkgray, 3 * 15002, 3 * 30000);
+        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, 0.80F, MyGLRenderer.darkgray, 3 * 15002, 3 * 30000);
 
         MainActivity.log("Graphics initialized");
     }

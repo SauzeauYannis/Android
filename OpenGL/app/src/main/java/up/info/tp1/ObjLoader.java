@@ -1,7 +1,5 @@
 package up.info.tp1;
 
-import android.opengl.GLES20;
-import android.opengl.Matrix;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -10,20 +8,14 @@ import java.io.InputStreamReader;
 
 import javax.microedition.khronos.opengles.GL;
 
-public class ObjLoader {
+public class ObjLoader extends MyObject {
 
     private final float[] vertexPos;
     private final int[] triangles;
-    private VBO vbo;
 
-    private final float[] modelviewmatrixobj;
+    public ObjLoader(String filepath, float posx, float posy, float posz, float scale, float[] color, int vertexnum, int trianglesnum) {
+        super(posx, posy, posz, scale, color);
 
-    private final float posx;
-    private final float posy;
-    private final float posz;
-    private final float[] color;
-
-    public ObjLoader(String filepath, float posx, float posy, float posz, float[] color, int vertexnum, int trianglesnum) {
         this.vertexPos = new float[vertexnum];
         this.triangles = new int[trianglesnum];
 
@@ -52,29 +44,10 @@ public class ObjLoader {
             Log.e("LOG", "IO error");
         }
 
-        this.vbo = new VBO(VBO.vertexPosToGlBuffer(this.vertexPos), this.triangles);
-
-        this.modelviewmatrixobj = new float[16];
-
-        this.posx = posx;
-        this.posy = posy;
-        this.posz = posz;
-        this.color = color;
+        setVbo(new VBO(VBO.vertexPosToGlBuffer(this.vertexPos), this.triangles));
     }
 
     public void show(NoLightShaders shaders, float[] modelviewmatrix, boolean withOutline) {
-        Matrix.setIdentityM(this.modelviewmatrixobj, 0);
-
-        Matrix.translateM(this.modelviewmatrixobj, 0, this.posx, this.posy, this.posz);
-
-        Matrix.multiplyMM(this.modelviewmatrixobj, 0, modelviewmatrix, 0, this.modelviewmatrixobj, 0);
-
-        shaders.setColor(color);
-        shaders.setModelViewMatrix(this.modelviewmatrixobj);
-
-        if (withOutline)
-            this.vbo.showOutline(shaders, GLES20.GL_TRIANGLES, true);
-        else
-            this.vbo.show(shaders, GLES20.GL_TRIANGLES, true);
+        show(shaders, modelviewmatrix, withOutline, true);
     }
 }
