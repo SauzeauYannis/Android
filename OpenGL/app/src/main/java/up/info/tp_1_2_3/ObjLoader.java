@@ -1,4 +1,4 @@
-package up.info.tp1;
+package up.info.tp_1_2_3;
 
 import android.util.Log;
 
@@ -6,15 +6,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import javax.microedition.khronos.opengles.GL;
-
 public class ObjLoader extends MyObject {
 
     private final float[] vertexPos;
     private final int[] triangles;
 
     public ObjLoader(String filepath, float posx, float posy, float posz, float scale, float[] color, int vertexnum, int trianglesnum) {
-        super(posx, posy, posz, scale, color);
+        super(posx, posy, posz, scale, color, true);
 
         this.vertexPos = new float[vertexnum];
         this.triangles = new int[trianglesnum];
@@ -47,7 +45,4 @@ public class ObjLoader extends MyObject {
         setVbo(new VBO(VBO.vertexPosToGlBuffer(this.vertexPos), this.triangles));
     }
 
-    public void show(NoLightShaders shaders, float[] modelviewmatrix, boolean withOutline) {
-        show(shaders, modelviewmatrix, withOutline, true);
-    }
 }

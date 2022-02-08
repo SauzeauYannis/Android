@@ -1,4 +1,4 @@
-package up.info.tp1;
+package up.info.tp_1_2_3;
 
 /**
 * Basic class to represent 3-vectors

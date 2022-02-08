@@ -1,8 +1,7 @@
-package up.info.tp1;
+package up.info.tp_1_2_3;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 public class Scene {
 
@@ -27,6 +26,7 @@ public class Scene {
     private Ball ball2;
     private Ball ball3;
     private Ball ball4;
+    private Cube cube;
     private ObjLoader armadilloObj;
 
     /**
@@ -63,10 +63,12 @@ public class Scene {
         room = new Room();
 
         ball0 = new Ball(0.5F, 1.5F, 1.5F, MyGLRenderer.orange);
-        ball1 = new Ball(wallsize / 2.0F, 0F, 5.0F, MyGLRenderer.magenta);
+        ball1 = new Ball(wallsize / 3.0F, 0F, 5.0F, MyGLRenderer.magenta);
         ball2 = new Ball(4, 1F, -1.5F, -1.5F,  MyGLRenderer.gray);
         ball3 = new Ball(0.25F, 0F, 0F, MyGLRenderer.cyan);
         ball4 = new Ball(0.75F, 1F, -2.0F, MyGLRenderer.yellow);
+
+        cube = new Cube(2.25F, 0.5F, 3.75F, 1F, new float[] {0.35F, 0.12F, 0.75F, 1F});
 
         armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, 0.80F, MyGLRenderer.darkgray, 3 * 15002, 3 * 30000);
 
@@ -104,6 +106,8 @@ public class Scene {
         ball2.show(shaders, modelviewmatrix, true);
         ball3.show(shaders, modelviewmatrix, false);
         ball4.show(shaders, modelviewmatrix, false);
+
+        cube.show(shaders, modelviewmatrix, false);
 
         armadilloObj.show(shaders, modelviewmatrix, true);
 

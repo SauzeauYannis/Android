@@ -1,4 +1,4 @@
-package up.info.tp1;
+package up.info.tp_1_2_3;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
