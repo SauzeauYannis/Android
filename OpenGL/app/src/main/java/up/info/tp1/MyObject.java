@@ -10,7 +10,9 @@ public abstract class MyObject {
     private final float posx;
     private final float posy;
     private final float posz;
+
     private final float scale;
+
     private final float[] color;
 
     private VBO vbo;

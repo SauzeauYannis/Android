@@ -8,8 +8,10 @@ public class Sphere {
 
     private final float[] vertexpos;
     private final short[] triangles;
+
     private short vertexnum;
     private int trianglesnum;
+
     private final VBO vbo;
 
     public Sphere() {
@@ -102,7 +104,7 @@ public class Sphere {
         if (nbsubdivision > 1) {
             HashMap<Pair<Short, Short>, Short> middlemap = new HashMap<>();
             for (int i = 0; i < initTriangle.length; i++)
-                createSphereRec(nbsubdivision, 1, middlemap, initTriangle[i], initTriangle[++i], initTriangle[++i]);
+                createSphereRec(nbsubdivision, middlemap, initTriangle[i], initTriangle[++i], initTriangle[++i]);
         } else {
             System.arraycopy(initTriangle, 0, triangles, 0, initTriangle.length);
             trianglesnum = initTriangle.length;
@@ -113,8 +115,8 @@ public class Sphere {
 
     public VBO getVbo() { return vbo; }
 
-    private void createSphereRec(int nbsubdivision, int currentsub, HashMap<Pair<Short, Short>, Short> middlemap, short a, short b, short c) {
-        if (nbsubdivision == currentsub) {
+    private void createSphereRec(int nbsubdivision, HashMap<Pair<Short, Short>, Short> middlemap, short a, short b, short c) {
+        if (nbsubdivision == 1) {
             triangles[trianglesnum++] = a;
             triangles[trianglesnum++] = b;
             triangles[trianglesnum++] = c;
@@ -123,17 +125,18 @@ public class Sphere {
             short e = computeMiddle(middlemap, b, c);
             short f = computeMiddle(middlemap, c, a);
 
-            createSphereRec(nbsubdivision, currentsub + 1, middlemap, a, d, f);
-            createSphereRec(nbsubdivision, currentsub + 1, middlemap, d, b, e);
-            createSphereRec(nbsubdivision, currentsub + 1, middlemap, f, e, c);
-            createSphereRec(nbsubdivision, currentsub + 1, middlemap, d, e, f);
+            createSphereRec(nbsubdivision - 1, middlemap, a, d, f);
+            createSphereRec(nbsubdivision - 1, middlemap, d, b, e);
+            createSphereRec(nbsubdivision - 1, middlemap, f, e, c);
+            createSphereRec(nbsubdivision - 1, middlemap, d, e, f);
         }
     }
 
     private short computeMiddle(HashMap<Pair<Short, Short>, Short> middlemap, short v1, short v2) {
         Pair<Short, Short> middlekey = v1 < v2 ? new Pair<>(v1, v2) : new Pair<>(v2, v1);
 
-        if (middlemap.containsKey(middlekey)) return middlemap.get(middlekey);
+        if (middlemap.containsKey(middlekey))
+            return middlemap.get(middlekey);
 
         short vm = vertexnum++;
 
