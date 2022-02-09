@@ -1,7 +1,6 @@
-package up.info.tp1;
+package up.info.shaders;
 
 import android.content.Context;
-import android.opengl.GLES20;
 
 /**
  * Implementation class of shaders to compute diffuse lighting using Gouraud interpolation.
@@ -75,32 +74,6 @@ public class GouraudShaders extends LightingShaders
 
         // Second method : get shader codes from ressource files
         return initializeShadersFromResources(context,"gouraud_vert.glsl","gouraud_frag.glsl");
-    }
-
-    /**
-     * Get Shaders variables (uniform, attributes, etc.)
-     */
-    @Override
-    public void findVariables()
-    {
-        super.findVariables();
-
-        // Variables for material
-        this.uMaterialColor = GLES20.glGetUniformLocation(this.shaderprogram, "uMaterialColor");
-        if (this.uMaterialColor==-1) throw new RuntimeException("uMaterialColor not found in shaders");
-    }
-
-
-    /* ======================
-       = Material functions =
-       ====================== */
-    /**
-     * Set the color of the object (uniform variable)
-     * @param color Color of the object
-     */
-    public void setuMaterialColor(final float[] color)
-    {
-        GLES20.glUniform4fv(this.uMaterialColor,1,color,0);
     }
 
 }

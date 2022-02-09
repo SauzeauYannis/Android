@@ -1,4 +1,4 @@
-package up.info.tp1;
+package up.info.shaders;
 
 import android.opengl.GLES20;
 

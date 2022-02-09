@@ -1,9 +1,7 @@
-package up.info.tp1;
+package up.info.shaders;
 
 import android.content.Context;
 import android.opengl.GLES20;
-
-import java.nio.FloatBuffer;
 
 /**
  * Implementation class to manipulate shaders for non-lighted objects (uniform color).

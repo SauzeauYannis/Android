@@ -1,4 +1,4 @@
-package up.info.tp1;
+package up.info.shaders;
 
 /**
 * Basic class to represent 3-vectors

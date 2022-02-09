@@ -1,4 +1,4 @@
-package up.info.tp1;
+package up.info.shaders;
 
 public class Ball extends MyObject {
 

@@ -1,14 +1,11 @@
-package up.info.tp1;
+package up.info.shaders;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-
-import javax.xml.transform.sax.TemplatesHandler;
 
 /**
  * Class to described the surface view. Mainly based on well-known code.

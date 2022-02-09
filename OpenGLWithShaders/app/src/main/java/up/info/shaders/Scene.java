@@ -1,8 +1,7 @@
-package up.info.tp1;
+package up.info.shaders;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
 public class Scene {
 
@@ -61,6 +60,9 @@ public class Scene {
         GLES20.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
 
         renderer.getShaders().setNormalizing(true);
+        renderer.getShaders().setLightColor(MyGLRenderer.white);
+        renderer.getShaders().setLightPosition(new float[] {0F, wallsize, 0F});
+        renderer.getShaders().setAmbiantLight(MyGLRenderer.yellow);
         renderer.getShaders().setLighting(true);
 
         room = new Room();

@@ -1,4 +1,4 @@
-package up.info.tp1;
+package up.info.shaders;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -10,7 +10,6 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
-import android.util.Log;
 
 
 /**
