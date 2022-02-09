@@ -2,14 +2,14 @@ package up.info.tp_1_2_3;
 
 public class Tetrahedron extends MyObject {
 
-    public Tetrahedron(float posx, float posz, float height, float[] color, boolean useInt) {
-        super(posx, 1 / 3F, posz, height, color, useInt);
+    public Tetrahedron(float posx, float posz, float height, float[] color) {
+        super(posx, 0F, posz, height, color, false);
 
         float[] vertexpos = new float[] {
-                (float) Math.sqrt(8 / 9F), - 1 / 3F, 0,
-                (float) - Math.sqrt(2 / 9F), - 1 / 3F, (float) Math.sqrt(2 / 3F),
-                (float) - Math.sqrt(2 / 9F), - 1 / 3F, (float) - Math.sqrt(2 / 3F),
-                0, 1, 0,
+                (float) Math.cos(Math.toRadians(0)), 0F, (float) Math.sin(Math.toRadians(0)),
+                (float) Math.cos(Math.toRadians(120)), 0F, (float) Math.sin(Math.toRadians(120)),
+                (float) Math.cos(Math.toRadians(240)), 0F, (float) Math.sin(Math.toRadians(240)),
+                0F, 1F, 0F,
         };
 
         short[] triangles = new short[] {
@@ -18,15 +18,17 @@ public class Tetrahedron extends MyObject {
                 1, 2, 3,
                 2, 0, 3,
         };
-        /*
+
         short[] edges = new short[] {
-                0
+                0, 3,
+                1, 3,
+                2, 3,
         };
-        */
+
         int glposbuffer = VBO.vertexPosToGlBuffer(vertexpos);
 
         setMainvbo(new VBO(glposbuffer, triangles));
-        //setEdgevbo(new VBO(glposbuffer, edges));
+        setEdgevbo(new VBO(glposbuffer, edges));
     }
 
 }

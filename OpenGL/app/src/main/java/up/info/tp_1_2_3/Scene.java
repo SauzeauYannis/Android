@@ -31,6 +31,8 @@ public class Scene {
 
     private Tetrahedron tetrahedron;
 
+    private Cone cone;
+
     private ObjLoader armadilloObj;
 
     /**
@@ -73,7 +75,9 @@ public class Scene {
 
         cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
 
-        tetrahedron = new Tetrahedron(0, 0, 1F, MyGLRenderer.yellow, false);
+        tetrahedron = new Tetrahedron(-2F, 0F, 1F, MyGLRenderer.yellow);
+
+        cone = new Cone(0, -2.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
 
         armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, 0.80F, MyGLRenderer.lightgray);
 
@@ -112,6 +116,8 @@ public class Scene {
         subd6ball.show(shaders, modelviewmatrix, false);
 
         cube.show(shaders, modelviewmatrix, false);
+
+        cone.show(shaders, modelviewmatrix, false);
 
         tetrahedron.show(shaders, modelviewmatrix, false);
 
