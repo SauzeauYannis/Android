@@ -6,14 +6,14 @@ public class Ball extends MyObject {
         super(posx, radius, posz, radius, color, false);
 
         Sphere sphere = new Sphere();
-        setVbo(sphere.getVbo());
+        setMainvbo(sphere.getVbo());
     }
 
     public Ball(int nbsubdivision, float radius, float posx, float posz, float[] color) {
         super(posx, radius, posz, radius, color, false);
 
         Sphere sphere = new Sphere(nbsubdivision);
-        setVbo(sphere.getVbo());
+        setMainvbo(sphere.getVbo());
     }
 
 }

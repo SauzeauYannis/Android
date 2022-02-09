@@ -2,6 +2,7 @@ package up.info.tp_1_2_3;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 public abstract class MyObject {
 
@@ -17,7 +18,8 @@ public abstract class MyObject {
 
     private final boolean useInt;
 
-    private VBO vbo;
+    private VBO mainvbo;
+    private VBO edgevbo;
 
     public MyObject(float posx, float posy, float posz, float scale, float[] color, boolean useInt) {
         this.posx = posx;
@@ -29,9 +31,11 @@ public abstract class MyObject {
         this.modelviewmatrixobj = new float[16];
     }
 
-    public void setVbo(VBO vbo) { this.vbo = vbo; }
+    public void setMainvbo(VBO mainvbo) { this.mainvbo = mainvbo; }
 
-    public void show(NoLightShaders shaders, float[] modelviewmatrix, boolean withOutline) {
+    public void setEdgevbo(VBO edgevbo) { this.edgevbo = edgevbo; }
+
+    public void show(NoLightShaders shaders, float[] modelviewmatrix, boolean showtriangles) {
         Matrix.setIdentityM(this.modelviewmatrixobj, 0);
 
         Matrix.translateM(this.modelviewmatrixobj, 0, this.posx, this.posy, this.posz);
@@ -43,10 +47,16 @@ public abstract class MyObject {
         shaders.setColor(this.color);
         shaders.setModelViewMatrix(this.modelviewmatrixobj);
 
-        if (withOutline)
-            vbo.showOutline(shaders, GLES20.GL_TRIANGLES, this.useInt);
-        else
-            vbo.show(shaders, GLES20.GL_TRIANGLES, this.useInt);
+        if (showtriangles) {
+            mainvbo.showTriangles(shaders, GLES20.GL_TRIANGLES, this.useInt);
+        } else {
+            mainvbo.show(shaders, GLES20.GL_TRIANGLES, this.useInt);
+        }
+
+        if (edgevbo != null) {
+            shaders.setColor(MyGLRenderer.black);
+            edgevbo.show(shaders, GLES20.GL_LINES, this.useInt);
+        }
     }
 
 }

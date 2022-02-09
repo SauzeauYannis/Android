@@ -2,6 +2,7 @@ package up.info.tp_1_2_3;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.util.Log;
 
 public class Room {
 
@@ -96,13 +97,17 @@ public class Room {
                         30, 31, 29}
         );
 
-        edge = new VBO(glposbuffer,
-                new short[] {0, 3, 1, 2, 5, 6, 9, 10});
+        short[] edgeelem = new short[2 * (vertexPos.length / 3)];
+
+        for (short i = 0, n = 0; i < vertexPos.length / 3; i++) {
+            edgeelem[n++] = i;
+            edgeelem[n++] = (short) ((i + 1) % 4 != 0 ?  i + 1 : i - 3);
+        }
+
+        edge = new VBO(glposbuffer, edgeelem);
 
         matrix = new float[16];
     }
-
-    public float[] getMatrix() { return matrix; }
 
     public void show(NoLightShaders shaders) {
         shaders.setColor(MyGLRenderer.blue);

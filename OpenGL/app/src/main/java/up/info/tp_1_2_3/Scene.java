@@ -21,12 +21,16 @@ public class Scene {
     float posx, posz;
 
     private Room room;
-    private Ball ball0;
-    private Ball ball1;
-    private Ball ball2;
-    private Ball ball3;
-    private Ball ball4;
+
+    private Ball geoballoutline;
+    private Ball subd4balloutline;
+    private Ball geoball;
+    private Ball subd6ball;
+
     private Cube cube;
+
+    private Tetrahedron tetrahedron;
+
     private ObjLoader armadilloObj;
 
     /**
@@ -62,15 +66,16 @@ public class Scene {
 
         room = new Room();
 
-        ball0 = new Ball(0.5F, 1.5F, 1.5F, MyGLRenderer.orange);
-        ball1 = new Ball(wallsize / 3.0F, 0F, 5.0F, MyGLRenderer.magenta);
-        ball2 = new Ball(4, 1F, -1.5F, -1.5F,  MyGLRenderer.gray);
-        ball3 = new Ball(0.25F, 0F, 0F, MyGLRenderer.cyan);
-        ball4 = new Ball(0.75F, 1F, -2.0F, MyGLRenderer.yellow);
+        geoballoutline = new Ball(1.0F, 1.5F, -1.5F, MyGLRenderer.magenta);
+        subd4balloutline = new Ball(4, 1.0F, -1.5F, -1.5F,  MyGLRenderer.darkgray);
+        geoball = new Ball(0.5F, 1.5F, 7.0F, MyGLRenderer.orange);
+        subd6ball = new Ball(6, 0.5F, -1.5F, 7.0F, MyGLRenderer.cyan);
 
-        cube = new Cube(2.25F, 0.5F, 3.75F, 1F, new float[] {0.35F, 0.12F, 0.75F, 1F});
+        cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
 
-        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, 0.80F, MyGLRenderer.darkgray, 3 * 15002, 3 * 30000);
+        tetrahedron = new Tetrahedron(0, 0, 1F, MyGLRenderer.yellow, false);
+
+        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, 0.80F, MyGLRenderer.lightgray);
 
         MainActivity.log("Graphics initialized");
     }
@@ -101,13 +106,14 @@ public class Scene {
         room.show(shaders);
         room.showSecondRoom(shaders, modelviewmatrix);
 
-        ball0.show(shaders, modelviewmatrix, false);
-        ball1.show(shaders, modelviewmatrix, true);
-        ball2.show(shaders, modelviewmatrix, true);
-        ball3.show(shaders, modelviewmatrix, false);
-        ball4.show(shaders, modelviewmatrix, false);
+        geoballoutline.show(shaders, modelviewmatrix, true);
+        subd4balloutline.show(shaders, modelviewmatrix, true);
+        geoball.show(shaders, modelviewmatrix, false);
+        subd6ball.show(shaders, modelviewmatrix, false);
 
         cube.show(shaders, modelviewmatrix, false);
+
+        tetrahedron.show(shaders, modelviewmatrix, false);
 
         armadilloObj.show(shaders, modelviewmatrix, true);
 

@@ -2,12 +2,12 @@ package up.info.tp_1_2_3;
 
 public class Cube extends MyObject {
 
-    private final float size = 1.0F;
+    private static final float originsize = 1.0F;
 
-    public Cube(float posx, float posy, float posz, float scale, float[] color) {
-        super(posx, posy, posz, scale, color, false);
+    public Cube(float posx, float posz, float size, float[] color) {
+        super(posx, size / 2.0F, posz, size, color, false);
 
-        float d = size / 2.0F;
+        float d = originsize / 2.0F;
 
         float[] vertexpos = new float[] {
                 -d, -d, d,
@@ -35,7 +35,25 @@ public class Cube extends MyObject {
                 6, 5, 7
         };
 
-        setVbo(new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles));
+        short[] edges = new short[] {
+                1, 0,
+                0, 2,
+                2, 3,
+                3, 1,
+                1, 5,
+                0, 4,
+                2, 6,
+                3, 7,
+                5, 4,
+                4, 6,
+                6, 7,
+                7, 5
+        };
+
+        int glposbuffer = VBO.vertexPosToGlBuffer(vertexpos);
+
+        setMainvbo(new VBO(glposbuffer, triangles));
+        setEdgevbo(new VBO(glposbuffer, edges));
     }
 
 }
