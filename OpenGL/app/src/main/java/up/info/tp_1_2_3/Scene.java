@@ -33,6 +33,8 @@ public class Scene {
 
     private Cone cone;
 
+    private Cylinder cylinder;
+
     private ObjLoader armadilloObj;
 
     /**
@@ -69,17 +71,19 @@ public class Scene {
         room = new Room();
 
         geoballoutline = new Ball(1.0F, 1.5F, -1.5F, MyGLRenderer.magenta);
-        subd4balloutline = new Ball(4, 1.0F, -1.5F, -1.5F,  MyGLRenderer.darkgray);
-        geoball = new Ball(0.5F, 1.5F, 7.0F, MyGLRenderer.orange);
-        subd6ball = new Ball(6, 0.5F, -1.5F, 7.0F, MyGLRenderer.cyan);
+        subd4balloutline = new Ball(4, 1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray);
+        geoball = new Ball(0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
+        subd6ball = new Ball(6, 0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
 
         cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
 
-        tetrahedron = new Tetrahedron(-2F, 0F, 1F, MyGLRenderer.yellow);
+        tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow);
 
-        cone = new Cone(0, -2.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
+        cone = new Cone(2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
 
-        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, 0.80F, MyGLRenderer.lightgray);
+        cylinder = new Cylinder(0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
+
+        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, 0.80F, new float[] {0.33F, 0.05F, 0.05F, 1.0F});
 
         MainActivity.log("Graphics initialized");
     }
@@ -117,9 +121,11 @@ public class Scene {
 
         cube.show(shaders, modelviewmatrix, false);
 
+        tetrahedron.show(shaders, modelviewmatrix, false);
+
         cone.show(shaders, modelviewmatrix, false);
 
-        tetrahedron.show(shaders, modelviewmatrix, false);
+        cylinder.show(shaders, modelviewmatrix, false);
 
         armadilloObj.show(shaders, modelviewmatrix, true);
 

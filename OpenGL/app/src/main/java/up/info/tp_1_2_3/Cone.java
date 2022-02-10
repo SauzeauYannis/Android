@@ -4,7 +4,7 @@ import android.util.Log;
 
 public class Cone extends MyObject {
 
-    private static final int nbdiv = 50;
+    private static final int nbdiv = 25;
 
     public Cone(float posx, float posz, float height, float[] color) {
         super(posx, 0F, posz, height, color, false);
@@ -20,9 +20,7 @@ public class Cone extends MyObject {
             vertexpos[++n] = (float) Math.sin(phi);
         }
 
-        vertexpos[3 * nbdiv] = 0F;
-        vertexpos[3 * nbdiv + 1] = 1F;
-        vertexpos[3 * nbdiv + 2] = 0F;
+        vertexpos[vertexpos.length - 2] = 1F;
 
         short[] triangles = new short[3 * nbdiv];
 
@@ -30,16 +28,6 @@ public class Cone extends MyObject {
             triangles[++n] = i;
             triangles[++n] = (short) ((i + 1) % nbdiv);
             triangles[++n] = nbdiv;
-        }
-
-        for (float f: vertexpos
-             ) {
-            Log.d("log", String.valueOf(f));
-        }
-
-        for (short s: triangles
-        ) {
-            Log.d("log", String.valueOf(s));
         }
 
         setMainvbo(new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles));
