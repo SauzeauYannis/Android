@@ -4,6 +4,9 @@ import android.util.Pair;
 
 import java.util.HashMap;
 
+/**
+ * The type Sphere.
+ */
 public class Sphere {
 
     private final float[] vertexpos;
@@ -14,6 +17,9 @@ public class Sphere {
 
     private final VBO vbo;
 
+    /**
+     * Instantiates a new Sphere.
+     */
     public Sphere() {
         int nbslice = 25;
         int nbcut = 25;
@@ -75,6 +81,11 @@ public class Sphere {
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
     }
 
+    /**
+     * Instantiates a new Sphere.
+     *
+     * @param nbsubdivision the nbsubdivision
+     */
     public Sphere(int nbsubdivision) {
         vertexnum = 6;
         vertexpos = new float[6 + 3 * (int) Math.pow(4, nbsubdivision)];
@@ -113,6 +124,11 @@ public class Sphere {
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
     }
 
+    /**
+     * Gets vbo.
+     *
+     * @return the vbo
+     */
     public VBO getVbo() { return vbo; }
 
     private void createSphereRec(int nbsubdivision, HashMap<Pair<Short, Short>, Short> middlemap, short a, short b, short c) {

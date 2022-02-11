@@ -6,8 +6,16 @@ public class Cylinder extends MyObject {
 
     private static final int nbdiv = 25;
 
+    /**
+     * Instantiates a new Cylinder.
+     *
+     * @param posx   the posx
+     * @param posz   the posz
+     * @param height the height
+     * @param color  the color
+     */
     public Cylinder(float posx, float posz, float height, float[] color) {
-        super(posx, 0F, posz, height, color, false);
+        super(posx, 0F, posz, height, color);
 
         float[] vertexpos = new float[2 * 3 * (nbdiv + 1)];
 

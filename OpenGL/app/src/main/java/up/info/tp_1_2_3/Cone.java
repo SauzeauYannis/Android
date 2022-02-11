@@ -1,13 +1,22 @@
 package up.info.tp_1_2_3;
 
-import android.util.Log;
-
+/**
+ * The type Cone.
+ */
 public class Cone extends MyObject {
 
     private static final int nbdiv = 25;
 
+    /**
+     * Instantiates a new Cone.
+     *
+     * @param posx   the posx
+     * @param posz   the posz
+     * @param height the height
+     * @param color  the color
+     */
     public Cone(float posx, float posz, float height, float[] color) {
-        super(posx, 0F, posz, height, color, false);
+        super(posx, 0F, posz, height, color);
 
         float[] vertexpos = new float[3 * (nbdiv + 1)];
 

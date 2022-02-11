@@ -8,13 +8,23 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Obj loader.
+ */
 public class ObjLoader extends MyObject {
 
-    private final float[] vertexPos;
-    private final int[] triangles;
-
+    /**
+     * Instantiates a new Obj loader.
+     *
+     * @param filepath the filepath
+     * @param posx     the posx
+     * @param posy     the posy
+     * @param posz     the posz
+     * @param scale    the scale
+     * @param color    the color
+     */
     public ObjLoader(String filepath, float posx, float posy, float posz, float scale, float[] color) {
-        super(posx, posy, posz, scale, color, true);
+        super(posx, posy, posz, scale, color);
 
         List<Float> vertexlist = new ArrayList<>();
         List<Integer> triangleslist = new ArrayList<>();
@@ -42,16 +52,16 @@ public class ObjLoader extends MyObject {
             Log.e("LOG", "IO error");
         }
 
-        this.vertexPos = new float[vertexlist.size()];
-        this.triangles = new int[triangleslist.size()];
+        float[] vertexPos = new float[vertexlist.size()];
+        int[] triangles = new int[triangleslist.size()];
 
         for (int i = 0; i < vertexlist.size(); i++)
-            this.vertexPos[i] = vertexlist.get(i);
+            vertexPos[i] = vertexlist.get(i);
 
         for (int i = 0; i < triangleslist.size(); i++)
-            this.triangles[i] = triangleslist.get(i);
+            triangles[i] = triangleslist.get(i);
 
-        setMainvbo(new VBO(VBO.vertexPosToGlBuffer(this.vertexPos), this.triangles));
+        setMainvbo(new VBO(VBO.vertexPosToGlBuffer(vertexPos), triangles));
     }
 
 }

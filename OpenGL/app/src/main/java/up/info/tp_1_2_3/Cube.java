@@ -1,11 +1,22 @@
 package up.info.tp_1_2_3;
 
+/**
+ * The type Cube.
+ */
 public class Cube extends MyObject {
 
     private static final float originsize = 1.0F;
 
+    /**
+     * Instantiates a new Cube.
+     *
+     * @param posx  the posx
+     * @param posz  the posz
+     * @param size  the size
+     * @param color the color
+     */
     public Cube(float posx, float posz, float size, float[] color) {
-        super(posx, size / 2.0F, posz, size, color, false);
+        super(posx, size / 2.0F, posz, size, color);
 
         float d = originsize / 2.0F;
 

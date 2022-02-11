@@ -2,8 +2,10 @@ package up.info.tp_1_2_3;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.util.Log;
 
+/**
+ * The type Room.
+ */
 public class Room {
 
     private final VBO wall;
@@ -14,6 +16,9 @@ public class Room {
 
     private final float[] matrix;
 
+    /**
+     * Instantiates a new Room.
+     */
     public Room() {
 
         float[] vertexPos = new float[] {
@@ -109,17 +114,28 @@ public class Room {
         matrix = new float[16];
     }
 
+    /**
+     * Show.
+     *
+     * @param shaders the shaders
+     */
     public void show(NoLightShaders shaders) {
         shaders.setColor(MyGLRenderer.blue);
-        this.wall.show(shaders, GLES20.GL_TRIANGLES, false);
+        this.wall.show(shaders, GLES20.GL_TRIANGLES);
         shaders.setColor(MyGLRenderer.red);
-        this.floor.show(shaders, GLES20.GL_TRIANGLES, false);
+        this.floor.show(shaders, GLES20.GL_TRIANGLES);
         shaders.setColor(MyGLRenderer.green);
-        this.ceiling.show(shaders, GLES20.GL_TRIANGLES, false);
+        this.ceiling.show(shaders, GLES20.GL_TRIANGLES);
         shaders.setColor(MyGLRenderer.black);
-        this.edge.show(shaders, GLES20.GL_LINES, false);
+        this.edge.show(shaders, GLES20.GL_LINES);
     }
 
+    /**
+     * Show second room.
+     *
+     * @param shaders         the shaders
+     * @param modelviewmatrix the modelviewmatrix
+     */
     public void showSecondRoom(NoLightShaders shaders, float[] modelviewmatrix) {
         Matrix.setIdentityM(this.matrix, 0);
 

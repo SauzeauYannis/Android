@@ -1,9 +1,20 @@
 package up.info.tp_1_2_3;
 
+/**
+ * The type Tetrahedron.
+ */
 public class Tetrahedron extends MyObject {
 
+    /**
+     * Instantiates a new Tetrahedron.
+     *
+     * @param posx   the posx
+     * @param posz   the posz
+     * @param height the height
+     * @param color  the color
+     */
     public Tetrahedron(float posx, float posz, float height, float[] color) {
-        super(posx, 0F, posz, height, color, false);
+        super(posx, 0F, posz, height, color);
 
         float[] vertexpos = new float[] {
                 (float) Math.cos(Math.toRadians(0)), 0F, (float) Math.sin(Math.toRadians(0)),
