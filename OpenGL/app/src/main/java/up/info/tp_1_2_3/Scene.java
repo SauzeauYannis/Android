@@ -22,9 +22,9 @@ public class Scene {
 
     private Room room;
 
-    private Ball geoballoutline;
+    private Ball angballoutline;
     private Ball subd4balloutline;
-    private Ball geoball;
+    private Ball angball;
     private Ball subd6ball;
 
     private Cube cube;
@@ -70,10 +70,10 @@ public class Scene {
 
         room = new Room();
 
-        geoballoutline = new Ball(1.0F, 1.5F, -1.5F, MyGLRenderer.magenta);
-        subd4balloutline = new Ball(4, 1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray);
-        geoball = new Ball(0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
-        subd6ball = new Ball(6, 0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
+        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta);
+        subd4balloutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray);
+        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
+        subd6ball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
 
         cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
 
@@ -114,9 +114,9 @@ public class Scene {
         room.show(shaders);
         room.showSecondRoom(shaders, modelviewmatrix);
 
-        geoballoutline.show(shaders, modelviewmatrix, true);
+        angballoutline.show(shaders, modelviewmatrix, true);
         subd4balloutline.show(shaders, modelviewmatrix, true);
-        geoball.show(shaders, modelviewmatrix, false);
+        angball.show(shaders, modelviewmatrix, false);
         subd6ball.show(shaders, modelviewmatrix, false);
 
         cube.show(shaders, modelviewmatrix, false);
