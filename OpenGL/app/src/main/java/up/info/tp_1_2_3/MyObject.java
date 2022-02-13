@@ -56,11 +56,11 @@ public abstract class MyObject {
     /**
      * Show.
      *
-     * @param shaders         the shaders
-     * @param modelviewmatrix the modelviewmatrix
-     * @param showtriangles   the showtriangles
+     * @param shaders                the shaders
+     * @param modelviewmatrix        the modelviewmatrix
+     * @param showtrianglesoutline   the showtriangles
      */
-    public void show(NoLightShaders shaders, float[] modelviewmatrix, boolean showtriangles) {
+    public void show(NoLightShaders shaders, float[] modelviewmatrix, boolean showtrianglesoutline) {
         Matrix.setIdentityM(this.modelviewmatrixobj, 0);
 
         Matrix.translateM(this.modelviewmatrixobj, 0, this.posx, this.posy, this.posz);
@@ -72,8 +72,8 @@ public abstract class MyObject {
         shaders.setColor(this.color);
         shaders.setModelViewMatrix(this.modelviewmatrixobj);
 
-        if (showtriangles) {
-            mainvbo.showOutlines(shaders, GLES20.GL_TRIANGLES);
+        if (showtrianglesoutline) {
+            mainvbo.showTriangleOutlines(shaders, GLES20.GL_TRIANGLES);
         } else {
             mainvbo.show(shaders, GLES20.GL_TRIANGLES);
         }
@@ -82,6 +82,7 @@ public abstract class MyObject {
             shaders.setColor(MyGLRenderer.black);
             edgevbo.show(shaders, GLES20.GL_LINES);
         }
+
     }
 
 }

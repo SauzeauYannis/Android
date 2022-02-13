@@ -18,7 +18,7 @@ public class Ball extends MyObject {
          */
         SUBDIVSION }
 
-    private static final Sphere sphere_ang = new Sphere();
+    private static final Sphere sphere_ang = new Sphere(50, 50);
     private static final Sphere sphere_sub = new Sphere(4);
 
     /**

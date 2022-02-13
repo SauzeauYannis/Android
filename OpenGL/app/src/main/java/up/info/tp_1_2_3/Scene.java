@@ -8,7 +8,7 @@ public class Scene {
     /**
      * A constant for the size of the wall
      */
-    static final float wallsize = 2.6F;
+    static final float wallsize = 2.5F;
 
     /**
      * An angle used to animate the viewer
@@ -23,9 +23,9 @@ public class Scene {
     private Room room;
 
     private Ball angballoutline;
-    private Ball subd4balloutline;
+    private Ball subballoutline;
     private Ball angball;
-    private Ball subd6ball;
+    private Ball subball;
 
     private Cube cube;
 
@@ -60,30 +60,31 @@ public class Scene {
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         // Allow back face culling !!
-        GLES20.glDisable(GLES20.GL_CULL_FACE);
+        GLES20.glEnable(GLES20.GL_CULL_FACE);
 
+        GLES20.glLineWidth(8);
         GLES20.glDepthFunc(GLES20.GL_LESS);
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         GLES20.glPolygonOffset(2.F, 4.F);
         GLES20.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
 
-        room = new Room();
+        room = new Room(MyGLRenderer.blue, MyGLRenderer.red, MyGLRenderer.green);
 
         angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta);
-        subd4balloutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray);
+        subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray);
         angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
-        subd6ball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
+        subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
 
         cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
 
         tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow);
 
-        cone = new Cone(2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
+        cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
 
-        cylinder = new Cylinder(0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
+        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
 
-        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 1.0F, 1.5F, 0.80F, new float[] {0.33F, 0.05F, 0.05F, 1.0F});
+        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.80F, new float[] {0.33F, 0.05F, 0.05F, 1.0F});
 
         MainActivity.log("Graphics initialized");
     }
@@ -115,13 +116,13 @@ public class Scene {
         room.showSecondRoom(shaders, modelviewmatrix);
 
         angballoutline.show(shaders, modelviewmatrix, true);
-        subd4balloutline.show(shaders, modelviewmatrix, true);
+        subballoutline.show(shaders, modelviewmatrix, true);
         angball.show(shaders, modelviewmatrix, false);
-        subd6ball.show(shaders, modelviewmatrix, false);
+        subball.show(shaders, modelviewmatrix, false);
 
         cube.show(shaders, modelviewmatrix, false);
 
-        tetrahedron.show(shaders, modelviewmatrix, false);
+        tetrahedron.show(shaders, modelviewmatrix, true);
 
         cone.show(shaders, modelviewmatrix, false);
 

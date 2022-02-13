@@ -5,18 +5,16 @@ package up.info.tp_1_2_3;
  */
 public class Cone extends MyObject {
 
-    private static final int nbdiv = 25;
-
     /**
      * Instantiates a new Cone.
      *
      * @param posx   the posx
      * @param posz   the posz
-     * @param height the height
+     * @param scale  the scale
      * @param color  the color
      */
-    public Cone(float posx, float posz, float height, float[] color) {
-        super(posx, 0F, posz, height, color);
+    public Cone(int nbdiv, float posx, float posz, float scale, float[] color) {
+        super(posx, 0F, posz, scale, color);
 
         float[] vertexpos = new float[3 * (nbdiv + 1)];
 
@@ -35,8 +33,8 @@ public class Cone extends MyObject {
 
         for (short i = 0, n = -1; i < nbdiv; i++) {
             triangles[++n] = i;
+            triangles[++n] = (short) nbdiv;
             triangles[++n] = (short) ((i + 1) % nbdiv);
-            triangles[++n] = nbdiv;
         }
 
         setMainvbo(new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles));

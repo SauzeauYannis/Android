@@ -12,72 +12,66 @@ public class Sphere {
     private final float[] vertexpos;
     private final short[] triangles;
 
-    private short vertexnum;
-    private int trianglesnum;
+    private short nbvertex; // maybe useless
+    private int nbtriangle;
 
     private final VBO vbo;
 
     /**
      * Instantiates a new Sphere.
      */
-    public Sphere() {
-        int nbslice = 25;
-        int nbcut = 25;
-
+    public Sphere(int nbslice, int nbcut) {
         vertexpos = new float[3 * ((nbslice - 1) * nbcut + 2)];
 
-        float theta = 180.0F / nbslice;
-        float phi = 360.0F / nbcut;
+        float thetastep = 180.0F / nbslice;
+        float phistep = 360.0F / nbcut;
 
-        int n = 0;
-
-        for (int i = 1; i < nbslice; i++) {
-            double t = Math.toRadians(-90.0F + theta * i);
+        for (int i = 1, n = -1; i < nbslice; i++) {
+            double theta = Math.toRadians(-90.0F + thetastep * i);
             for (int j = 0; j < nbcut; j++) {
-                double p = Math.toRadians(phi * j);
-                vertexpos[n++] = (float) Math.cos(t) * (float) Math.cos(p);
-                vertexpos[n++] = (float) Math.cos(t) * (float) Math.sin(p);
-                vertexpos[n++] = (float) Math.sin(t);
+                double phi = Math.toRadians(phistep * j);
+                vertexpos[++n] = (float) Math.cos(theta) * (float) Math.cos(phi);
+                vertexpos[++n] = (float) Math.cos(theta) * (float) Math.sin(phi);
+                vertexpos[++n] = (float) Math.sin(theta);
             }
         }
 
         vertexpos[vertexpos.length - 4] = -1;
         vertexpos[vertexpos.length - 1] = 1;
 
-        n = 0;
+        triangles = new short[2 * 3 * nbcut * (nbslice - 1)];
 
-        triangles = new short[6 * nbcut* (nbslice - 1)];
-
+        nbtriangle = -1;
+        
         for (int i = 0; i < nbslice - 2; i++) {
             int h = nbcut * i;
             int h1 = h + nbcut;
             for (int j = 0; j < nbcut; j++) {
                 int k = (j + 1) % nbcut;
-                triangles[n++] = (short) (h + k);
-                triangles[n++] = (short) (h + j);
-                triangles[n++] = (short) (h1 + j);
-                triangles[n++] = (short) (h1 + k);
-                triangles[n++] = (short) (h + k);
-                triangles[n++] = (short) (h1 + j);
+                triangles[++nbtriangle] = (short) (h + k);
+                triangles[++nbtriangle] = (short) (h1 + j);
+                triangles[++nbtriangle] = (short) (h + j);
+                triangles[++nbtriangle] = (short) (h1 + k);
+                triangles[++nbtriangle] = (short) (h1 + j);
+                triangles[++nbtriangle] = (short) (h + k);
             }
         }
 
         for (int i = 0; i < nbcut; i++) {
-            triangles[n++] = (short) (i);
-            triangles[n++] = (short) ((i + 1) % nbcut);
-            triangles[n++] = (short) ((nbcut) * (nbslice - 1));
+            triangles[++nbtriangle] = (short) (i);
+            triangles[++nbtriangle] = (short) ((nbcut) * (nbslice - 1));
+            triangles[++nbtriangle] = (short) ((i + 1) % nbcut);
         }
 
         for (int i = 0; i < nbcut; i++) {
             int h = (nbcut) * (nbslice - 2);
             int h1 = h + nbcut;
-            triangles[n++] = (short) (h1 + 1);
-            triangles[n++] = (short) (h + (i + 1) % nbcut);
-            triangles[n++] = (short) (h + i);
+            triangles[++nbtriangle] = (short) (h1 + 1);
+            triangles[++nbtriangle] = (short) (h + i);
+            triangles[++nbtriangle] = (short) (h + (i + 1) % nbcut);
         }
 
-        vertexnum = (short) vertexpos.length;
-        trianglesnum = triangles.length;
+        nbvertex = (short) vertexpos.length;
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
     }
 
@@ -87,8 +81,8 @@ public class Sphere {
      * @param nbsubdivision the nbsubdivision
      */
     public Sphere(int nbsubdivision) {
-        vertexnum = 6;
-        vertexpos = new float[6 + 3 * (int) Math.pow(4, nbsubdivision)];
+        nbvertex = 6;
+        vertexpos = new float[6 + 3 * (int) Math.pow(4, nbsubdivision + 1)];
 
         for (int i = 0, n = -1; i < 2; i++) {
             for (int j = 0; j < 3; j++) {
@@ -98,8 +92,8 @@ public class Sphere {
             }
         }
 
-        trianglesnum = 0;
-        triangles = new short[3 * 8 * (int) Math.pow(4, nbsubdivision - 1)];
+        nbtriangle = -1;
+        triangles = new short[3 * 8 * (int) Math.pow(4, nbsubdivision)];
 
         short[] initTriangle = new short[] {
                 0, 1, 2,
@@ -112,13 +106,13 @@ public class Sphere {
                 5, 0, 4
         };
 
-        if (nbsubdivision > 1) {
+        if (nbsubdivision > 0) {
             HashMap<Pair<Short, Short>, Short> middlemap = new HashMap<>();
             for (int i = 0; i < initTriangle.length; i++)
                 createSphereRec(nbsubdivision, middlemap, initTriangle[i], initTriangle[++i], initTriangle[++i]);
         } else {
             System.arraycopy(initTriangle, 0, triangles, 0, initTriangle.length);
-            trianglesnum = initTriangle.length;
+            nbtriangle = initTriangle.length;
         }
 
         vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
@@ -132,10 +126,10 @@ public class Sphere {
     public VBO getVbo() { return vbo; }
 
     private void createSphereRec(int nbsubdivision, HashMap<Pair<Short, Short>, Short> middlemap, short a, short b, short c) {
-        if (nbsubdivision == 1) {
-            triangles[trianglesnum++] = a;
-            triangles[trianglesnum++] = b;
-            triangles[trianglesnum++] = c;
+        if (nbsubdivision == 0) {
+            triangles[++nbtriangle] = a;
+            triangles[++nbtriangle] = b;
+            triangles[++nbtriangle] = c;
         } else {
             short d = computeMiddle(middlemap, a, b);
             short e = computeMiddle(middlemap, b, c);
@@ -154,7 +148,7 @@ public class Sphere {
         if (middlemap.containsKey(middlekey))
             return middlemap.get(middlekey);
 
-        short vm = vertexnum++;
+        short vm = nbvertex++;
 
         for (int i = 0; i < 3; i++)
             vertexpos[3 * vm + i] = 0.5F * (vertexpos[3 * v1 + i] + vertexpos[3 * v2 + i]);

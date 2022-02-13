@@ -7,6 +7,47 @@ public class Cube extends MyObject {
 
     private static final float originsize = 1.0F;
 
+    private static final int glposbuffer = VBO.vertexPosToGlBuffer(new float[] {
+            -originsize / 2, -originsize / 2, originsize / 2,
+            originsize / 2, -originsize / 2, originsize / 2,
+            -originsize / 2, -originsize / 2, -originsize / 2,
+            originsize / 2, -originsize / 2, -originsize / 2,
+            -originsize / 2, originsize / 2, originsize / 2,
+            originsize / 2, originsize / 2, originsize / 2,
+            -originsize / 2, originsize / 2, -originsize / 2,
+            originsize / 2, originsize / 2, -originsize / 2
+    });
+
+    private static final VBO mainvbo = new VBO(glposbuffer, new short[] {
+            0, 1, 4,
+            1, 5, 4,
+            1, 3, 5,
+            3, 7, 5,
+            2, 6, 3,
+            3, 6, 7,
+            0, 4, 2,
+            4, 6, 2,
+            0, 1, 2,
+            1, 3, 2,
+            6, 4, 5,
+            6, 5, 7
+    });
+
+    private static final VBO edgevbo = new VBO(glposbuffer, new short[] {
+            1, 0,
+            0, 2,
+            2, 3,
+            3, 1,
+            1, 5,
+            0, 4,
+            2, 6,
+            3, 7,
+            5, 4,
+            4, 6,
+            6, 7,
+            7, 5
+    });
+
     /**
      * Instantiates a new Cube.
      *
@@ -16,55 +57,10 @@ public class Cube extends MyObject {
      * @param color the color
      */
     public Cube(float posx, float posz, float size, float[] color) {
-        super(posx, size / 2.0F, posz, size, color);
+        super(posx, originsize * size / 2.0F, posz, size, color);
 
-        float d = originsize / 2.0F;
-
-        float[] vertexpos = new float[] {
-                -d, -d, d,
-                d, -d, d,
-                -d, -d, -d,
-                d, -d, -d,
-                -d, d, d,
-                d, d, d,
-                -d, d, -d,
-                d, d, -d
-        };
-
-        short[] triangles = new short[] {
-                0, 1, 4,
-                1, 5, 4,
-                1, 3, 5,
-                3, 7, 5,
-                2, 3, 6,
-                3, 7, 6,
-                0, 2, 4,
-                4, 2, 6,
-                0, 1, 2,
-                1, 3, 2,
-                6, 4, 5,
-                6, 5, 7
-        };
-
-        short[] edges = new short[] {
-                1, 0,
-                0, 2,
-                2, 3,
-                3, 1,
-                1, 5,
-                0, 4,
-                2, 6,
-                3, 7,
-                5, 4,
-                4, 6,
-                6, 7,
-                7, 5
-        };
-
-        int glposbuffer = VBO.vertexPosToGlBuffer(vertexpos);
-
-        setMainvbo(new VBO(glposbuffer, triangles));
-        setEdgevbo(new VBO(glposbuffer, edges));
+        setMainvbo(mainvbo);
+        setEdgevbo(edgevbo);
     }
 
 }

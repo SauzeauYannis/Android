@@ -1,10 +1,6 @@
 package up.info.tp_1_2_3;
 
-import android.util.Log;
-
 public class Cylinder extends MyObject {
-
-    private static final int nbdiv = 25;
 
     /**
      * Instantiates a new Cylinder.
@@ -14,7 +10,7 @@ public class Cylinder extends MyObject {
      * @param height the height
      * @param color  the color
      */
-    public Cylinder(float posx, float posz, float height, float[] color) {
+    public Cylinder(int nbdiv, float posx, float posz, float height, float[] color) {
         super(posx, 0F, posz, height, color);
 
         float[] vertexpos = new float[2 * 3 * (nbdiv + 1)];
@@ -36,20 +32,20 @@ public class Cylinder extends MyObject {
 
         for (short i = 0, n = -1; i < nbdiv; i++) {
             triangles[++n] = i;
-            triangles[++n] = (short) ((i + 1) % nbdiv);
-            triangles[++n] = (short) (nbdiv + i);
             triangles[++n] = (short) (nbdiv + i);
             triangles[++n] = (short) ((i + 1) % nbdiv);
+            triangles[++n] = (short) (nbdiv + i);
             triangles[++n] = (short) (nbdiv + (i + 1) % nbdiv);
+            triangles[++n] = (short) ((i + 1) % nbdiv);
         }
 
-        for (short i = 0, n = 2 * 3 * nbdiv - 1; i < nbdiv; i++) {
+        for (short i = 0, n = (short) (2 * 3 * nbdiv - 1); i < nbdiv; i++) {
             triangles[++n] = i;
+            triangles[++n] = (short) (2 * nbdiv - 1);
             triangles[++n] = (short) ((i + 1) % nbdiv);
-            triangles[++n] = (short) 2 * nbdiv - 1;
             triangles[++n] = (short) (nbdiv + i);
+            triangles[++n] = (short) (2 * nbdiv);
             triangles[++n] = (short) (nbdiv + (i + 1) % nbdiv);
-            triangles[++n] = (short) 2 * nbdiv;
         }
 
         setMainvbo(new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles));
