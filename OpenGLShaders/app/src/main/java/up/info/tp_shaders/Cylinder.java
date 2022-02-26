@@ -1,4 +1,4 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
 public class Cylinder extends MyObject {
 
@@ -48,7 +48,7 @@ public class Cylinder extends MyObject {
             triangles[++n] = (short) (nbdiv + (i + 1) % nbdiv);
         }
 
-        setMainvbo(new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles));
+        setMainvbo(new VBO(VBO.floatArrayToGlBuffer(vertexpos), 0, triangles)); // TODO: 26-Feb-22  
     }
 
 }

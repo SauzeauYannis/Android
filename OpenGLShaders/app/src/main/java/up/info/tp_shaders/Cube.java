@@ -1,4 +1,4 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
 /**
  * The type Cube.
@@ -7,7 +7,7 @@ public class Cube extends MyObject {
 
     private static final float originsize = 1.0F;
 
-    private static final int glposbuffer = VBO.vertexPosToGlBuffer(new float[] {
+    private static final int glposbuffer = VBO.floatArrayToGlBuffer(new float[] {
             -originsize / 2, -originsize / 2, originsize / 2,
             originsize / 2, -originsize / 2, originsize / 2,
             -originsize / 2, -originsize / 2, -originsize / 2,
@@ -18,7 +18,7 @@ public class Cube extends MyObject {
             originsize / 2, originsize / 2, -originsize / 2
     });
 
-    private static final VBO mainvbo = new VBO(glposbuffer, new short[] {
+    private static final VBO mainvbo = new VBO(glposbuffer, 0, new short[] {
             0, 1, 4,
             1, 5, 4,
             1, 3, 5,
@@ -31,9 +31,9 @@ public class Cube extends MyObject {
             1, 3, 2,
             6, 4, 5,
             6, 5, 7
-    });
+    }); // TODO: 26-Feb-22
 
-    private static final VBO edgevbo = new VBO(glposbuffer, new short[] {
+    private static final VBO edgevbo = new VBO(glposbuffer, 0, new short[] {
             1, 0,
             0, 2,
             2, 3,
@@ -46,7 +46,7 @@ public class Cube extends MyObject {
             4, 6,
             6, 7,
             7, 5
-    });
+    }); // TODO: 26-Feb-22
 
     /**
      * Instantiates a new Cube.

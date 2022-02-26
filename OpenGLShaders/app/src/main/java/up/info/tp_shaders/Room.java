@@ -1,4 +1,4 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
@@ -8,7 +8,7 @@ import android.opengl.Matrix;
  */
 public class Room {
 
-    private final static int glposbuffer = VBO.vertexPosToGlBuffer(new float[] {
+    private final static int glposbuffer = VBO.floatArrayToGlBuffer(new float[] {
             // Front wall
             -3, 0, -3,
             3, 0, -3,
@@ -52,7 +52,51 @@ public class Room {
             3, Scene.wallsize, -3
     });
 
-    private final static VBO wall = new VBO(glposbuffer,
+    private final static int glnmlbuffer = VBO.floatArrayToGlBuffer(new float[] {
+            // Front wall
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
+            // Left wall
+            -1, 0, 0,
+            -1, 0, 0,
+            -1, 0, 0,
+            -1, 0, 0,
+            // Right wall
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+            // Back wall
+            // right quad
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            // left quad
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            // top quad
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            // floor
+            0, -1, 0,
+            0, -1, 0,
+            0, -1, 0,
+            0, -1, 0,
+            // ceiling
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0,
+    });
+
+    private final static VBO wall = new VBO(glnmlbuffer, glnmlbuffer,
             new short[] {
                     // Front wall
                     0, 1, 3,
@@ -75,19 +119,19 @@ public class Room {
                     22, 23, 21}
     );
 
-    private final static VBO floor = new VBO(glposbuffer,
+    private final static VBO floor = new VBO(glnmlbuffer, glnmlbuffer,
             new short[] {
                     24, 25, 27,
                     26, 27, 25}
     );
 
-    private final static VBO ceiling = new VBO(glposbuffer,
+    private final static VBO ceiling = new VBO(glnmlbuffer, glnmlbuffer,
             new short[] {
                     28, 29, 31,
                     30, 31, 29}
     );
 
-    private final static VBO edge = new VBO(glposbuffer,
+    private final static VBO edge = new VBO(glnmlbuffer, glnmlbuffer,
             new short[] {
                     0, 1,
                     1, 2,
@@ -129,14 +173,14 @@ public class Room {
      *
      * @param shaders the shaders
      */
-    public void show(NoLightShaders shaders) {
-        shaders.setColor(wallcolor);
+    public void show(LightingShaders shaders) {
+        shaders.setMaterialColor(wallcolor);
         wall.show(shaders, GLES20.GL_TRIANGLES);
-        shaders.setColor(floorcolor);
+        shaders.setMaterialColor(floorcolor);
         floor.show(shaders, GLES20.GL_TRIANGLES);
-        shaders.setColor(ceilingcolor);
+        shaders.setMaterialColor(ceilingcolor);
         ceiling.show(shaders, GLES20.GL_TRIANGLES);
-        shaders.setColor(MyGLRenderer.black);
+        shaders.setMaterialColor(MyGLRenderer.black);
         edge.show(shaders, GLES20.GL_LINES);
     }
 
@@ -146,7 +190,7 @@ public class Room {
      * @param shaders         the shaders
      * @param modelviewmatrix the modelviewmatrix
      */
-    public void showSecondRoom(NoLightShaders shaders, float[] modelviewmatrix) {
+    public void showSecondRoom(LightingShaders shaders, float[] modelviewmatrix) {
         Matrix.setIdentityM(this.matrix, 0);
 
         Matrix.rotateM(this.matrix, 0, 180, 0.0F, 1.0F, 0.0F);

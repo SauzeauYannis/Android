@@ -1,4 +1,4 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;

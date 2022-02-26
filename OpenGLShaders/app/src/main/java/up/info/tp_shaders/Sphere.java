@@ -1,4 +1,4 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
 import android.util.Pair;
 
@@ -72,7 +72,9 @@ public class Sphere {
         }
 
         nbvertex = (short) vertexpos.length;
-        vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
+
+        int glbuffer = VBO.floatArrayToGlBuffer(vertexpos);
+        vbo = new VBO(glbuffer, glbuffer, triangles);
     }
 
     /**
@@ -115,7 +117,8 @@ public class Sphere {
             nbtriangle = initTriangle.length;
         }
 
-        vbo = new VBO(VBO.vertexPosToGlBuffer(vertexpos), triangles);
+        int glbuffer = VBO.floatArrayToGlBuffer(vertexpos);
+        vbo = new VBO(glbuffer, glbuffer, triangles);
     }
 
     /**

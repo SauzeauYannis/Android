@@ -1,5 +1,6 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
+import android.content.Context;
 import android.opengl.GLES20;
 
 /**
@@ -15,47 +16,21 @@ public class NoLightShaders extends BasicShaders
     private int uColor;
 
     /**
-     * Fragment shader : the uniform color is used for each pixel
-     */
-    private static final String FRAGSRC=
-            "precision mediump float;\n"
-                    +"uniform vec4 uColor;\n"
-                    +"void main()\n"
-                    +"{\n"
-                    +"    gl_FragColor=uColor;\n"
-                    +"}\n";
-
-    /**
-     * Vertex shader: it only transform vertex coordinates into viewer's space and project to screen
-     */
-    private static final String VERTSRC=
-            // Matrices
-            "uniform mat4 uModelViewMatrix;\n"
-                    +"uniform mat4 uProjectionMatrix;\n"
-
-                    // Vertex attributes
-                    +"attribute vec3 aVertexPosition;\n"
-
-                    +"void main() {\n"
-                    +"  gl_Position= uProjectionMatrix*uModelViewMatrix*vec4(aVertexPosition, 1.0);\n"
-                    +"}\n";
-
-    /**
      * Constructor of the complete rendering Shader programs
      */
-    public NoLightShaders(final MyGLRenderer renderer)
+    public NoLightShaders(Context context)
     {
-        super(renderer);
+        super(context);
     }
 
     @Override
-    public int createProgram()
+    public int createProgram(Context context)
     {
         // First approach : get shader sources as String stored in the object
         // return initializeShaders(gl,VERTSRC,FRAGSRC);
 
         // Second method : get shader codes from ressource files
-        return initializeShaders(VERTSRC,FRAGSRC);
+        return initializeShadersFromResources(context,"nolight_vert.glsl","nolight_frag.glsl");
     }
 
     /**
@@ -68,6 +43,7 @@ public class NoLightShaders extends BasicShaders
 
         // Variables for material
         this.uColor = GLES20.glGetUniformLocation(this.shaderprogram, "uColor");
+        if (this.uColor==-1) throw new RuntimeException("uColor not found in shaders");
     }
 
 
@@ -83,3 +59,4 @@ public class NoLightShaders extends BasicShaders
         GLES20.glUniform4fv(this.uColor,1,color,0);
     }
 }
+

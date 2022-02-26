@@ -1,6 +1,13 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.opengl.GLES20;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 
 /**
@@ -11,6 +18,51 @@ import java.nio.FloatBuffer;
  */
 public abstract class BasicShaders
 {
+    /**
+     * General method to get the content of a text file
+     * @param file input file
+     * @return string containing all the file content
+     * @throws IOException
+     */
+    static String getTextContent(InputStream file) throws IOException
+    {
+        BufferedReader reader=new BufferedReader(new InputStreamReader(file));
+        String content="";
+        while(reader.ready())
+        {
+            String line=reader.readLine();
+            content+=line+'\n';
+        }
+        return content;
+    }
+
+    /**
+     * Method to create a program from source files for vertex and fragment shaders
+     * @param context Context of the application, a way to get to assets
+     * @param vertname name of the vertex program
+     * @param fragname name of the fragment program
+     * @return program linking the compiled vertex and fragment programs
+     */
+    static protected int initializeShadersFromResources(Context context,String vertname,String fragname)
+    {
+        String vertsrc,fragsrc;
+        try {
+            AssetManager assetmngr = context.getAssets();
+
+            InputStream vertinput = assetmngr.open(vertname);
+            InputStream fraginput = assetmngr.open(fragname);
+            vertsrc = getTextContent(vertinput);
+            fragsrc = getTextContent(fraginput);
+        }
+        catch(IOException e)
+        {
+            MainActivity.log("Error loading shaders : " +e);
+            throw new RuntimeException("Error loading shaders");
+        }
+
+        int shaderprogram=initializeShaders(vertsrc,fragsrc);
+        return shaderprogram;
+    }
 
     /**
      * General method to compile and link vertex and fragment shaders in a shader program
@@ -111,9 +163,9 @@ public abstract class BasicShaders
     /**
      * Constructor of the complete rendering Shader programs
      */
-    public BasicShaders(final MyGLRenderer renderer)
+    public BasicShaders(Context context)
     {
-        this.shaderprogram=createProgram();
+        this.shaderprogram=createProgram(context);
         this.findVariables();
     }
 
@@ -122,7 +174,7 @@ public abstract class BasicShaders
      * created by downclasses
      * @return program id created after compiling and linking shader programs
      */
-    public abstract int createProgram();
+    public abstract int createProgram(Context context);
 
 
     /**
@@ -132,10 +184,13 @@ public abstract class BasicShaders
     {
         // Variables for matrices
         this.uProjectionMatrix = GLES20.glGetUniformLocation(this.shaderprogram, "uProjectionMatrix");
+        if (this.uProjectionMatrix==-1) throw new RuntimeException("uPojectionMatrix not found in shaders");
         this.uModelViewMatrix = GLES20.glGetUniformLocation(this.shaderprogram, "uModelViewMatrix");
+        if (this.uProjectionMatrix==-1) throw new RuntimeException("uModelViewMatrix not found in shaders");
 
         // vertex attributes
         this.aVertexPosition = GLES20.glGetAttribLocation(this.shaderprogram, "aVertexPosition");
+        if (this.aVertexPosition==-1) throw new RuntimeException("aVertexPosition not found in shaders");
         GLES20.glEnableVertexAttribArray(this.aVertexPosition);
     }
 

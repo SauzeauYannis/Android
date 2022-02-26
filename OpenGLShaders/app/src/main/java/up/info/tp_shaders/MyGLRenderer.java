@@ -1,4 +1,4 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -39,7 +39,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer
     /**
      * Shaders
      */
-    private NoLightShaders shaders;
+    private LightingShaders shaders;
     /**
      * Projection matrix to provide to the shader
      */
@@ -48,7 +48,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer
     /**
      * @return the current Shader
      */
-    public NoLightShaders getShaders()
+    public LightingShaders getShaders()
     {
         return this.shaders;
     }
@@ -89,7 +89,9 @@ public class MyGLRenderer implements GLSurfaceView.Renderer
     public void onSurfaceCreated(GL10 unused, EGLConfig config)
     {
         // Create shader
-        this.shaders=new NoLightShaders(this); // or other shaders
+        //this.shaders=new NoLightShaders(getView().getContext()); // or other shaders
+        this.shaders = new GouraudShaders(getView().getContext());
+        this.shaders.setNormalizing(true);
         checkGlError("Shader Creation");
 
         scene.initGraphics(this);

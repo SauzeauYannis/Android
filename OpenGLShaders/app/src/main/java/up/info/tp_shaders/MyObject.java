@@ -1,4 +1,4 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
@@ -60,7 +60,7 @@ public abstract class MyObject {
      * @param modelviewmatrix        the modelviewmatrix
      * @param showtrianglesoutline   the showtriangles
      */
-    public void show(NoLightShaders shaders, float[] modelviewmatrix, boolean showtrianglesoutline) {
+    public void show(LightingShaders shaders, float[] modelviewmatrix, boolean showtrianglesoutline) {
         Matrix.setIdentityM(this.modelviewmatrixobj, 0);
 
         Matrix.translateM(this.modelviewmatrixobj, 0, this.posx, this.posy, this.posz);
@@ -69,7 +69,7 @@ public abstract class MyObject {
 
         Matrix.multiplyMM(this.modelviewmatrixobj, 0, modelviewmatrix, 0, this.modelviewmatrixobj, 0);
 
-        shaders.setColor(this.color);
+        shaders.setMaterialColor(this.color);
         shaders.setModelViewMatrix(this.modelviewmatrixobj);
 
         if (showtrianglesoutline) {
@@ -79,7 +79,7 @@ public abstract class MyObject {
         }
 
         if (edgevbo != null) {
-            shaders.setColor(MyGLRenderer.black);
+            shaders.setMaterialColor(MyGLRenderer.black);
             edgevbo.show(shaders, GLES20.GL_LINES);
         }
 

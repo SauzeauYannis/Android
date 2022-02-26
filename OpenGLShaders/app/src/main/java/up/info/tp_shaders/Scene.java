@@ -1,5 +1,6 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
+import android.graphics.Shader;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
@@ -27,15 +28,15 @@ public class Scene {
     private Ball angball;
     private Ball subball;
 
-    private Cube cube;
-
-    private Tetrahedron tetrahedron;
-
-    private Cone cone;
-
-    private Cylinder cylinder;
-
-    private ObjLoader armadilloObj;
+//    private Cube cube;
+//
+//    private Tetrahedron tetrahedron;
+//
+//    private Cone cone;
+//
+//    private Cylinder cylinder;
+//
+//    private ObjLoader armadilloObj;
 
     /**
      * Constructor : build each wall, the floor and the ceiling as quads
@@ -76,15 +77,23 @@ public class Scene {
         angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
         subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
 
-        cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
+        LightingShaders shader = renderer.getShaders();
 
-        tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow);
+        shader.setAmbiantLight(MyGLRenderer.white);
+        shader.setLightSpecular(MyGLRenderer.white);
+        shader.setLightPosition(new float[]{0F, 0F, 0F});
+        shader.setLightColor(MyGLRenderer.white);
+        shader.setLighting(true);
 
-        cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
-
-        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
-
-        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.80F, new float[] {0.33F, 0.05F, 0.05F, 1.0F});
+//        cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
+//
+//        tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow);
+//
+//        cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
+//
+//        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
+//
+//        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.80F, new float[] {0.33F, 0.05F, 0.05F, 1.0F});
 
         MainActivity.log("Graphics initialized");
     }
@@ -101,7 +110,7 @@ public class Scene {
         MainActivity.log("Starting rendering");
 
         // Get shader to send uniform data
-        NoLightShaders shaders = renderer.getShaders();
+        LightingShaders shaders = renderer.getShaders();
 
         // Place viewer in the right position and orientation
         Matrix.setIdentityM(modelviewmatrix,0);
@@ -120,15 +129,15 @@ public class Scene {
         angball.show(shaders, modelviewmatrix, false);
         subball.show(shaders, modelviewmatrix, false);
 
-        cube.show(shaders, modelviewmatrix, false);
+        //cube.show(shaders, modelviewmatrix, false);
 
-        tetrahedron.show(shaders, modelviewmatrix, true);
+        //tetrahedron.show(shaders, modelviewmatrix, true);
 
-        cone.show(shaders, modelviewmatrix, false);
+        //cone.show(shaders, modelviewmatrix, false);
 
-        cylinder.show(shaders, modelviewmatrix, false);
+        //cylinder.show(shaders, modelviewmatrix, false);
 
-        armadilloObj.show(shaders, modelviewmatrix, true);
+        //armadilloObj.show(shaders, modelviewmatrix, true);
 
         MainActivity.log("Rendering terminated.");
     }

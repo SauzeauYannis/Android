@@ -1,4 +1,4 @@
-package up.info.tp_1_2_3;
+package up.info.tp_shaders;
 
 import android.util.Log;
 
@@ -61,7 +61,7 @@ public class ObjLoader extends MyObject {
         for (int i = 0; i < triangleslist.size(); i++)
             triangles[i] = triangleslist.get(i);
 
-        setMainvbo(new VBO(VBO.vertexPosToGlBuffer(vertexPos), triangles));
+        setMainvbo(new VBO(VBO.floatArrayToGlBuffer(vertexPos), 0, triangles)); // TODO: 26-Feb-22  
     }
 
 }
