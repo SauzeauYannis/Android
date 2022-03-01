@@ -125,10 +125,13 @@ public class VBO {
     public void show(LightingShaders shaders, int elemtype) {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
         shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
+
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glnmlbuffer);
         shaders.setNormalsPointer(3, GLES20.GL_FLOAT);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
+        GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
+
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
     }

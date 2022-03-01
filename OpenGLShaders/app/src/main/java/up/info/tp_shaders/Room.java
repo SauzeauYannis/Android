@@ -54,49 +54,49 @@ public class Room {
 
     private final static int glnmlbuffer = VBO.floatArrayToGlBuffer(new float[] {
             // Front wall
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
+            0, 0, 1,
             // Left wall
-            -1, 0, 0,
-            -1, 0, 0,
-            -1, 0, 0,
-            -1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
+            1, 0, 0,
             // Right wall
-            1, 0, 0,
-            1, 0, 0,
-            1, 0, 0,
-            1, 0, 0,
+            -1, 0, 0,
+            -1, 0, 0,
+            -1, 0, 0,
+            -1, 0, 0,
             // Back wall
             // right quad
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
             // left quad
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
             // top quad
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
+            0, 0, -1,
             // floor
-            0, -1, 0,
-            0, -1, 0,
-            0, -1, 0,
-            0, -1, 0,
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0,
+            0, 1, 0,
             // ceiling
-            0, 1, 0,
-            0, 1, 0,
-            0, 1, 0,
-            0, 1, 0,
+            0, -1, 0,
+            0, -1, 0,
+            0, -1, 0,
+            0, -1, 0,
     });
 
-    private final static VBO wall = new VBO(glnmlbuffer, glnmlbuffer,
+    private final static VBO wall = new VBO(glposbuffer, glnmlbuffer,
             new short[] {
                     // Front wall
                     0, 1, 3,
@@ -119,19 +119,19 @@ public class Room {
                     22, 23, 21}
     );
 
-    private final static VBO floor = new VBO(glnmlbuffer, glnmlbuffer,
+    private final static VBO floor = new VBO(glposbuffer, glnmlbuffer,
             new short[] {
                     24, 25, 27,
                     26, 27, 25}
     );
 
-    private final static VBO ceiling = new VBO(glnmlbuffer, glnmlbuffer,
+    private final static VBO ceiling = new VBO(glposbuffer, glnmlbuffer,
             new short[] {
                     28, 29, 31,
                     30, 31, 29}
     );
 
-    private final static VBO edge = new VBO(glnmlbuffer, glnmlbuffer,
+    private final static VBO edge = new VBO(glposbuffer, glnmlbuffer,
             new short[] {
                     0, 1,
                     1, 2,
@@ -180,8 +180,8 @@ public class Room {
         floor.show(shaders, GLES20.GL_TRIANGLES);
         shaders.setMaterialColor(ceilingcolor);
         ceiling.show(shaders, GLES20.GL_TRIANGLES);
-        shaders.setMaterialColor(MyGLRenderer.black);
-        edge.show(shaders, GLES20.GL_LINES);
+        //shaders.setMaterialColor(MyGLRenderer.black);
+        //edge.show(shaders, GLES20.GL_LINES);
     }
 
     /**

@@ -119,29 +119,16 @@ public class VBO {
      * @param shaders  the shaders
      * @param elemtype the elemtype
      */
-    public void show(NoLightShaders shaders, int elemtype) {
+    public void show(NoLightShaders shaders, int elemtype, boolean withoutline) {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
         shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
         GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    /**
-     * Show outlines.
-     *
-     * @param shaders  the shaders
-     * @param elemtype the elemtype
-     */
-    public void showTriangleOutlines(NoLightShaders shaders, int elemtype) {
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
-        shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
-        shaders.setColor(MyGLRenderer.black);
-        for (int i = 0; i < nbelem; i += 3)
-            GLES20.glDrawElements(GLES20.GL_LINE_LOOP, 3, this.typeelem, i * this.sizeelem);
+        if (withoutline) {
+            shaders.setColor(MyGLRenderer.black);
+            for (int i = 0; i < nbelem; i += 3)
+                GLES20.glDrawElements(GLES20.GL_LINE_LOOP, 3, this.typeelem, i * this.sizeelem);
+        }
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
     }

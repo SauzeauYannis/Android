@@ -1,6 +1,5 @@
 package up.info.tp_shaders;
 
-import android.graphics.Shader;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
@@ -23,10 +22,10 @@ public class Scene {
 
     private Room room;
 
-    private Ball angballoutline;
-    private Ball subballoutline;
-    private Ball angball;
-    private Ball subball;
+//    private Ball angballoutline;
+//    private Ball subballoutline;
+//    private Ball angball;
+//    private Ball subball;
 
 //    private Cube cube;
 //
@@ -70,20 +69,23 @@ public class Scene {
         GLES20.glPolygonOffset(2.F, 4.F);
         GLES20.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
 
+        LightingShaders shaders = renderer.getShaders();
+
+        shaders.setNormalizing(true);
+        shaders.setLighting(true);
+
+        shaders.setAmbiantLight(new float[]{0.2F, 0.2F, 0.2F, 1F});
+        shaders.setLightSpecular(MyGLRenderer.white);
+        shaders.setLightColor(new float[]{0.8F, 0.8F, 0.8F, 1F});
+
+        shaders.setLightPosition(new float[]{0F, 0F, 0F});
+
         room = new Room(MyGLRenderer.blue, MyGLRenderer.red, MyGLRenderer.green);
 
-        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta);
-        subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray);
-        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
-        subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
-
-        LightingShaders shader = renderer.getShaders();
-
-        shader.setAmbiantLight(MyGLRenderer.white);
-        shader.setLightSpecular(MyGLRenderer.white);
-        shader.setLightPosition(new float[]{0F, 0F, 0F});
-        shader.setLightColor(MyGLRenderer.white);
-        shader.setLighting(true);
+//        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta);
+//        subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray);
+//        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
+//        subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
 
 //        cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
 //
@@ -124,10 +126,10 @@ public class Scene {
         room.show(shaders);
         room.showSecondRoom(shaders, modelviewmatrix);
 
-        angballoutline.show(shaders, modelviewmatrix, true);
-        subballoutline.show(shaders, modelviewmatrix, true);
-        angball.show(shaders, modelviewmatrix, false);
-        subball.show(shaders, modelviewmatrix, false);
+//        angballoutline.show(shaders, modelviewmatrix, true);
+//        subballoutline.show(shaders, modelviewmatrix, true);
+//        angball.show(shaders, modelviewmatrix, false);
+//        subball.show(shaders, modelviewmatrix, false);
 
         //cube.show(shaders, modelviewmatrix, false);
 

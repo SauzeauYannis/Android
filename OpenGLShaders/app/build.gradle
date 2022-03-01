@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "up.info.objects"
+        applicationId "up.info.shaders"
         minSdk 25
         targetSdk 31
         versionCode 1

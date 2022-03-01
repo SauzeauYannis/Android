@@ -90,8 +90,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer
     {
         // Create shader
         //this.shaders=new NoLightShaders(getView().getContext()); // or other shaders
-        this.shaders = new GouraudShaders(getView().getContext());
-        this.shaders.setNormalizing(true);
+        this.shaders = new GouraudShaders(this.view.getContext());
         checkGlError("Shader Creation");
 
         scene.initGraphics(this);
