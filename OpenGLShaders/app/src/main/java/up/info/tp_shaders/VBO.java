@@ -57,23 +57,98 @@ public class VBO {
      * @return the int
      */
     public static int floatArrayToGlBuffer(float[] floatarray) {
-        ByteBuffer posbytebuf = ByteBuffer.allocateDirect(floatarray.length * Float.BYTES);
-        posbytebuf.order(ByteOrder.nativeOrder());
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(floatarray.length * Float.BYTES);
+        byteBuffer.order(ByteOrder.nativeOrder());
 
-        FloatBuffer posbuffer = posbytebuf.asFloatBuffer();
+        FloatBuffer posbuffer = byteBuffer.asFloatBuffer();
         posbuffer.put(floatarray);
         posbuffer.position(0);
 
         int[] buffers = new int[1];
         GLES20.glGenBuffers(1, buffers, 0);
-        int glposbuffer = buffers[0];
+        int glbuffer = buffers[0];
 
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glbuffer);
         GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, floatarray.length * Float.BYTES,
                 posbuffer, GLES20.GL_STATIC_DRAW);
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 
-        return glposbuffer;
+        return glbuffer;
+    }
+
+    public static float[] computeNormals(float[] pos, short[] elem) {
+        float[] nml = new float[pos.length];
+
+        for (int i = 0; i < elem.length; i += 3) {
+            Vec3f A = new Vec3f(pos[3 * elem[i]], pos[3 * elem[i] + 1], pos[3 * elem[i] + 2]);
+            Vec3f B = new Vec3f(pos[3 * elem[i + 1]], pos[3 * elem[i + 1] + 1], pos[3 * elem[i + 1] + 2]);
+            Vec3f C = new Vec3f(pos[3 * elem[i + 2]], pos[3 * elem[i + 2] + 1], pos[3 * elem[i + 2] + 2]);
+
+            Vec3f X = new Vec3f();
+            Vec3f Y = new Vec3f();
+
+            X.setSub(B, A);
+            Y.setSub(C, A);
+
+            Vec3f vec3f = new Vec3f();
+            vec3f.setCrossProduct(X, Y);
+            vec3f.normalize();
+
+            for (int j = 0; j < 3; j++) {
+                nml[3 * elem[i + j]] = vec3f.x;
+                //Log.d("NML", (3 * elem[i + j]) + ") X: " + vec3f.x);
+                nml[3 * elem[i + j] + 1] = vec3f.y;
+                //Log.d("NML", (3 * elem[i + j] + 1) + ") Y: " + vec3f.y);
+                nml[3 * elem[i + j] + 2] = vec3f.z;
+                //Log.d("NML", (3 * elem[i + j] + 2) + ") Z: " + vec3f.z);
+            }
+        }
+
+        return nml;
+    }
+
+    /**
+     * Show.
+     *
+     * @param shaders  the shaders
+     * @param elemtype the elemtype
+     */
+    public void show(LightingShaders shaders, int elemtype) {
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
+        shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glnmlbuffer);
+        shaders.setNormalsPointer(3, GLES20.GL_FLOAT);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
+        GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+
+    /**
+     * Show outlines.
+     *
+     * @param shaders  the shaders
+     * @param elemtype the elemtype
+     */
+    public void showTriangleOutlines(LightingShaders shaders, int elemtype) {
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
+        shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glnmlbuffer);
+        shaders.setNormalsPointer(3, GLES20.GL_FLOAT);
+
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
+        GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
+
+        shaders.setMaterialColor(MyGLRenderer.black);
+        for (int i = 0; i < nbelem; i += 3)
+            GLES20.glDrawElements(GLES20.GL_LINE_LOOP, 3, this.typeelem, i * this.sizeelem);
+
+        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     private int elemToGlBuffer(short[] elem) {
@@ -114,46 +189,6 @@ public class VBO {
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
 
         return glelembuffer;
-    }
-
-    /**
-     * Show.
-     *
-     * @param shaders  the shaders
-     * @param elemtype the elemtype
-     */
-    public void show(LightingShaders shaders, int elemtype) {
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
-        shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
-
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glnmlbuffer);
-        shaders.setNormalsPointer(3, GLES20.GL_FLOAT);
-
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
-
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    /**
-     * Show outlines.
-     *
-     * @param shaders  the shaders
-     * @param elemtype the elemtype
-     */
-    public void showTriangleOutlines(LightingShaders shaders, int elemtype) {
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
-        shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
-        shaders.setMaterialColor(MyGLRenderer.black);
-        for (int i = 0; i < nbelem; i += 3)
-            GLES20.glDrawElements(GLES20.GL_LINE_LOOP, 3, this.typeelem, i * this.sizeelem);
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glnmlbuffer);
-        shaders.setNormalsPointer(3, GLES20.GL_FLOAT);
-        GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
-        GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
 }

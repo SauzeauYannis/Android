@@ -3,12 +3,14 @@ package up.info.tp_shaders;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
+import java.util.Arrays;
+
 /**
  * The type Room.
  */
 public class Room {
 
-    private final static int glposbuffer = VBO.floatArrayToGlBuffer(new float[] {
+    private final static float[] vertexPos = new float[]{
             // Front wall
             -3, 0, -3,
             3, 0, -3,
@@ -50,89 +52,55 @@ public class Room {
             -3, Scene.wallsize, 3,
             -3, Scene.wallsize, -3,
             3, Scene.wallsize, -3
-    });
+    };
 
-    private final static int glnmlbuffer = VBO.floatArrayToGlBuffer(new float[] {
+    private final static short[] triangles = new short[]{
             // Front wall
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
+            0, 1, 3,
+            2, 3, 1,
             // Left wall
-            1, 0, 0,
-            1, 0, 0,
-            1, 0, 0,
-            1, 0, 0,
+            4, 5, 7,
+            6, 7, 5,
             // Right wall
-            -1, 0, 0,
-            -1, 0, 0,
-            -1, 0, 0,
-            -1, 0, 0,
+            8, 9, 11,
+            10, 11, 9,
             // Back wall
             // right quad
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
+            12, 13, 15,
+            14, 15, 13,
             // left quad
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
+            16, 17, 19,
+            18, 19, 17,
             // top quad
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
-            0, 0, -1,
+            20, 21, 23,
+            22, 23, 21,
             // floor
-            0, 1, 0,
-            0, 1, 0,
-            0, 1, 0,
-            0, 1, 0,
+            24, 25, 27,
+            26, 27, 25,
             // ceiling
-            0, -1, 0,
-            0, -1, 0,
-            0, -1, 0,
-            0, -1, 0,
-    });
+            28, 29, 31,
+            30, 31, 29};
+
+    private final static int glposbuffer = VBO.floatArrayToGlBuffer(vertexPos);
+
+    private final static int glnmlbuffer = VBO.floatArrayToGlBuffer(
+            VBO.computeNormals(vertexPos, triangles)
+    );
 
     private final static VBO wall = new VBO(glposbuffer, glnmlbuffer,
-            new short[] {
-                    // Front wall
-                    0, 1, 3,
-                    2, 3, 1,
-                    // Left wall
-                    4, 5, 7,
-                    6, 7, 5,
-                    // Right wall
-                    8, 9, 11,
-                    10, 11, 9,
-                    // Back wall
-                    // right quad
-                    12, 13, 15,
-                    14, 15, 13,
-                    // left quad
-                    16, 17, 19,
-                    18, 19, 17,
-                    // top quad
-                    20, 21, 23,
-                    22, 23, 21}
+            Arrays.copyOfRange(triangles, 0, 36)
     );
 
     private final static VBO floor = new VBO(glposbuffer, glnmlbuffer,
-            new short[] {
-                    24, 25, 27,
-                    26, 27, 25}
+            Arrays.copyOfRange(triangles, 36, 42)
     );
 
     private final static VBO ceiling = new VBO(glposbuffer, glnmlbuffer,
-            new short[] {
-                    28, 29, 31,
-                    30, 31, 29}
+            Arrays.copyOfRange(triangles, 42, 48)
     );
 
     private final static VBO edge = new VBO(glposbuffer, glnmlbuffer,
-            new short[] {
+            new short[]{
                     0, 1,
                     1, 2,
                     2, 3,
@@ -157,9 +125,10 @@ public class Room {
 
     /**
      * Instantiates a new Room.
-     * @param wallcolor     the color of wall
-     * @param floorcolor    the color of floor
-     * @param ceilingcolor  the color of ceiling
+     *
+     * @param wallcolor    the color of wall
+     * @param floorcolor   the color of floor
+     * @param ceilingcolor the color of ceiling
      */
     public Room(float[] wallcolor, float[] floorcolor, float[] ceilingcolor) {
         this.wallcolor = wallcolor;
@@ -180,8 +149,8 @@ public class Room {
         floor.show(shaders, GLES20.GL_TRIANGLES);
         shaders.setMaterialColor(ceilingcolor);
         ceiling.show(shaders, GLES20.GL_TRIANGLES);
-        //shaders.setMaterialColor(MyGLRenderer.black);
-        //edge.show(shaders, GLES20.GL_LINES);
+        shaders.setMaterialColor(MyGLRenderer.black);
+        edge.show(shaders, GLES20.GL_LINES);
     }
 
     /**

@@ -36,8 +36,13 @@ public class Cone extends MyObject {
             triangles[++n] = (short) nbdiv;
             triangles[++n] = (short) ((i + 1) % nbdiv);
         }
-        
-        setMainvbo(new VBO(VBO.floatArrayToGlBuffer(vertexpos), 0, triangles)); // TODO: 26-Feb-22  
+
+        int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
+        int glmlbuffer = VBO.floatArrayToGlBuffer(
+                VBO.computeNormals(vertexpos, triangles)
+        );
+
+        setMainvbo(new VBO(glposbuffer, glmlbuffer, triangles));
     }
 
 }
