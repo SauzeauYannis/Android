@@ -81,25 +81,25 @@ public class Room {
             28, 29, 31,
             30, 31, 29};
 
-    private final static int glposbuffer = VBO.floatArrayToGlBuffer(vertexPos);
+    private final int glposbuffer = VBO.floatArrayToGlBuffer(vertexPos);
 
-    private final static int glnmlbuffer = VBO.floatArrayToGlBuffer(
+    private final int glnmlbuffer = VBO.floatArrayToGlBuffer(
             VBO.computeNormals(vertexPos, triangles)
     );
 
-    private final static VBO wall = new VBO(glposbuffer, glnmlbuffer,
+    private final VBO wall = new VBO(glposbuffer, glnmlbuffer,
             Arrays.copyOfRange(triangles, 0, 36)
     );
 
-    private final static VBO floor = new VBO(glposbuffer, glnmlbuffer,
+    private final VBO floor = new VBO(glposbuffer, glnmlbuffer,
             Arrays.copyOfRange(triangles, 36, 42)
     );
 
-    private final static VBO ceiling = new VBO(glposbuffer, glnmlbuffer,
+    private final VBO ceiling = new VBO(glposbuffer, glnmlbuffer,
             Arrays.copyOfRange(triangles, 42, 48)
     );
 
-    private final static VBO edge = new VBO(glposbuffer, glnmlbuffer,
+    private final VBO edge = new VBO(glposbuffer, glnmlbuffer,
             new short[]{
                     0, 1,
                     1, 2,

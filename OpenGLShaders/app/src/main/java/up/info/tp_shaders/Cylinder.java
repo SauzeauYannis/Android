@@ -41,9 +41,9 @@ public class Cylinder extends MyObject {
         }
 
         for (short i = 0, n = (short) (2 * 3 * nbdiv - 1); i < nbdiv; i++) {
-            triangles[++n] = i;
-            triangles[++n] = (short) (2 * nbdiv);
-            triangles[++n] = (short) ((i + 1) % nbdiv);
+            //triangles[++n] = i;
+            //triangles[++n] = (short) (2 * nbdiv);
+            //triangles[++n] = (short) ((i + 1) % nbdiv);
             triangles[++n] = (short) (nbdiv + i);
             triangles[++n] = (short) (2 * nbdiv - 1);
             triangles[++n] = (short) (nbdiv + (i + 1) % nbdiv);

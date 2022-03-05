@@ -34,7 +34,7 @@ public class Scene {
 
     private Cone cone;
 
-    //private Cylinder cylinder;
+    private Cylinder cylinder;
 
     private ObjLoader armadilloObj;
 
@@ -96,7 +96,7 @@ public class Scene {
 
         cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
 
-        //cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
+        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
 
         armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.80F, MyGLRenderer.white);
 
@@ -138,8 +138,8 @@ public class Scene {
         cube.show(shaders, modelviewmatrix, false);
         tetrahedron.show(shaders, modelviewmatrix, true);
         cone.show(shaders, modelviewmatrix, false);
-        //cylinder.show(shaders, modelviewmatrix, false);
-        armadilloObj.show(shaders, modelviewmatrix, true);
+        cylinder.show(shaders, modelviewmatrix, false);
+        armadilloObj.show(shaders, modelviewmatrix, false);
 
         MainActivity.log("Rendering terminated.");
     }

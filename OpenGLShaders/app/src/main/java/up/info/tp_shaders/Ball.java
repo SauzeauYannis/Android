@@ -6,22 +6,6 @@ package up.info.tp_shaders;
 public class Ball extends MyObject {
 
     /**
-     * The enum Sphere type.
-     */
-    public enum SphereType {
-        /**
-         * Angles sphere type.
-         */
-        ANGLES,
-        /**
-         * Subdivsion sphere type.
-         */
-        SUBDIVSION }
-
-    private static final Sphere sphere_ang = new Sphere(50, 50);
-    private static final Sphere sphere_sub = new Sphere(4);
-
-    /**
      * Instantiates a new Ball.
      *
      * @param sphereType the sphere type
@@ -33,7 +17,23 @@ public class Ball extends MyObject {
     public Ball(SphereType sphereType, float radius, float posx, float posz, float[] color) {
         super(posx, radius, posz, radius, color);
 
+        Sphere sphere_ang = new Sphere(50, 50);
+        Sphere sphere_sub = new Sphere(4);
         setMainvbo(sphereType == SphereType.ANGLES ? sphere_ang.getVbo() : sphere_sub.getVbo());
+    }
+
+    /**
+     * The enum Sphere type.
+     */
+    public enum SphereType {
+        /**
+         * Angles sphere type.
+         */
+        ANGLES,
+        /**
+         * Subdivsion sphere type.
+         */
+        SUBDIVSION
     }
 
 }

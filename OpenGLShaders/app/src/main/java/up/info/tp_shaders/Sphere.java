@@ -77,8 +77,8 @@ public class Sphere {
         System.arraycopy(vertexpos, 0, normals, 0, vertexpos.length);
 
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        int glnmlbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        vbo = new VBO(glposbuffer, glnmlbuffer, triangles);
+        //int glnmlbuffer = VBO.floatArrayToGlBuffer(vertexpos);
+        vbo = new VBO(glposbuffer, glposbuffer, triangles);
     }
 
     /**
@@ -125,8 +125,8 @@ public class Sphere {
         System.arraycopy(vertexpos, 0, normals, 0, vertexpos.length);
 
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        int glnmlbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        vbo = new VBO(glposbuffer, glnmlbuffer, triangles);
+        //int glnmlbuffer = VBO.floatArrayToGlBuffer(vertexpos);
+        vbo = new VBO(glposbuffer, glposbuffer, triangles);
     }
 
     /**

@@ -33,15 +33,15 @@ public class Cube extends MyObject {
             6, 5, 7
     };
 
-    private static final int glposbuffer = VBO.floatArrayToGlBuffer(vertexPos);
+    private final int glposbuffer = VBO.floatArrayToGlBuffer(vertexPos);
 
-    private static final int glnmlbuffer = VBO.floatArrayToGlBuffer(
+    private final int glnmlbuffer = VBO.floatArrayToGlBuffer(
             VBO.computeNormals(vertexPos, triangles)
     );
 
-    private static final VBO mainvbo = new VBO(glposbuffer, glnmlbuffer, triangles);
+    private final VBO mainvbo = new VBO(glposbuffer, glnmlbuffer, triangles);
 
-    private static final VBO edgevbo = new VBO(glposbuffer, glnmlbuffer, new short[] {
+    private final VBO edgevbo = new VBO(glposbuffer, glnmlbuffer, new short[] {
             1, 0,
             0, 2,
             2, 3,
