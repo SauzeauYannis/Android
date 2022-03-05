@@ -6,7 +6,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The type Obj loader.
@@ -29,7 +31,7 @@ public class ObjLoader extends MyObject {
         List<Float> vertexlist = new ArrayList<>();
         List<Float> normallist = new ArrayList<>();
         List<Integer> triangleslist = new ArrayList<>();
-        List<Integer> normposlist = new ArrayList<>();
+        HashMap<Integer, Integer> normpos = new HashMap<>();
 
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(ObjLoader.class.getResourceAsStream(filepath)));
@@ -48,12 +50,18 @@ public class ObjLoader extends MyObject {
                     normallist.add(Float.parseFloat(splitted[3]));
                 } else if (line.startsWith("f")) {
                     String[] splitted = line.split(" ");
-                    triangleslist.add(Integer.parseInt(splitted[1].split("/")[0]) - 1);
-                    triangleslist.add(Integer.parseInt(splitted[2].split("/")[0]) - 1);
-                    triangleslist.add(Integer.parseInt(splitted[3].split("/")[0]) - 1);
-                    normposlist.add(Integer.parseInt(splitted[1].split("/")[2]) - 1);
-                    normposlist.add(Integer.parseInt(splitted[2].split("/")[2]) - 1);
-                    normposlist.add(Integer.parseInt(splitted[3].split("/")[2]) - 1);
+                    // ABC triangle
+                    int A = Integer.parseInt(splitted[1].split("/")[0]) - 1;
+                    int B = Integer.parseInt(splitted[2].split("/")[0]) - 1;
+                    int C = Integer.parseInt(splitted[3].split("/")[0]) - 1;
+
+                    triangleslist.add(A);
+                    triangleslist.add(B);
+                    triangleslist.add(C);
+
+                    normpos.put(A, Integer.parseInt(splitted[1].split("/")[2]) - 1);
+                    normpos.put(A, Integer.parseInt(splitted[2].split("/")[2]) - 1);
+                    normpos.put(A, Integer.parseInt(splitted[3].split("/")[2]) - 1);
                 }
             }
 
@@ -63,19 +71,25 @@ public class ObjLoader extends MyObject {
         }
 
         float[] vertexPos = new float[vertexlist.size()];
-        //float[] normals = new float[vertexlist.size()];
-        float[] normals = new float[normallist.size()];
+        float[] normals = new float[vertexlist.size()];
         int[] triangles = new int[triangleslist.size()];
 
         for (int i = 0; i < vertexlist.size(); i++)
             vertexPos[i] = vertexlist.get(i);
 
-        for (int i = 0; i < normposlist.size(); i++) {
-            int n = 3 * normposlist.get(i);
-            normals[n] = normallist.get(n);
-            normals[n + 1] = normallist.get(n + 1);
-            normals[n + 2] = normallist.get(n + 2);
+        for (Map.Entry<Integer, Integer> entry: normpos.entrySet()) {
+            normals[3 * entry.getKey()] = normals[3 * entry.getValue()];
+            normals[3 * entry.getKey() + 1] = normals[3 * entry.getValue() + 1];
+            normals[3 * entry.getKey() + 2] = normals[3 * entry.getValue() + 2];
         }
+
+//
+//        for (int i = 0; i < normposlist.size(); i++) {
+//            int n = 3 * normposlist.get(i);
+//            normals[n] = normallist.get(n);
+//            normals[n + 1] = normallist.get(n + 1);
+//            normals[n + 2] = normallist.get(n + 2);
+//        }
 
         for (int i = 0; i < triangleslist.size(); i++)
             triangles[i] = triangleslist.get(i);
