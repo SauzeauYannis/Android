@@ -83,25 +83,8 @@ public class ObjLoader extends MyObject {
             normals[3 * entry.getKey() + 2] = normals[3 * entry.getValue() + 2];
         }
 
-//
-//        for (int i = 0; i < normposlist.size(); i++) {
-//            int n = 3 * normposlist.get(i);
-//            normals[n] = normallist.get(n);
-//            normals[n + 1] = normallist.get(n + 1);
-//            normals[n + 2] = normallist.get(n + 2);
-//        }
-
         for (int i = 0; i < triangleslist.size(); i++)
             triangles[i] = triangleslist.get(i);
-
-        Log.d("NML", String.valueOf(vertexlist.size()));
-        Log.d("NML", String.valueOf(normallist.size()));
-        Log.d("NML", String.valueOf(normals[0]));
-        Log.d("NML", String.valueOf(normals[1]));
-        Log.d("NML", String.valueOf(normals[2]));
-        Log.d("NML", String.valueOf(normals[3]));
-        Log.d("NML", String.valueOf(normals[4]));
-        Log.d("NML", String.valueOf(normals[5]));
 
         setMainvbo(new VBO(VBO.floatArrayToGlBuffer(vertexPos),
                 VBO.floatArrayToGlBuffer(normals), triangles));

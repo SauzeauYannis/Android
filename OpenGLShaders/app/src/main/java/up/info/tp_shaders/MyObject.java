@@ -72,15 +72,11 @@ public abstract class MyObject {
         shaders.setMaterialColor(this.color);
         shaders.setModelViewMatrix(this.modelviewmatrixobj);
 
-        if (showtrianglesoutline) {
-            mainvbo.showTriangleOutlines(shaders, GLES20.GL_TRIANGLES);
-        } else {
-            mainvbo.show(shaders, GLES20.GL_TRIANGLES);
-        }
+        mainvbo.show(shaders, GLES20.GL_TRIANGLES, showtrianglesoutline);
 
         if (edgevbo != null) {
             shaders.setMaterialColor(MyGLRenderer.black);
-            edgevbo.show(shaders, GLES20.GL_LINES);
+            edgevbo.show(shaders, GLES20.GL_LINES, false);
         }
 
     }

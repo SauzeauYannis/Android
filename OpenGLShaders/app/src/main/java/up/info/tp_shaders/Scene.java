@@ -98,7 +98,7 @@ public class Scene {
 
         cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
 
-        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.015F, MyGLRenderer.white);
+        armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.015F, MyGLRenderer.red);
 
         MainActivity.log("Graphics initialized");
     }

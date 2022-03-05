@@ -144,13 +144,13 @@ public class Room {
      */
     public void show(LightingShaders shaders) {
         shaders.setMaterialColor(wallcolor);
-        wall.show(shaders, GLES20.GL_TRIANGLES);
+        wall.show(shaders, GLES20.GL_TRIANGLES, false);
         shaders.setMaterialColor(floorcolor);
-        floor.show(shaders, GLES20.GL_TRIANGLES);
+        floor.show(shaders, GLES20.GL_TRIANGLES, false);
         shaders.setMaterialColor(ceilingcolor);
-        ceiling.show(shaders, GLES20.GL_TRIANGLES);
+        ceiling.show(shaders, GLES20.GL_TRIANGLES, false);
         shaders.setMaterialColor(MyGLRenderer.black);
-        edge.show(shaders, GLES20.GL_LINES);
+        edge.show(shaders, GLES20.GL_LINES, false);
     }
 
     /**

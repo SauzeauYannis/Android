@@ -1,5 +1,7 @@
 package up.info.tp_shaders;
 
+import android.util.Log;
+
 public class Cylinder extends MyObject {
 
     /**
@@ -27,7 +29,6 @@ public class Cylinder extends MyObject {
         }
 
         vertexpos[vertexpos.length - 2] = 1.0F;
-        vertexpos[vertexpos.length - 1] = 0.0F;
 
         short[] triangles = new short[2 * 2 * 3 * nbdiv];
 
@@ -41,20 +42,26 @@ public class Cylinder extends MyObject {
         }
 
         for (short i = 0, n = (short) (2 * 3 * nbdiv - 1); i < nbdiv; i++) {
-            //triangles[++n] = i;
-            //triangles[++n] = (short) (2 * nbdiv);
-            //triangles[++n] = (short) ((i + 1) % nbdiv);
+            triangles[++n] = i;
+            triangles[++n] = (short) (2 * nbdiv);
+            triangles[++n] = (short) ((i + 1) % nbdiv);
             triangles[++n] = (short) (nbdiv + i);
-            triangles[++n] = (short) (2 * nbdiv - 1);
+            triangles[++n] = (short) (2 * nbdiv + 1);
             triangles[++n] = (short) (nbdiv + (i + 1) % nbdiv);
         }
 
+//        for (int i = 0; i < vertexpos.length - 2; i += 3)
+//            Log.d("CYL", i + ") X: " + vertexpos[i] + " | Y: " + vertexpos[i + 1] + " | Z: " + vertexpos[i + 2]);
+//
+//        for (int i = 0; i < triangles.length - 2; i += 3)
+//            Log.d("CYL", i + ") A: " + triangles[i] + " | B: " + triangles[i + 1] + " | C: " + triangles[i + 2]);
+
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        int glmlbuffer = VBO.floatArrayToGlBuffer(
+        int glnmlbuffer = VBO.floatArrayToGlBuffer(
                 VBO.computeNormals(vertexpos, triangles)
         );
 
-        setMainvbo(new VBO(glposbuffer, glmlbuffer, triangles));
+        setMainvbo(new VBO(glposbuffer, glnmlbuffer, triangles));
     }
 
 }
