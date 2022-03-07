@@ -89,7 +89,6 @@ public class Scene {
         angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
         subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
 
-
         cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
 
         tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow);
