@@ -71,6 +71,8 @@ public class Scene {
         GLES20.glPolygonOffset(2.F, 4.F);
         GLES20.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
 
+        MyGLRenderer.loadTexture(renderer.getView().getContext(), R.drawable.wall);
+
         LightingShaders shaders = renderer.getShaders();
 
         shaders.setNormalizing(true);
