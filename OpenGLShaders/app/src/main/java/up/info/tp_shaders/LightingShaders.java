@@ -61,6 +61,10 @@ public abstract class LightingShaders extends BasicShaders
      */
     protected int uNormalizing;
     /**
+     * GLSL uniform boolean to activate texture (or not)
+     */
+    protected int uTexturing;
+    /**
      * GLSL uniform material color of the object
      */
     protected int uMaterialColor;
@@ -72,6 +76,10 @@ public abstract class LightingShaders extends BasicShaders
      * GLSL uniform Shininess of the material (for specular component)
      */
     protected int uMaterialShininess;
+    /**
+     * GLSL uniform Texture unit
+     */
+    protected int uTextureUnit;
     // ================================
     // Attributes to manage GLES arrays
     // ================================
@@ -79,6 +87,10 @@ public abstract class LightingShaders extends BasicShaders
      * GLSL attribute for vertex normal arrays
      */
     protected int aVertexNormal;
+    /**
+     * GLSL attribute for texture normal arrays
+     */
+    protected int aTexCoord;
 
 
     /**
@@ -128,6 +140,9 @@ public abstract class LightingShaders extends BasicShaders
         this.uNormalizing = GLES20.glGetUniformLocation(this.shaderprogram, "uNormalizing");
         if (this.uNormalizing==-1) MainActivity.log("uNormalizing not found in shaders...");
 
+        this.uTexturing = GLES20.glGetUniformLocation(this.shaderprogram, "uTexturing");
+        if (this.uTexturing==-1) MainActivity.log("uTexturing not found in shaders...");
+
         this.uMaterialColor = GLES20.glGetUniformLocation(this.shaderprogram, "uMaterialColor");
         if (this.uMaterialColor==-1) throw new RuntimeException("uMaterialColor not found in shaders");
 
@@ -137,10 +152,17 @@ public abstract class LightingShaders extends BasicShaders
         this.uMaterialShininess = GLES20.glGetUniformLocation(this.shaderprogram, "uMaterialShininess");
         if (this.uMaterialShininess==-1) MainActivity.log("Warning: uMaterialShininess not found in shaders");
 
+        this.uTextureUnit = GLES20.glGetUniformLocation(this.shaderprogram, "uTextureUnit");
+        if (this.uTextureUnit==-1) MainActivity.log("Warning: uTextureUnit not found in shaders");
+
         // vertex attributes
         this.aVertexNormal = GLES20.glGetAttribLocation(this.shaderprogram, "aVertexNormal");
         if (this.aVertexNormal==-1) throw new RuntimeException("aVertexNormal not found in shaders");
         GLES20.glEnableVertexAttribArray(this.aVertexNormal);
+
+        this.aTexCoord = GLES20.glGetAttribLocation(this.shaderprogram, "aTexCoord");
+        if (this.aTexCoord==-1) throw new RuntimeException("aTexCoord not found in shaders");
+        GLES20.glEnableVertexAttribArray(this.aTexCoord);
     }
 
     /**
@@ -196,6 +218,15 @@ public abstract class LightingShaders extends BasicShaders
     public void setLighting(final boolean state)
     {
         if (this.uLighting!=-1) GLES20.glUniform1i(this.uLighting,state?1:0);
+    }
+
+    /**
+     * Set texturing on/off
+     * @param state on/off value
+     */
+    public void setTexturing(final boolean state)
+    {
+        if (this.uTexturing!=-1) GLES20.glUniform1i(this.uTexturing,state?1:0);
     }
 
     /**
@@ -286,6 +317,11 @@ public abstract class LightingShaders extends BasicShaders
         GLES20.glUniform1f(this.uMaterialShininess,shininess);
     }
 
+    public void setTextureUnit(final int textureUnit)
+    {
+        GLES20.glUniform1i(this.uTextureUnit,textureUnit);
+    }
+
     // ===================
     // Attributes handling
     // ===================
@@ -299,5 +335,8 @@ public abstract class LightingShaders extends BasicShaders
         GLES20.glVertexAttribPointer(this.aVertexNormal, size, dtype, false, 0, 0);
     }
 
-
+    public void setTextureCoordsPointer(int size,int dtype)
+    {
+        GLES20.glVertexAttribPointer(this.aTexCoord, size, dtype, false, 0, 0);
+    }
 }

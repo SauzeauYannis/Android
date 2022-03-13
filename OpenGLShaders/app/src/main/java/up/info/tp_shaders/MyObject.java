@@ -17,6 +17,7 @@ public abstract class MyObject {
     private final float scale;
 
     private final float[] color;
+    private final int textureid;
 
     private VBO mainvbo;
     private VBO edgevbo;
@@ -30,12 +31,13 @@ public abstract class MyObject {
      * @param scale the scale
      * @param color the color
      */
-    public MyObject(float posx, float posy, float posz, float scale, float[] color) {
+    public MyObject(float posx, float posy, float posz, float scale, float[] color, int textureid) {
         this.posx = posx;
         this.posy = posy;
         this.posz = posz;
         this.scale = scale;
         this.color = color;
+        this.textureid = textureid;
         this.modelviewmatrixobj = new float[16];
     }
 
@@ -72,11 +74,13 @@ public abstract class MyObject {
         shaders.setMaterialColor(this.color);
         shaders.setModelViewMatrix(this.modelviewmatrixobj);
 
-        mainvbo.show(shaders, GLES20.GL_TRIANGLES, showtrianglesoutline);
+        shaders.setTexturing(this.textureid != 0);
+        mainvbo.show(shaders, GLES20.GL_TRIANGLES, this.textureid, showtrianglesoutline);
+        shaders.setTexturing(this.textureid == 0);
 
         if (edgevbo != null) {
             shaders.setMaterialColor(MyGLRenderer.black);
-            edgevbo.show(shaders, GLES20.GL_LINES, false);
+            edgevbo.show(shaders, GLES20.GL_LINES, 0, false);
         }
 
     }

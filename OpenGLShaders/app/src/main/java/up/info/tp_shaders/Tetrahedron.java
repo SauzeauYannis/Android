@@ -13,8 +13,8 @@ public class Tetrahedron extends Cone {
      * @param height the height
      * @param color  the color
      */
-    public Tetrahedron(float posx, float posz, float height, float[] color) {
-        super(3, posx, posz, height, color);
+    public Tetrahedron(float posx, float posz, float height, float[] color, int textureid) {
+        super(3, posx, posz, height, color, textureid);
     }
 
 }

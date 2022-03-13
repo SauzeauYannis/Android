@@ -26,7 +26,7 @@ public class ObjLoader extends MyObject {
      * @param color    the color
      */
     public ObjLoader(String filepath, float posx, float posy, float posz, float scale, float[] color) {
-        super(posx, posy, posz, scale, color);
+        super(posx, posy, posz, scale, color, 0);
 
         List<Float> vertexlist = new ArrayList<>();
         List<Float> normallist = new ArrayList<>();
@@ -87,7 +87,7 @@ public class ObjLoader extends MyObject {
             triangles[i] = triangleslist.get(i);
 
         setMainvbo(new VBO(VBO.floatArrayToGlBuffer(vertexPos),
-                VBO.floatArrayToGlBuffer(normals), triangles));
+                VBO.floatArrayToGlBuffer(normals), 0, triangles));
     }
 
 }

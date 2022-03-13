@@ -1,5 +1,6 @@
 package up.info.tp_shaders;
 
+import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
@@ -26,7 +27,6 @@ public class Scene {
     private Ball subballoutline;
     private Ball angball;
     private Ball subball;
-
 
     private Cube cube;
 
@@ -71,7 +71,7 @@ public class Scene {
         GLES20.glPolygonOffset(2.F, 4.F);
         GLES20.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
 
-        MyGLRenderer.loadTexture(renderer.getView().getContext(), R.drawable.wall);
+        Context context = renderer.getView().getContext();
 
         LightingShaders shaders = renderer.getShaders();
 
@@ -88,20 +88,22 @@ public class Scene {
         shaders.setMaterialShininess(25);
         shaders.setMaterialSpecular(MyGLRenderer.white);
 
-        room = new Room(MyGLRenderer.blue, MyGLRenderer.red, MyGLRenderer.green);
+        room = new Room(MyGLRenderer.blue, MyGLRenderer.loadTexture(context, R.drawable.wall),
+                MyGLRenderer.red, MyGLRenderer.loadTexture(context, R.drawable.tiles1),
+                MyGLRenderer.green, MyGLRenderer.loadTexture(context, R.drawable.ceiling));
 
-        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta);
-        subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray);
-        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange);
-        subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan);
+        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta, 0);
+        subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray, 0);
+        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange, 0);
+        subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan, 0);
 
-        cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F});
+        cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F}, MyGLRenderer.loadTexture(context, R.drawable.rubiks));
 
-        tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow);
+        tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow, 0);
 
-        cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F});
+        cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F}, 0);
 
-        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F});
+        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F}, 0);
 
         armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.015F, MyGLRenderer.red);
 

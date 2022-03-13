@@ -72,20 +72,20 @@ public class Room {
             0, 1,
             // Back wall
             // right quad
-            1, 0,
+            1f/3, 0,
             0, 0,
-            0, 1,
-            1, 1,
+            0, 0.8f,
+            1f/3, 0.8f,
             // left quad
-            1, 0,
+            1f/3, 0,
             0, 0,
-            0, 1,
-            1, 1,
+            0, 0.8f,
+            1f/3, 0.8f,
             // top quad
             1, 0,
             0, 0,
-            0, 1,
-            1, 1,
+            0, 0.2f,
+            1, 0.2f,
             // floor
             0, 0,
             1, 0,
@@ -131,21 +131,21 @@ public class Room {
             VBO.computeNormals(vertexPos, triangles)
     );
 
-    private final int gltxrbuffer = VBO.floatArrayToGlBuffer(textures);
+    private final int gltexbuffer = VBO.floatArrayToGlBuffer(textures);
 
-    private final VBO wall = new VBO(glposbuffer, glnmlbuffer,
+    private final VBO wall = new VBO(glposbuffer, glnmlbuffer, gltexbuffer,
             Arrays.copyOfRange(triangles, 0, 36)
     );
 
-    private final VBO floor = new VBO(glposbuffer, glnmlbuffer,
+    private final VBO floor = new VBO(glposbuffer, glnmlbuffer, gltexbuffer,
             Arrays.copyOfRange(triangles, 36, 42)
     );
 
-    private final VBO ceiling = new VBO(glposbuffer, glnmlbuffer,
+    private final VBO ceiling = new VBO(glposbuffer, glnmlbuffer, gltexbuffer,
             Arrays.copyOfRange(triangles, 42, 48)
     );
 
-    private final VBO edge = new VBO(glposbuffer, glnmlbuffer,
+    private final VBO edge = new VBO(glposbuffer, glnmlbuffer, 0,
             new short[]{
                     0, 1,
                     1, 2,
@@ -167,6 +167,10 @@ public class Room {
     private final float[] floorcolor;
     private final float[] ceilingcolor;
 
+    private final int walltexid;
+    private final int floortexid;
+    private final int ceilingtexid;
+
     private final float[] matrix;
 
     /**
@@ -176,10 +180,15 @@ public class Room {
      * @param floorcolor   the color of floor
      * @param ceilingcolor the color of ceiling
      */
-    public Room(float[] wallcolor, float[] floorcolor, float[] ceilingcolor) {
+    public Room(float[] wallcolor, int walltexid,
+                float[] floorcolor, int floortexid,
+                float[] ceilingcolor, int ceilingtexid) {
         this.wallcolor = wallcolor;
         this.floorcolor = floorcolor;
         this.ceilingcolor = ceilingcolor;
+        this.walltexid = walltexid;
+        this.floortexid = floortexid;
+        this.ceilingtexid = ceilingtexid;
         this.matrix = new float[16];
     }
 
@@ -189,14 +198,21 @@ public class Room {
      * @param shaders the shaders
      */
     public void show(LightingShaders shaders) {
-        shaders.setMaterialColor(wallcolor);
-        wall.show(shaders, GLES20.GL_TRIANGLES, false);
-        shaders.setMaterialColor(floorcolor);
-        floor.show(shaders, GLES20.GL_TRIANGLES, false);
-        shaders.setMaterialColor(ceilingcolor);
-        ceiling.show(shaders, GLES20.GL_TRIANGLES, false);
+        shaders.setTexturing(true);
+
+        shaders.setMaterialColor(this.wallcolor);
+        wall.show(shaders, GLES20.GL_TRIANGLES, this.walltexid, false);
+
+        shaders.setMaterialColor(this.floorcolor);
+        floor.show(shaders, GLES20.GL_TRIANGLES, this.floortexid, false);
+
+        shaders.setMaterialColor(this.ceilingcolor);
+        ceiling.show(shaders, GLES20.GL_TRIANGLES, this.ceilingtexid, false);
+
+        shaders.setTexturing(false);
+
         shaders.setMaterialColor(MyGLRenderer.black);
-        edge.show(shaders, GLES20.GL_LINES, false);
+        edge.show(shaders, GLES20.GL_LINES, 0, false);
     }
 
     /**

@@ -12,8 +12,8 @@ public class Cylinder extends MyObject {
      * @param height the height
      * @param color  the color
      */
-    public Cylinder(int nbdiv, float posx, float posz, float height, float[] color) {
-        super(posx, 0F, posz, height, color);
+    public Cylinder(int nbdiv, float posx, float posz, float height, float[] color, int textureid) {
+        super(posx, 0F, posz, height, color, textureid);
 
         float[] vertexpos = new float[2 * 3 * (nbdiv + 1)];
 
@@ -61,7 +61,7 @@ public class Cylinder extends MyObject {
                 VBO.computeNormals(vertexpos, triangles)
         );
 
-        setMainvbo(new VBO(glposbuffer, glnmlbuffer, triangles));
+        setMainvbo(new VBO(glposbuffer, glnmlbuffer, 0, triangles));
     }
 
 }

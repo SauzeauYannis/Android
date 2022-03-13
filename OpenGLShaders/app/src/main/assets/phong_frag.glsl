@@ -16,29 +16,42 @@ uniform float uQuadraticAttenuation;
 
 // Material definition
 uniform bool uNormalizing;
+uniform bool uTexturing;
 uniform vec4 uMaterialColor;
 uniform vec4 uMaterialSpecular;
 uniform float uMaterialShininess;
+uniform sampler2D uTextureUnit;
 
 // Interpolated data
 varying vec3 vVertexNormal;
-varying vec4 pos;
+varying vec4 vPos;
+varying vec2 vTexCoord;
 
 void main(void) {
+  vec4 texelColor = texture2D(uTextureUnit, vTexCoord);
+
   if (uLighting) {
     vec3 normal = uNormalMatrix * vVertexNormal;
     if (uNormalizing)
       normal = normalize(normal);
 
-    vec3 lightdir = normalize(uLightPos - pos.xyz);
+    vec3 lightdir = normalize(uLightPos - vPos.xyz);
     float weight = max(dot(normal, lightdir), 0.0);
-    float shininess = max(dot(normal, vec3(normalize(-pos))), 0.0);
+    float shininess = max(dot(normal, vec3(normalize(-vPos))), 0.0);
 
-    float d = distance(uLightPos, pos.xyz);
+    float d = distance(uLightPos, vPos.xyz);
     float attenuation = 1.0 / (uConstantAttenuation + uLinearAttenuation * d + uQuadraticAttenuation * d * d);
 
-    gl_FragColor = attenuation * (uMaterialColor * (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
+    if (uTexturing) {
+      gl_FragColor = attenuation * (texelColor * /*uMaterialColor **/ (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
+    } else {
+      gl_FragColor = attenuation * (uMaterialColor * (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
+    }
   } else {
-    gl_FragColor = uMaterialColor;
+    if (uTexturing) {
+      gl_FragColor = texelColor * uMaterialColor;
+    } else {
+      gl_FragColor = uMaterialColor;
+    }
   }
 }

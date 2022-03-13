@@ -15,6 +15,7 @@ public class VBO {
 
     private final int glposbuffer;
     private final int glnmlbuffer;
+    private final int gltexbuffer;
     private final int glelembuffer;
     private final int nbelem;
     private final int typeelem;
@@ -26,9 +27,10 @@ public class VBO {
      * @param glposbuffer the glposbuffer
      * @param elem        the elem
      */
-    public VBO(int glposbuffer, int glnmlbuffer, short[] elem) {
+    public VBO(int glposbuffer, int glnmlbuffer, int gltexbuffer, short[] elem) {
         this.glposbuffer = glposbuffer;
         this.glnmlbuffer = glnmlbuffer;
+        this.gltexbuffer = gltexbuffer;
         this.glelembuffer = elemToGlBuffer(elem);
         this.nbelem = elem.length;
         this.typeelem = GLES20.GL_UNSIGNED_SHORT;
@@ -41,9 +43,10 @@ public class VBO {
      * @param glposbuffer the glposbuffer
      * @param elem        the elem
      */
-    public VBO(int glposbuffer, int glnmlbuffer, int[] elem) {
+    public VBO(int glposbuffer, int glnmlbuffer, int gltexbuffer, int[] elem) {
         this.glposbuffer = glposbuffer;
         this.glnmlbuffer = glnmlbuffer;
+        this.gltexbuffer = gltexbuffer;
         this.glelembuffer = elemToGlBuffer(elem);
         this.nbelem = elem.length;
         this.typeelem = GLES20.GL_UNSIGNED_INT;
@@ -113,19 +116,28 @@ public class VBO {
      * @param shaders  the shaders
      * @param elemtype the elemtype
      */
-    public void show(LightingShaders shaders, int elemtype, boolean withoutline) {
+    public void show(LightingShaders shaders, int elemtype, int textureid, boolean withoutline) {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);
         shaders.setPositionsPointer(3, GLES20.GL_FLOAT);
 
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glnmlbuffer);
         shaders.setNormalsPointer(3, GLES20.GL_FLOAT);
 
+        if (this.gltexbuffer != 0) {
+            GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureid);
+            shaders.setTextureUnit(0);
+
+            GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, gltexbuffer);
+            shaders.setTextureCoordsPointer(2, GLES20.GL_FLOAT);
+        }
+
         GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, glelembuffer);
-        GLES20.glDrawElements(elemtype, nbelem, this.typeelem, 0);
+        GLES20.glDrawElements(elemtype, this.nbelem, this.typeelem, 0);
 
         if (withoutline) {
             shaders.setMaterialColor(MyGLRenderer.black);
-            for (int i = 0; i < nbelem; i += 3)
+            for (int i = 0; i < this.nbelem; i += 3)
                 GLES20.glDrawElements(GLES20.GL_LINE_LOOP, 3, this.typeelem, i * this.sizeelem);
         }
 
