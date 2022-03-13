@@ -125,7 +125,6 @@ public class Sphere {
         System.arraycopy(vertexpos, 0, normals, 0, vertexpos.length);
 
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        //int glnmlbuffer = VBO.floatArrayToGlBuffer(vertexpos);
         vbo = new VBO(glposbuffer, glposbuffer, triangles);
     }
 
@@ -164,7 +163,7 @@ public class Sphere {
         for (int i = 0; i < 3; i++)
             vertexpos[3 * vm + i] = 0.5F * (vertexpos[3 * v1 + i] + vertexpos[3 * v2 + i]);
 
-        float normd = (float) (1.0F / Math.sqrt(Math.pow(vertexpos[3 * vm], 2) + Math.pow(vertexpos[3 * vm + 1], 2) + Math.pow(vertexpos[3 * vm + 2], 2)));
+        float normd = (float) (1.0F / Math.sqrt(vertexpos[3 * vm] * vertexpos[3 * vm] + vertexpos[3 * vm + 1] * vertexpos[3 * vm + 1] + vertexpos[3 * vm + 2] * vertexpos[3 * vm + 2]));
 
         for (int i = 0; i < 3; i++)
             vertexpos[3 * vm + i] *= normd;

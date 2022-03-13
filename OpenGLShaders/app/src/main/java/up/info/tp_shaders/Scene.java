@@ -81,8 +81,12 @@ public class Scene {
         shaders.setAmbiantLight(new float[]{0.2F, 0.2F, 0.2F, 1F});
         shaders.setLightSpecular(MyGLRenderer.white);
         shaders.setLightColor(new float[]{0.8F, 0.8F, 0.8F, 1F});
+        shaders.setLightAttenuation(1.0f, 0.1f, 0.01f);
 
         shaders.setLightPosition(new float[]{0F, 0F, 0F});
+
+        shaders.setMaterialShininess(25);
+        shaders.setMaterialSpecular(MyGLRenderer.white);
 
         room = new Room(MyGLRenderer.blue, MyGLRenderer.red, MyGLRenderer.green);
 

@@ -16,7 +16,7 @@ uniform vec4 uLightColor;
 uniform bool uNormalizing;
 uniform vec4 uMaterialColor;
 
-// vertex attributes
+// Vertex attributes
 attribute vec3 aVertexPosition;
 attribute vec3 aVertexNormal;
 

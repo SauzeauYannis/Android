@@ -54,6 +54,50 @@ public class Room {
             3, Scene.wallsize, -3
     };
 
+    private final static float[] textures = new float[]{
+            // Front wall
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1,
+            // Left wall
+            1, 1,
+            0, 1,
+            0, 0,
+            1, 0,
+            // Right wall
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1,
+            // Back wall
+            // right quad
+            1, 0,
+            0, 0,
+            0, 1,
+            1, 1,
+            // left quad
+            1, 0,
+            0, 0,
+            0, 1,
+            1, 1,
+            // top quad
+            1, 0,
+            0, 0,
+            0, 1,
+            1, 1,
+            // floor
+            0, 0,
+            1, 0,
+            1, 1,
+            0, 1,
+            // ceiling
+            1, 0,
+            0, 0,
+            0, 1,
+            1, 1
+    };
+
     private final static short[] triangles = new short[]{
             // Front wall
             0, 1, 3,
@@ -86,6 +130,8 @@ public class Room {
     private final int glnmlbuffer = VBO.floatArrayToGlBuffer(
             VBO.computeNormals(vertexPos, triangles)
     );
+
+    private final int gltxrbuffer = VBO.floatArrayToGlBuffer(textures);
 
     private final VBO wall = new VBO(glposbuffer, glnmlbuffer,
             Arrays.copyOfRange(triangles, 0, 36)
