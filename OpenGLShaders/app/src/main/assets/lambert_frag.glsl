@@ -18,7 +18,7 @@ uniform float uMaterialShininess;
 
 // Interpolated data
 varying vec3 vVertexNormal;
-varying vec4 pos;
+varying vec4 vPos;
 
 void main(void) {
   if (uLighting) {
@@ -26,7 +26,7 @@ void main(void) {
     if (uNormalizing)
       normal = normalize(normal);
 
-    vec3 lightdir = normalize(uLightPos - pos.xyz);
+    vec3 lightdir = normalize(uLightPos - vPos.xyz);
     float weight = max(dot(normal, lightdir), 0.0);
 
     gl_FragColor = uMaterialColor * (uAmbiantLight + weight * uLightColor);

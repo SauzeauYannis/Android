@@ -11,12 +11,12 @@ attribute vec3 aVertexNormal;
 
 // Interpolated data
 varying vec3 vVertexNormal;
-varying vec4 pos;
+varying vec4 vPos;
 
 void main(void) {
   vVertexNormal = aVertexNormal;
 
-  pos = uModelViewMatrix * vec4(aVertexPosition, 1.0);
+  vPos = uModelViewMatrix * vec4(aVertexPosition, 1.0);
 
-  gl_Position = uProjectionMatrix * pos;
+  gl_Position = uProjectionMatrix * vPos;
 }
