@@ -82,7 +82,6 @@ public abstract class MyObject {
             shaders.setMaterialColor(MyGLRenderer.black);
             edgevbo.show(shaders, GLES20.GL_LINES, 0, false);
         }
-
     }
 
 }

@@ -13,8 +13,6 @@ uniform vec4 uLightColor;
 // Material definition
 uniform bool uNormalizing;
 uniform vec4 uMaterialColor;
-uniform vec4 uMaterialSpecular;
-uniform float uMaterialShininess;
 
 // Interpolated data
 varying vec3 vVertexNormal;

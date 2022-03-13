@@ -88,7 +88,7 @@ public class Scene {
         shaders.setMaterialShininess(25);
         shaders.setMaterialSpecular(MyGLRenderer.white);
 
-        room = new Room(MyGLRenderer.blue, MyGLRenderer.loadTexture(context, R.drawable.wall),
+        room = new Room(MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.wall),
                 MyGLRenderer.red, MyGLRenderer.loadTexture(context, R.drawable.tiles1),
                 MyGLRenderer.green, MyGLRenderer.loadTexture(context, R.drawable.ceiling));
 
@@ -97,7 +97,7 @@ public class Scene {
         angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange, 0);
         subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan, 0);
 
-        cube = new Cube(2.25F,  1.75F, 1.25F, new float[] {0.35F, 0.12F, 0.75F, 1F}, MyGLRenderer.loadTexture(context, R.drawable.rubiks));
+        cube = new Cube(2.25F,  1.75F, 1.25F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.rubiks));
 
         tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow, 0);
 

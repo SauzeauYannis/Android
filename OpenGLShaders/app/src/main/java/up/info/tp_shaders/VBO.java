@@ -99,11 +99,8 @@ public class VBO {
 
             for (int j = 0; j < 3; j++) {
                 nml[3 * elem[i + j]] = vec3f.x;
-                //Log.d("NML", (3 * elem[i + j]) + ") X: " + vec3f.x);
                 nml[3 * elem[i + j] + 1] = vec3f.y;
-                //Log.d("NML", (3 * elem[i + j] + 1) + ") Y: " + vec3f.y);
                 nml[3 * elem[i + j] + 2] = vec3f.z;
-                //Log.d("NML", (3 * elem[i + j] + 2) + ") Z: " + vec3f.z);
             }
         }
 

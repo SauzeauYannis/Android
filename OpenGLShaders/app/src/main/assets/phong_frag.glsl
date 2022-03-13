@@ -43,7 +43,7 @@ void main(void) {
     float attenuation = 1.0 / (uConstantAttenuation + uLinearAttenuation * d + uQuadraticAttenuation * d * d);
 
     if (uTexturing) {
-      gl_FragColor = attenuation * (texelColor * /*uMaterialColor **/ (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
+      gl_FragColor = attenuation * (texelColor * uMaterialColor * (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
     } else {
       gl_FragColor = attenuation * (uMaterialColor * (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
     }
