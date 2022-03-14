@@ -89,12 +89,13 @@ public class Scene {
         shaders.setMaterialSpecular(MyGLRenderer.white);
 
         room = new Room(MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.wall),
-                MyGLRenderer.red, MyGLRenderer.loadTexture(context, R.drawable.tiles1),
-                MyGLRenderer.green, MyGLRenderer.loadTexture(context, R.drawable.ceiling));
+                new float[]{1F, 1F, 1F, 0.5F}, MyGLRenderer.loadTexture(context, R.drawable.marble2),
+                new float[]{0.1F, 0.1F, 0.65F, 1F}, MyGLRenderer.loadTexture(context, R.drawable.ceiling));
 
         angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta, 0);
         subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray, 0);
-        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.orange, 0);
+        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.basketball));
+        //angball = new Ball(Ball.SphereType.ANGLES, 1.0F, 0, 0, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.beachball));
         subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan, 0);
 
         cube = new Cube(2.25F,  1.75F, 1.25F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.rubiks));
@@ -103,7 +104,7 @@ public class Scene {
 
         cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F}, 0);
 
-        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1.0F}, 0);
+        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1F}, 0);
 
         armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.015F, MyGLRenderer.red);
 
@@ -131,6 +132,26 @@ public class Scene {
         Matrix.rotateM(modelviewmatrix, 0, angley, 0.0F, 1.0F, 0.0F);
         Matrix.translateM(modelviewmatrix, 0, posx, -1.6F, posz);
 
+        Matrix.scaleM(modelviewmatrix, 0, 1.0F, -1.0F, 1.0F);
+
+        GLES20.glFrontFace(GLES20.GL_CW);
+
+        showScene(modelviewmatrix, shaders);
+
+        Matrix.scaleM(modelviewmatrix, 0, 1.0F, -1.0F, 1.0F);
+
+        GLES20.glFrontFace(GLES20.GL_CCW);
+        GLES20.glEnable(GLES20.GL_BLEND);
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+
+        showScene(modelviewmatrix, shaders);
+
+        GLES20.glDisable(GLES20.GL_BLEND);
+
+        MainActivity.log("Rendering terminated.");
+    }
+
+    private void showScene(float[] modelviewmatrix, LightingShaders shaders) {
         shaders.setModelViewMatrix(modelviewmatrix);
 
         room.show(shaders);
@@ -141,13 +162,10 @@ public class Scene {
         angball.show(shaders, modelviewmatrix, false);
         subball.show(shaders, modelviewmatrix, false);
 
-
         cube.show(shaders, modelviewmatrix, false);
         tetrahedron.show(shaders, modelviewmatrix, true);
         cone.show(shaders, modelviewmatrix, false);
         cylinder.show(shaders, modelviewmatrix, false);
         armadilloObj.show(shaders, modelviewmatrix, false);
-
-        MainActivity.log("Rendering terminated.");
     }
 }

@@ -28,7 +28,9 @@ varying vec4 vPos;
 varying vec2 vTexCoord;
 
 void main(void) {
-  vec4 texelColor = texture2D(uTextureUnit, vTexCoord);
+  vec4 texelColor = uMaterialColor;
+  if (uTexturing)
+    texelColor *= texture2D(uTextureUnit, vTexCoord);
 
   if (uLighting) {
     vec3 normal = uNormalMatrix * vVertexNormal;
@@ -42,16 +44,10 @@ void main(void) {
     float d = distance(uLightPos, vPos.xyz);
     float attenuation = 1.0 / (uConstantAttenuation + uLinearAttenuation * d + uQuadraticAttenuation * d * d);
 
-    if (uTexturing) {
-      gl_FragColor = attenuation * (texelColor * uMaterialColor * (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
-    } else {
-      gl_FragColor = attenuation * (uMaterialColor * (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
-    }
+    gl_FragColor = attenuation * (texelColor * (uAmbiantLight + weight * uLightColor) + uMaterialSpecular * (pow(shininess, uMaterialShininess) * uLightSpecular));
   } else {
-    if (uTexturing) {
-      gl_FragColor = texelColor * uMaterialColor;
-    } else {
-      gl_FragColor = uMaterialColor;
-    }
+    gl_FragColor = texelColor;
   }
+
+  gl_FragColor.a = uMaterialColor.a;
 }

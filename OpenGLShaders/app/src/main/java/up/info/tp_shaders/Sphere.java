@@ -22,22 +22,31 @@ public class Sphere {
      */
     public Sphere(int nbslice, int nbcut) {
         vertexpos = new float[3 * ((nbslice - 1) * nbcut + 2)];
+        float[] textures = new float[(2 * vertexpos.length) / 3];
 
         float thetastep = 180.0F / nbslice;
         float phistep = 360.0F / nbcut;
 
-        for (int i = 1, n = -1; i < nbslice; i++) {
+        for (int i = 1, n = -1, m = -1; i < nbslice; i++) {
             double theta = Math.toRadians(-90.0F + thetastep * i);
             for (int j = 0; j < nbcut; j++) {
                 double phi = Math.toRadians(phistep * j);
                 vertexpos[++n] = (float) Math.cos(theta) * (float) Math.cos(phi);
                 vertexpos[++n] = (float) Math.cos(theta) * (float) Math.sin(phi);
                 vertexpos[++n] = (float) Math.sin(theta);
+
+                textures[++m] = (float) (phi / (2.0D * Math.PI));
+                textures[++m] = (float) (theta / Math.PI + 0.5D);
             }
         }
 
         vertexpos[vertexpos.length - 4] = -1;
         vertexpos[vertexpos.length - 1] = 1;
+
+        textures[textures.length - 4] = 0.5F;
+        textures[textures.length - 3] = 0;
+        textures[textures.length - 2] = 0.5F;
+        textures[textures.length - 1] = 1;
 
         triangles = new short[2 * 3 * nbcut * (nbslice - 1)];
 
@@ -71,14 +80,10 @@ public class Sphere {
             triangles[++nbtriangle] = (short) (h + (i + 1) % nbcut);
         }
 
-        nbvertex = (short) vertexpos.length;
-
-        float[] normals = new float[vertexpos.length];
-        System.arraycopy(vertexpos, 0, normals, 0, vertexpos.length);
-
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        //int glnmlbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        vbo = new VBO(glposbuffer, glposbuffer, 0, triangles);
+        int gltexbuffer = VBO.floatArrayToGlBuffer(textures);
+
+        vbo = new VBO(glposbuffer, glposbuffer, gltexbuffer, triangles);
     }
 
     /**
@@ -89,6 +94,7 @@ public class Sphere {
     public Sphere(int nbsubdivision) {
         nbvertex = 6;
         vertexpos = new float[6 + 3 * (int) Math.pow(4, nbsubdivision + 1)];
+        float[] textures = new float[(2 * vertexpos.length) / 3];
 
         for (int i = 0, n = -1; i < 2; i++) {
             for (int j = 0; j < 3; j++) {
