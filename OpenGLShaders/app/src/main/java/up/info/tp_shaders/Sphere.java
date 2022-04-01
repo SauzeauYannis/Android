@@ -1,5 +1,6 @@
 package up.info.tp_shaders;
 
+import android.util.Log;
 import android.util.Pair;
 
 import java.util.HashMap;
@@ -78,6 +79,21 @@ public class Sphere {
             triangles[++nbtriangle] = (short) (h1 + 1);
             triangles[++nbtriangle] = (short) (h + i);
             triangles[++nbtriangle] = (short) (h + (i + 1) % nbcut);
+        }
+
+        // use log class to print the position of each vertex with x y z
+        for (int i = 0; i < vertexpos.length; i += 3) {
+            Log.d("Sphere", "vertex " + i + " : " + vertexpos[i] + " " + vertexpos[i + 1] + " " + vertexpos[i + 2]);
+        }
+
+        // use log class to print the position of each texture with u v
+        for (int i = 0; i < textures.length; i += 2) {
+            Log.d("Sphere", "texture " + i + " : " + textures[i] + " " + textures[i + 1]);
+        }
+
+        // use log class to print the triangles with a b c format
+        for (int i = 0; i < triangles.length; i += 3) {
+            Log.d("Sphere", "a: " + triangles[i] + " b: " + triangles[i + 1] + " c: " + triangles[i + 2]);
         }
 
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);

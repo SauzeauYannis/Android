@@ -92,10 +92,9 @@ public class Scene {
                 new float[]{1F, 1F, 1F, 0.5F}, MyGLRenderer.loadTexture(context, R.drawable.marble2),
                 new float[]{0.1F, 0.1F, 0.65F, 1F}, MyGLRenderer.loadTexture(context, R.drawable.ceiling));
 
-        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta, 0);
+        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.basketball));
         subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray, 0);
-        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.basketball));
-        //angball = new Ball(Ball.SphereType.ANGLES, 1.0F, 0, 0, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.beachball));
+        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.beachball));
         subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.cyan, 0);
 
         cube = new Cube(2.25F,  1.75F, 1.25F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.rubiks));
