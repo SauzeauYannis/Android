@@ -36,8 +36,8 @@ public class Sphere {
                 vertexpos[++n] = (float) Math.cos(theta) * (float) Math.sin(phi);
                 vertexpos[++n] = (float) Math.sin(theta);
 
-                textures[++m] = (float) (phi / (2.0D * Math.PI));
-                textures[++m] = (float) (theta / Math.PI + 0.5D);
+                textures[++m] = (float) (phi / (2 * Math.PI));
+                textures[++m] = (float) (theta / Math.PI + 0.5);
             }
         }
 
@@ -143,11 +143,22 @@ public class Sphere {
             nbtriangle = initTriangle.length;
         }
 
-        float[] normals = new float[vertexpos.length];
-        System.arraycopy(vertexpos, 0, normals, 0, vertexpos.length);
+        for (int i = 0, n = -1; i < vertexpos.length; i += 3) {
+            float x = vertexpos[i];
+            float y = vertexpos[i + 1];
+            float z = vertexpos[i + 2];
+
+            double theta = (float) Math.asin(z);
+            double phi = (float) Math.atan2(y, x);
+
+            textures[++n] = (float) (phi / (2 * Math.PI));
+            textures[++n] = (float) (theta / Math.PI + 0.5);
+        }
 
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
-        vbo = new VBO(glposbuffer, glposbuffer, 0, triangles);
+        int gltexbuffer = VBO.floatArrayToGlBuffer(textures);
+
+        vbo = new VBO(glposbuffer, glposbuffer, gltexbuffer, triangles);
     }
 
     /**
