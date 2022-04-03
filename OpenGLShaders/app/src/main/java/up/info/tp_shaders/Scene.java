@@ -92,14 +92,14 @@ public class Scene {
                 new float[]{1F, 1F, 1F, 0.5F}, MyGLRenderer.loadTexture(context, R.drawable.marble2),
                 new float[]{0.1F, 0.1F, 0.65F, 1F}, MyGLRenderer.loadTexture(context, R.drawable.ceiling));
 
-        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.basketball));
-        subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.basketball));
-        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.beachball));
+        angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta, 0);
+        subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray, 0);
+        angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.basketball));
         subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.beachball));
 
         cube = new Cube(2.25F,  1.75F, 1.25F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.rubiks));
 
-        tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow, 0);
+        tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow, MyGLRenderer.loadTexture(context, R.drawable.marble1));
 
         cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F}, 0);
 

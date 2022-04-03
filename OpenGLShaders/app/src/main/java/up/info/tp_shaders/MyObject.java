@@ -49,13 +49,6 @@ public abstract class MyObject {
     public void setMainvbo(VBO mainvbo) { this.mainvbo = mainvbo; }
 
     /**
-     * Sets edgevbo.
-     *
-     * @param edgevbo the edgevbo
-     */
-    public void setEdgevbo(VBO edgevbo) { this.edgevbo = edgevbo; }
-
-    /**
      * Show.
      *
      * @param shaders                the shaders

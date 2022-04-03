@@ -13,7 +13,7 @@ public class Cone extends MyObject {
      * @param scale  the scale
      * @param color  the color
      */
-    public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid) {
+    public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid, int gltexbuffer) {
         super(posx, 0F, posz, scale, color, textureid);
 
         float[] vertexpos = new float[3 * (nbdiv + 1)];
@@ -42,7 +42,11 @@ public class Cone extends MyObject {
                 VBO.computeNormals(vertexpos, triangles)
         );
 
-        setMainvbo(new VBO(glposbuffer, glmlbuffer, 0, triangles));
+        setMainvbo(new VBO(glposbuffer, glmlbuffer, gltexbuffer, triangles));
+    }
+
+    public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid) {
+        this(nbdiv, posx, posz, scale, color, textureid, 0);
     }
 
 }
