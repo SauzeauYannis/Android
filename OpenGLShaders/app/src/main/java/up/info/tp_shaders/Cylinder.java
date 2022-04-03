@@ -8,15 +8,17 @@ public class Cylinder extends MyObject {
     /**
      * Instantiates a new Cylinder.
      *
-     * @param nbdiv     the nbdiv
-     * @param posx      the posx
-     * @param posz      the posz
-     * @param height    the height
-     * @param color     the color
-     * @param textureid the textureid
+     * @param nbdiv         the nbdiv
+     * @param posx          the posx
+     * @param posz          the posz
+     * @param height        the height
+     * @param color         the color
+     * @param textureid     the textureid
+     * @param specularcolor the specularcolor
+     * @param shininess     the shininess
      */
-    public Cylinder(int nbdiv, float posx, float posz, float height, float[] color, int textureid) {
-        super(posx, 0F, posz, height, color, textureid);
+    public Cylinder(int nbdiv, float posx, float posz, float height, float[] color, int textureid, float[] specularcolor, float shininess) {
+        super(posx, 0F, posz, height, color, textureid, specularcolor, shininess);
 
         float[] vertexpos = new float[2 * 3 * (nbdiv + 1)];
 
@@ -59,6 +61,19 @@ public class Cylinder extends MyObject {
         );
 
         setMainvbo(new VBO(glposbuffer, glnmlbuffer, 0, triangles));
+    }
+
+    /**
+     * Instantiates a new Cylinder.
+     *
+     * @param nbdiv  the nbdiv
+     * @param posx   the posx
+     * @param posz   the posz
+     * @param height the height
+     * @param color  the color
+     */
+    public Cylinder(int nbdiv, float posx, float posz, float height, float[] color) {
+        this(nbdiv, posx, posz, height, color, 0, null, 0);
     }
 
 }

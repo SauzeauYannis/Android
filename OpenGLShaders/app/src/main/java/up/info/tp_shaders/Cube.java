@@ -80,14 +80,16 @@ public class Cube extends MyObject {
     /**
      * Instantiates a new Cube.
      *
-     * @param posx      the posx
-     * @param posz      the posz
-     * @param size      the size
-     * @param color     the color
-     * @param textureid the textureid
+     * @param posx          the posx
+     * @param posz          the posz
+     * @param size          the size
+     * @param color         the color
+     * @param textureid     the textureid
+     * @param specularcolor the specularcolor
+     * @param shininess     the shininess
      */
-    public Cube(float posx, float posz, float size, float[] color, int textureid) {
-        super(posx, originsize * size / 2.0F, posz, size, color, textureid);
+    public Cube(float posx, float posz, float size, float[] color, int textureid, float[] specularcolor, float shininess) {
+        super(posx, originsize * size / 2.0F, posz, size, color, textureid, specularcolor, shininess);
 
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexPos);
         int glnmlbuffer = VBO.floatArrayToGlBuffer(
@@ -96,6 +98,18 @@ public class Cube extends MyObject {
         int gltexbuffer = VBO.floatArrayToGlBuffer(textures);
 
         setMainvbo(new VBO(glposbuffer, glnmlbuffer, gltexbuffer, triangles));
+    }
+
+    /**
+     * Instantiates a new Cube.
+     *
+     * @param posx  the posx
+     * @param posz  the posz
+     * @param size  the size
+     * @param color the color
+     */
+    public Cube(float posx, float posz, float size, float[] color) {
+        this(posx, posz, size, color, 0, null, 0);
     }
 
 }

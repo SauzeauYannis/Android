@@ -8,16 +8,18 @@ public class Cone extends MyObject {
     /**
      * Instantiates a new Cone.
      *
-     * @param nbdiv       the nbdiv
-     * @param posx        the posx
-     * @param posz        the posz
-     * @param scale       the scale
-     * @param color       the color
-     * @param textureid   the textureid
-     * @param gltexbuffer the gltexbuffer
+     * @param nbdiv         the nbdiv
+     * @param posx          the posx
+     * @param posz          the posz
+     * @param scale         the scale
+     * @param color         the color
+     * @param textureid     the textureid
+     * @param specularcolor the specularcolor
+     * @param shininess     the shininess
+     * @param gltexbuffer   the gltexbuffer
      */
-    public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid, int gltexbuffer) {
-        super(posx, 0F, posz, scale, color, textureid);
+    public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid, float[] specularcolor, float shininess, int gltexbuffer) {
+        super(posx, 0F, posz, scale, color, textureid, specularcolor, shininess);
 
         float[] vertexpos = new float[3 * (nbdiv + 1)];
 
@@ -51,15 +53,30 @@ public class Cone extends MyObject {
     /**
      * Instantiates a new Cone.
      *
-     * @param nbdiv     the nbdiv
-     * @param posx      the posx
-     * @param posz      the posz
-     * @param scale     the scale
-     * @param color     the color
-     * @param textureid the textureid
+     * @param nbdiv         the nbdiv
+     * @param posx          the posx
+     * @param posz          the posz
+     * @param scale         the scale
+     * @param color         the color
+     * @param textureid     the textureid
+     * @param specularcolor the specularcolor
+     * @param shininess     the shininess
      */
-    public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid) {
-        this(nbdiv, posx, posz, scale, color, textureid, 0);
+    public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid, float[] specularcolor, float shininess) {
+        this(nbdiv, posx, posz, scale, color, textureid, specularcolor, shininess, 0);
+    }
+
+    /**
+     * Instantiates a new Cone.
+     *
+     * @param nbdiv the nbdiv
+     * @param posx  the posx
+     * @param posz  the posz
+     * @param scale the scale
+     * @param color the color
+     */
+    public Cone(int nbdiv, float posx, float posz, float scale, float[] color) {
+        this(nbdiv, posx, posz, scale, color, 0, null, 0);
     }
 
 }
