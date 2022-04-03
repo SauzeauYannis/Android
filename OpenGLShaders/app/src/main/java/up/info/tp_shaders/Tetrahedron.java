@@ -8,10 +8,11 @@ public class Tetrahedron extends Cone {
     /**
      * Instantiates a new Tetrahedron.
      *
-     * @param posx   the posx
-     * @param posz   the posz
-     * @param height the height
-     * @param color  the color
+     * @param posx      the posx
+     * @param posz      the posz
+     * @param height    the height
+     * @param color     the color
+     * @param textureid the textureid
      */
     public Tetrahedron(float posx, float posz, float height, float[] color, int textureid) {
         super(3, posx, posz, height, color, textureid, VBO.floatArrayToGlBuffer(new float[]{

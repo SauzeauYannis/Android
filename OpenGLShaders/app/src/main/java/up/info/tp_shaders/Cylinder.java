@@ -1,16 +1,19 @@
 package up.info.tp_shaders;
 
-import android.util.Log;
-
+/**
+ * The type Cylinder.
+ */
 public class Cylinder extends MyObject {
 
     /**
      * Instantiates a new Cylinder.
      *
-     * @param posx   the posx
-     * @param posz   the posz
-     * @param height the height
-     * @param color  the color
+     * @param nbdiv     the nbdiv
+     * @param posx      the posx
+     * @param posz      the posz
+     * @param height    the height
+     * @param color     the color
+     * @param textureid the textureid
      */
     public Cylinder(int nbdiv, float posx, float posz, float height, float[] color, int textureid) {
         super(posx, 0F, posz, height, color, textureid);
@@ -49,12 +52,6 @@ public class Cylinder extends MyObject {
             triangles[++n] = (short) (2 * nbdiv + 1);
             triangles[++n] = (short) (nbdiv + (i + 1) % nbdiv);
         }
-
-//        for (int i = 0; i < vertexpos.length - 2; i += 3)
-//            Log.d("CYL", i + ") X: " + vertexpos[i] + " | Y: " + vertexpos[i + 1] + " | Z: " + vertexpos[i + 2]);
-//
-//        for (int i = 0; i < triangles.length - 2; i += 3)
-//            Log.d("CYL", i + ") A: " + triangles[i] + " | B: " + triangles[i + 1] + " | C: " + triangles[i + 2]);
 
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
         int glnmlbuffer = VBO.floatArrayToGlBuffer(

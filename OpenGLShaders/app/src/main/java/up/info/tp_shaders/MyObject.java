@@ -20,16 +20,16 @@ public abstract class MyObject {
     private final int textureid;
 
     private VBO mainvbo;
-    private VBO edgevbo;
 
     /**
      * Instantiates a new My object.
      *
-     * @param posx  the posx
-     * @param posy  the posy
-     * @param posz  the posz
-     * @param scale the scale
-     * @param color the color
+     * @param posx      the posx
+     * @param posy      the posy
+     * @param posz      the posz
+     * @param scale     the scale
+     * @param color     the color
+     * @param textureid the textureid
      */
     public MyObject(float posx, float posy, float posz, float scale, float[] color, int textureid) {
         this.posx = posx;
@@ -46,14 +46,16 @@ public abstract class MyObject {
      *
      * @param mainvbo the mainvbo
      */
-    public void setMainvbo(VBO mainvbo) { this.mainvbo = mainvbo; }
+    public void setMainvbo(VBO mainvbo) {
+        this.mainvbo = mainvbo;
+    }
 
     /**
      * Show.
      *
-     * @param shaders                the shaders
-     * @param modelviewmatrix        the modelviewmatrix
-     * @param showtrianglesoutline   the showtriangles
+     * @param shaders              the shaders
+     * @param modelviewmatrix      the modelviewmatrix
+     * @param showtrianglesoutline the showtriangles
      */
     public void show(LightingShaders shaders, float[] modelviewmatrix, boolean showtrianglesoutline) {
         Matrix.setIdentityM(this.modelviewmatrixobj, 0);
@@ -70,11 +72,6 @@ public abstract class MyObject {
         shaders.setTexturing(this.textureid != 0);
         mainvbo.show(shaders, GLES20.GL_TRIANGLES, this.textureid, showtrianglesoutline);
         shaders.setTexturing(this.textureid == 0);
-
-        if (edgevbo != null) {
-            shaders.setMaterialColor(MyGLRenderer.black);
-            edgevbo.show(shaders, GLES20.GL_LINES, 0, false);
-        }
     }
 
 }

@@ -72,15 +72,15 @@ public class Room {
             0, 1,
             // Back wall
             // right quad
-            1f/3, 0,
+            1f / 3, 0,
             0, 0,
             0, 0.8f,
-            1f/3, 0.8f,
+            1f / 3, 0.8f,
             // left quad
-            1f/3, 0,
+            1f / 3, 0,
             0, 0,
             0, 0.8f,
-            1f/3, 0.8f,
+            1f / 3, 0.8f,
             // top quad
             1, 0,
             0, 0,
@@ -177,8 +177,11 @@ public class Room {
      * Instantiates a new Room.
      *
      * @param wallcolor    the color of wall
+     * @param walltexid    the walltexid
      * @param floorcolor   the color of floor
+     * @param floortexid   the floortexid
      * @param ceilingcolor the color of ceiling
+     * @param ceilingtexid the ceilingtexid
      */
     public Room(float[] wallcolor, int walltexid,
                 float[] floorcolor, int floortexid,

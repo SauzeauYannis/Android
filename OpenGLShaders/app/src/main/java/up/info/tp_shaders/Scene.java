@@ -4,6 +4,9 @@ import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
+/**
+ * The type Scene.
+ */
 public class Scene {
 
     /**
@@ -14,12 +17,18 @@ public class Scene {
     /**
      * An angle used to animate the viewer
      */
-    float anglex, angley;
+    float anglex, /**
+     * The Angley.
+     */
+    angley;
 
     /**
      * A position used to move the viewer
      */
-    float posx, posz;
+    float posx, /**
+     * The Posz.
+     */
+    posz;
 
     private Room room;
 
@@ -38,12 +47,10 @@ public class Scene {
 
     private ObjLoader armadilloObj;
 
-
     /**
      * Constructor : build each wall, the floor and the ceiling as quads
      */
-    public Scene()
-    {
+    public Scene() {
         // Init observer's view angles and positions
         anglex = 0.F;
         angley = 0.F;
@@ -51,13 +58,12 @@ public class Scene {
         posz = 0.F;
     }
 
-
     /**
      * Init some OpenGL and shaders uniform data to render the simulation scene
+     *
      * @param renderer Renderer
      */
-    public void initGraphics(MyGLRenderer renderer)
-    {
+    public void initGraphics(MyGLRenderer renderer) {
         MainActivity.log("Initializing graphics");
         // Set the background frame color
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -93,30 +99,29 @@ public class Scene {
                 new float[]{0.1F, 0.1F, 0.65F, 1F}, MyGLRenderer.loadTexture(context, R.drawable.ceiling));
 
         angballoutline = new Ball(Ball.SphereType.ANGLES, 1.0F, 1.5F, -1.5F, MyGLRenderer.magenta, 0);
-        subballoutline = new Ball(Ball.SphereType.SUBDIVSION,  1.0F, -1.5F, -1.5F,  MyGLRenderer.lightgray, 0);
+        subballoutline = new Ball(Ball.SphereType.SUBDIVSION, 1.0F, -1.5F, -1.5F, MyGLRenderer.lightgray, 0);
         angball = new Ball(Ball.SphereType.ANGLES, 0.5F, 2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.basketball));
-        subball = new Ball(Ball.SphereType.SUBDIVSION,  0.5F, -2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.beachball));
+        subball = new Ball(Ball.SphereType.SUBDIVSION, 0.5F, -2.0F, 7.0F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.beachball));
 
-        cube = new Cube(2.25F,  1.75F, 1.25F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.rubiks));
+        cube = new Cube(2.25F, 1.75F, 1.25F, MyGLRenderer.white, MyGLRenderer.loadTexture(context, R.drawable.rubiks));
 
         tetrahedron = new Tetrahedron(-2.0F, 5.0F, 1F, MyGLRenderer.yellow, MyGLRenderer.loadTexture(context, R.drawable.marble1));
 
-        cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[] {0.62F, 0.81F, 0,21F, 1F}, 0);
+        cone = new Cone(50, 2.0F, 5.0F, 1.0F, new float[]{0.62F, 0.81F, 0, 21F, 1F}, 0);
 
-        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[] {0.2F, 0.5F, 0.8F, 1F}, 0);
+        cylinder = new Cylinder(50, 0F, 7.0F, 1.25F, new float[]{0.2F, 0.5F, 0.8F, 1F}, 0);
 
         armadilloObj = new ObjLoader("/assets/armadillo.obj", -1.5F, 0.90F, 1.5F, 0.015F, MyGLRenderer.red);
 
         MainActivity.log("Graphics initialized");
     }
 
-
     /**
      * Draw the current simulation state
+     *
      * @param renderer Renderer
      */
-    public void draw(MyGLRenderer renderer)
-    {
+    public void draw(MyGLRenderer renderer) {
         float[] modelviewmatrix = new float[16];
 
         MainActivity.log("Starting rendering");
@@ -125,7 +130,7 @@ public class Scene {
         LightingShaders shaders = renderer.getShaders();
 
         // Place viewer in the right position and orientation
-        Matrix.setIdentityM(modelviewmatrix,0);
+        Matrix.setIdentityM(modelviewmatrix, 0);
         // setRotateM instead of rotateM in the next instruction would avoid this initialization...
         Matrix.rotateM(modelviewmatrix, 0, anglex, 1.0F, 0.0F, 0.0F);
         Matrix.rotateM(modelviewmatrix, 0, angley, 0.0F, 1.0F, 0.0F);

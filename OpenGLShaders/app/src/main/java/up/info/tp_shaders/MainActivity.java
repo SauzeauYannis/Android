@@ -5,8 +5,10 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends Activity
-{
+/**
+ * The type Main activity.
+ */
+public class MainActivity extends Activity {
     /**
      * TAG for logging errors
      */
@@ -15,25 +17,31 @@ public class MainActivity extends Activity
      * View where OpenGL can draw
      */
     private MyGLSurfaceView glview;
+
     /**
-     * Reference to the Scene environment
+     * Method used to send message to the log console
+     *
+     * @param message message to display in log
      */
-    private Scene scene;
+    static public void log(String message) {
+        Log.i(LOG_TAG, message);
+    }
 
     /**
      * Creation of the surface view and the scene
-     * @param savedInstanceState
+     *
+     * @param savedInstanceState saved state of the application
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        log("Starting "+ getString(R.string.app_name) +"...");
+        log("Starting " + getString(R.string.app_name) + "...");
 
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
-        this.scene =new Scene();
-        this.glview = new MyGLSurfaceView(this,this.scene);
+        Scene scene = new Scene();
+        this.glview = new MyGLSurfaceView(this, scene);
         setContentView(this.glview);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
@@ -44,7 +52,7 @@ public class MainActivity extends Activity
     @Override
     protected void onPause() {
         super.onPause();
-        log("Pausing "+ getString(R.string.app_name) +".");
+        log("Pausing " + getString(R.string.app_name) + ".");
         this.glview.onPause();
     }
 
@@ -54,16 +62,7 @@ public class MainActivity extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-        log("Resuming "+ getString(R.string.app_name) +".");
+        log("Resuming " + getString(R.string.app_name) + ".");
         glview.onResume();
-    }
-
-    /**
-     * Method used to send message to the log console
-     * @param message message to display in log
-     */
-    static public void log(String message)
-    {
-        Log.i(LOG_TAG, message);
     }
 }

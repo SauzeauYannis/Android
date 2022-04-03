@@ -77,7 +77,7 @@ public class ObjLoader extends MyObject {
         for (int i = 0; i < vertexlist.size(); i++)
             vertexPos[i] = vertexlist.get(i);
 
-        for (Map.Entry<Integer, Integer> entry: normpos.entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : normpos.entrySet()) {
             normals[3 * entry.getKey()] = normallist.get(3 * entry.getValue());
             normals[3 * entry.getKey() + 1] = normallist.get(3 * entry.getValue() + 1);
             normals[3 * entry.getKey() + 2] = normallist.get(3 * entry.getValue() + 2);

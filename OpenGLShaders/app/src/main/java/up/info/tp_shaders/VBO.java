@@ -25,6 +25,8 @@ public class VBO {
      * Instantiates a new Vbo.
      *
      * @param glposbuffer the glposbuffer
+     * @param glnmlbuffer the glnmlbuffer
+     * @param gltexbuffer the gltexbuffer
      * @param elem        the elem
      */
     public VBO(int glposbuffer, int glnmlbuffer, int gltexbuffer, short[] elem) {
@@ -41,6 +43,8 @@ public class VBO {
      * Instantiates a new Vbo.
      *
      * @param glposbuffer the glposbuffer
+     * @param glnmlbuffer the glnmlbuffer
+     * @param gltexbuffer the gltexbuffer
      * @param elem        the elem
      */
     public VBO(int glposbuffer, int glnmlbuffer, int gltexbuffer, int[] elem) {
@@ -79,6 +83,13 @@ public class VBO {
         return glbuffer;
     }
 
+    /**
+     * Compute normals float [ ].
+     *
+     * @param pos  the pos
+     * @param elem the elem
+     * @return the float [ ]
+     */
     public static float[] computeNormals(float[] pos, short[] elem) {
         float[] nml = new float[pos.length];
 
@@ -93,14 +104,14 @@ public class VBO {
             X.setSub(B, A);
             Y.setSub(C, A);
 
-            Vec3f vec3f = new Vec3f();
-            vec3f.setCrossProduct(X, Y);
-            vec3f.normalize();
+            Vec3f nmlpos = new Vec3f();
+            nmlpos.setCrossProduct(X, Y);
+            nmlpos.normalize();
 
             for (int j = 0; j < 3; j++) {
-                nml[3 * elem[i + j]] = vec3f.x;
-                nml[3 * elem[i + j] + 1] = vec3f.y;
-                nml[3 * elem[i + j] + 2] = vec3f.z;
+                nml[3 * elem[i + j]] = nmlpos.x;
+                nml[3 * elem[i + j] + 1] = nmlpos.y;
+                nml[3 * elem[i + j] + 2] = nmlpos.z;
             }
         }
 
@@ -110,8 +121,10 @@ public class VBO {
     /**
      * Show.
      *
-     * @param shaders  the shaders
-     * @param elemtype the elemtype
+     * @param shaders     the shaders
+     * @param elemtype    the elemtype
+     * @param textureid   the textureid
+     * @param withoutline the withoutline
      */
     public void show(LightingShaders shaders, int elemtype, int textureid, boolean withoutline) {
         GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, glposbuffer);

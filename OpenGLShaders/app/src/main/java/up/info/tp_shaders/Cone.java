@@ -8,10 +8,13 @@ public class Cone extends MyObject {
     /**
      * Instantiates a new Cone.
      *
-     * @param posx   the posx
-     * @param posz   the posz
-     * @param scale  the scale
-     * @param color  the color
+     * @param nbdiv       the nbdiv
+     * @param posx        the posx
+     * @param posz        the posz
+     * @param scale       the scale
+     * @param color       the color
+     * @param textureid   the textureid
+     * @param gltexbuffer the gltexbuffer
      */
     public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid, int gltexbuffer) {
         super(posx, 0F, posz, scale, color, textureid);
@@ -45,6 +48,16 @@ public class Cone extends MyObject {
         setMainvbo(new VBO(glposbuffer, glmlbuffer, gltexbuffer, triangles));
     }
 
+    /**
+     * Instantiates a new Cone.
+     *
+     * @param nbdiv     the nbdiv
+     * @param posx      the posx
+     * @param posz      the posz
+     * @param scale     the scale
+     * @param color     the color
+     * @param textureid the textureid
+     */
     public Cone(int nbdiv, float posx, float posz, float scale, float[] color, int textureid) {
         this(nbdiv, posx, posz, scale, color, textureid, 0);
     }

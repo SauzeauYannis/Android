@@ -13,12 +13,14 @@ public class Ball extends MyObject {
      * @param posx       the posx
      * @param posz       the posz
      * @param color      the color
+     * @param textureid  the textureid
      */
     public Ball(SphereType sphereType, float radius, float posx, float posz, float[] color, int textureid) {
         super(posx, radius, posz, radius, color, textureid);
 
         Sphere sphere_ang = new Sphere(50, 50);
         Sphere sphere_sub = new Sphere(4);
+
         setMainvbo(sphereType == SphereType.ANGLES ? sphere_ang.getVbo() : sphere_sub.getVbo());
     }
 

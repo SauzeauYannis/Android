@@ -1,6 +1,5 @@
 package up.info.tp_shaders;
 
-import android.util.Log;
 import android.util.Pair;
 
 import java.util.HashMap;
@@ -12,14 +11,15 @@ public class Sphere {
 
     private final float[] vertexpos;
     private final short[] triangles;
-
+    private final VBO vbo;
     private short nbvertex; // maybe useless
     private int nbtriangle;
 
-    private final VBO vbo;
-
     /**
      * Instantiates a new Sphere.
+     *
+     * @param nbslice the nbslice
+     * @param nbcut   the nbcut
      */
     public Sphere(int nbslice, int nbcut) {
         vertexpos = new float[3 * ((nbslice - 1) * nbcut + 2)];
@@ -52,7 +52,7 @@ public class Sphere {
         triangles = new short[2 * 3 * nbcut * (nbslice - 1)];
 
         nbtriangle = -1;
-        
+
         for (int i = 0; i < nbslice - 2; i++) {
             int h = nbcut * i;
             int h1 = h + nbcut;
@@ -79,21 +79,6 @@ public class Sphere {
             triangles[++nbtriangle] = (short) (h1 + 1);
             triangles[++nbtriangle] = (short) (h + i);
             triangles[++nbtriangle] = (short) (h + (i + 1) % nbcut);
-        }
-
-        // use log class to print the position of each vertex with x y z
-        for (int i = 0; i < vertexpos.length; i += 3) {
-            Log.d("Sphere", "vertex " + i + " : " + vertexpos[i] + " " + vertexpos[i + 1] + " " + vertexpos[i + 2]);
-        }
-
-        // use log class to print the position of each texture with u v
-        for (int i = 0; i < textures.length; i += 2) {
-            Log.d("Sphere", "texture " + i + " : " + textures[i] + " " + textures[i + 1]);
-        }
-
-        // use log class to print the triangles with a b c format
-        for (int i = 0; i < triangles.length; i += 3) {
-            Log.d("Sphere", "a: " + triangles[i] + " b: " + triangles[i + 1] + " c: " + triangles[i + 2]);
         }
 
         int glposbuffer = VBO.floatArrayToGlBuffer(vertexpos);
@@ -123,7 +108,7 @@ public class Sphere {
         nbtriangle = -1;
         triangles = new short[3 * 8 * (int) Math.pow(4, nbsubdivision)];
 
-        short[] initTriangle = new short[] {
+        short[] initTriangle = new short[]{
                 0, 1, 2,
                 1, 3, 2,
                 3, 4, 2,
@@ -166,7 +151,9 @@ public class Sphere {
      *
      * @return the vbo
      */
-    public VBO getVbo() { return vbo; }
+    public VBO getVbo() {
+        return vbo;
+    }
 
     private void createSphereRec(int nbsubdivision, HashMap<Pair<Short, Short>, Short> middlemap, short a, short b, short c) {
         if (nbsubdivision == 0) {
