@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">JobStats</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <!-- Strings used for the app -->
+    <string name="ajouter">Ajouter</string>
+    <string name="cardinaud_texte">Cardinaud</string>
+    <string name="prada_texte">Prada</string>
+    <string name="choix_embarcadere_texte">Choix de l\'embarcadère :</string>
+    <string name="nombre_personnes_texte">Nombre de personnes :</string>
+    <string name="duree_texte">Durée :</string>
+    <string name="pourboire_texte">Pourboire :</string>
+    <string name="oui">Oui   </string>
+    <string name="non">Non   </string>
+    <string name="zero">0</string>
+    <string name="collective_texte">Collective</string>
+    <string name="privative_texte">Privative</string>
+    <string-array name="duree">
+        <item>0H45</item>
+        <item>1H00</item>
+        <item>1H30</item>
+        <item>2H00</item>
+        <item>3H00</item>
+        <item>Aube</item>
+        <item>Crep</item>
+    </string-array>
+
+    <!-- Save data -->
+    <string name="saved_trip">voyage</string>
+    <string name="saved_card">cardinaud</string>
+    <string name="saved_prad">prada</string>
+    <string name="saved_pers">personnes</string>
+    <string name="saved_cole">collective</string>
+    <string name="saved_priv">privative</string>
+    <string name="saved_time">durrée</string>
+    <string name="saved_tip">pourboire</string>
+    <string name="saved_tip_value">valeur du pourboire</string>
+</resources>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#323232"
+        tools:context=".SecondFragment">
+
+        <TextView
+            android:id="@+id/choixEmbarcadere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choix_embarcadere_texte"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/embarcadere"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/embarcadere"
+            android:layout_width="350dp"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/ajouter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.13">
+
+            <RadioButton
+                android:id="@+id/cardinaud"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/cardinaud_texte"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textColorLink="#FFFFFF" />
+
+            <RadioButton
+                android:id="@+id/prada"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/prada_texte"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textColorLink="#FFFFFF" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/nombresPersonnes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nombre_personnes_texte"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/barrePersonnes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/embarcadere"
+            app:layout_constraintVertical_bias="0.391" />
+
+        <TextView
+            android:id="@+id/valeurBarre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/zero"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/barrePersonnes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <SeekBar
+            android:id="@+id/barrePersonnes"
+            android:layout_width="350dp"
+            android:layout_height="35dp"
+            android:indeterminate="false"
+            android:max="10"
+            app:layout_constraintBottom_toTopOf="@+id/ajouter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/embarcadere"
+            app:layout_constraintVertical_bias="0.225" />
+
+        <RadioGroup
+            android:id="@+id/baladeType"
+            android:layout_width="350dp"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/duree"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrePersonnes">
+
+            <RadioButton
+                android:id="@+id/collective"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:selectAllOnFocus="false"
+                android:text="@string/collective_texte"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textColorLink="#FFFFFF" />
+
+            <RadioButton
+                android:id="@+id/privative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/privative_texte"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textColorHighlight="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textColorLink="#FFFFFF" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/duree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/duree_texte"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/listeDuree"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrePersonnes"
+            app:layout_constraintVertical_bias="0.833" />
+
+        <Spinner
+            android:id="@+id/listeDuree"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toTopOf="@+id/ajouter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barrePersonnes"
+            app:layout_constraintVertical_bias="0.384" />
+
+        <TextView
+            android:id="@+id/pourboire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pourboire_texte"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/boolenPouboire"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listeDuree" />
+
+        <Switch
+            android:id="@+id/boolenPouboire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/non"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/ajouter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listeDuree"
+            app:layout_constraintVertical_bias="0.441" />
+
+        <EditText
+            android:id="@+id/nombrePourboire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:autofillHints="0"
+            android:ems="10"
+            android:hint="@string/zero"
+            android:inputType="number|numberDecimal"
+            android:text="@string/zero"
+            android:textAlignment="center"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/ajouter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/boolenPouboire"
+            app:layout_constraintVertical_bias="0.343" />
+
+        <Button
+            android:id="@+id/ajouter"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@android:drawable/dialog_holo_light_frame"
+            android:text="@string/ajouter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
