@@ -1,1 +1,0 @@
-# andfun-kotlin-gdg-finder

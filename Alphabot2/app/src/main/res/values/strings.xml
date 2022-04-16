@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Alphabot2</string>
+    <string name="image_description">Play and Stop Image</string>
+    <string name="playText">Appuyer sur le bouton pour mettre en marche le robot</string>
+    <string name="stopText">Appuyer sur le bouton pour arrêter le robot</string>
+    <string name="text_buuton">OK</string>
+</resources>
